@@ -12,8 +12,13 @@ export default class User {
     this.token = HTTPAdapter.token
   }
 
-  postComment (topicId, commentMessage, uniqueId) {
-    return this.HTTPAdapter.post(`api/v2/sdk/post_comment`, {token: this.token, comment: commentMessage, topic_id: topicId, unique_temp_id: uniqueId})
+  postComment (topicId, commentMessage, uniqueId, type, payload) {
+    return this.HTTPAdapter.post(`api/v2/sdk/post_comment`, {
+      token: this.token, comment: commentMessage, 
+      topic_id: topicId, unique_temp_id: uniqueId,
+      type: type,
+      payload: payload
+    })
     .then((res) => {
       return new Promise((resolve, reject) => {
         if (res.body.status !== 200) return reject(res)

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script>
     <style>
       *, *:before, *:after { box-sizing: border-box; }
       body { font-family: sans-serif; color: #444; margin: 0 auto; padding: 0; background: #4c4c4c; }
@@ -17,7 +18,7 @@
       .participant--info { float: right; width: calc(100% - 40px); }
       .participant--info strong { display: block; }
       .participant--info i.fa { font-size: 24px; position: absolute; top:10px; right: 10px; }
-      #qcw-app { width: 700px; height: 500px; position: fixed; top: 20px; right: 10px; }
+      #mywidget { position: fixed; bottom: 15px; right: 15px; width: 400px; height: 500px; }
     </style>
   </head>
   <body>
@@ -26,7 +27,6 @@
         <h1>Qiscus SDK Demo</h1>
       </div>
       <div class="content">
-        <p>For demo purpose, you'll need to input user credentials, you can also do it programmatically by navigating to <a href="autoinit-example.html">autoinit-example.html</a></p>
         <ul class="participants">
           <li data-email="e@qiscus.com">
             <div class="participant--avatar"></div>
@@ -47,13 +47,20 @@
         </ul>
       </div>
     </div>
-    <div id="qiscus-widget"></div>
+    <div id="mywidget">
+      <div id="qiscus-widget"></div>
+    </div>
     <script>
       $(function(){
         // add listener to li
         $('.participants li').on('click', function(){
           qiscus.UI.chatTarget($(this).data('email'));
         });
+        // qiscus.init({
+        //   AppId: 'dragongo',
+        //   plugins: ['emoji'],
+        //   mode: 'wide',
+        // });
       })
     </script>
     <!-- built files will be auto injected -->

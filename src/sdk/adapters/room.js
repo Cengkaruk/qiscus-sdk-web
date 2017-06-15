@@ -27,6 +27,8 @@ export default class RoomAdapter {
       const rivalUser = find(p => p.email === email)(room.participants)
       room.name = rivalUser ? rivalUser.username : 'Room name'
       return Promise.resolve(room)
+    }, (err) => {
+      return Promise.reject(err)
     })
   }
 
@@ -58,6 +60,7 @@ export default class RoomAdapter {
           avatarURL: room.avatar_url,
           options: room.options,
           participants: room.participants.map(participant => ({
+            id: participant.id,
             email: participant.email,
             username: participant.username,
             avatarURL: participant.avatar_url

@@ -1,24 +1,32 @@
 @import "_variable.scss";
+@import "node_modules/embed-js/src/css/embed.scss";
+
 #qcw-app * {
   box-sizing: border-box;
 }
 #qcw-app {
   font-family: sans-serif;
-  &--wide-mode {
+  &.qcw-app--wide-mode {
     width: 100%;
     height: 100%;
     position: relative;
   }
 }
+.ejs-image.ejs-embed {
+    display: none;
+}
+.widget-chat-wrapper { height: 100%; }
 @media (max-width: 700px) { 
   #qcw-app .qcw-container { 
     width: 100%;
     height: 100%;
     bottom: 0;
     right: 0;
+    transform: translateY(0);
+    overflow: hidden;
   }
   ul#messages__comments {
-    height: calc(100vh - 115px) !important;
+    height: calc(100vh - 98px) !important;
   }
 }
 @import '_chat-trigger.scss';

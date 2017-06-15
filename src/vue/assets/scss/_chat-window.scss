@@ -15,17 +15,18 @@
   .qcw-app--wide-mode & {
     width: 100%; height: 100%;
     position: relative;
-    top: 0; left: 0;
+    top: 0; left: 0; bottom: auto;
+    transform: translateY(0);
+    overflow: hidden;
   }
 }
 .qcw-header {
   background: $primary-color;
   color: #ecf0f1;
-  padding: 15px;
+  padding: 12px 20px 18px 45px;
   border-radius: 5px 5px 0 0;
   text-shadow: 0 -1px 0 rgba(0,0,0,.3);
   font-weight: bold;
-  text-align: center;
   position: relative;
 }
 .qcw-header i.fa {
@@ -42,16 +43,19 @@
   flex: 3;
   display: flex;
   flex-flow: column nowrap;
-  background: #FFF;
+  background: #444;
 }
 ul#messages__comments {
   list-style: none;
-  background: #FFF;
+  background: #E0F2F1;
   margin:0;
-  height: 380px;
+  height: 402px;
   overflow: hidden;
   overflow-y: auto;
   padding: 10px 20px;
+}
+.qcw-app--wide-mode ul#messages__comments {
+  height: calc(100% - 100px);
 }
 ul#messages__comments::-webkit-scrollbar {
  width: 9px; background-color: #ddd;
@@ -65,40 +69,26 @@ ul#messages__comments::-webkit-scrollbar-thumb {
  border-radius: 10px; -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);	background-color: $primary-color;
 }
 .qcw-comment-form {
-  // display: flex;
-  // flex-flow: row nowrap;
+  background: #FFF;
   overflow: hidden;
   position: relative;
   height: 50px;
-  padding: 10px 70px 10px 10px;
+  padding: 10px;
   * {
     box-sizing: border-box;
-  }
-  i {
-    font-size: 20px; margin: 5px 0 0 15px; color: #444;
-    padding: 4px 7px 0 5px;
-    color: #eee;
-    cursor: pointer;
-    background: $primary-color;
-    border-radius: 50%;
-    width: 30px; height: 30px;
   }
   .uploader {
     position: absolute;
     bottom: 13px; right: 7px;
-    input {
-      opacity: 0; width: 100%; height: 100%;
-      position: absolute;
-      top: 0; left: 0; cursor: pointer;
-    }
   }
 }
 .qcw-comment-form textarea {
-  width: 100%;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-size: 12px; padding: 7px 10px;
-  max-height: 30px;
+  width: calc(100% - 30px);
+  border: 0;
+  font-family: inherit;
+  font-size: 12px; 
+  padding: 7px 10px;
+  max-height: 50px;
   resize: none;
   outline: none;
 }
@@ -115,8 +105,9 @@ ul#messages__comments::-webkit-scrollbar-thumb {
 .isTypingText {
   position: absolute;
   text-align: left;
-  bottom: 12px;
+  bottom: 5px;
   font-size: 10px;
+  text-shadow: none;
 }
 .comment-loading-container {
   position: absolute;
@@ -128,7 +119,110 @@ ul#messages__comments::-webkit-scrollbar-thumb {
     border-width: 15px;
     position: absolute;
     display: block;
-    top: 35%;
-    left: 35%;
+    top: 50%;
+    margin-top: -75px;
+    left: 50%;
+    margin-left: -75px;
   }
+}
+.qcw-form-actions {
+  position: absolute;
+  top: -9px; right: 5px;
+  li {
+    display: inline-block;
+    position: relative;
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+      background: $primary-color;
+    }
+    &:hover i {
+      color: #FFF;
+    }
+  }
+  i {
+    font-size: 15px;
+    color: #666;
+    cursor: pointer;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+}
+.qcw-attachment__actions {
+  position: absolute;
+  bottom: 50px;
+  right: -150%;
+  list-style: none;
+  margin: 0;
+  transition: all .32s ease;
+  li {
+    position: relative;
+    width: 35px; height: 35px;
+    cursor: pointer;
+    background: #C4C4C4;
+    border-radius: 50%;
+    color: #505050;
+    margin-bottom: 10px;
+    transition: all .32s ease;
+    &:hover {
+      background: $primary-color;
+      color: #FFF;
+    }
+  }
+  i {
+    font-size: 15px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  input {
+    opacity: 0; width: 100%; height: 100%;
+    position: absolute;
+    top: 0; left: 0; cursor: pointer;
+  }
+}
+.qcw-attachment__actions.qcw-attachment__actions--active {
+  right: 20px;
+}
+.qcw-attachment__label {
+  opacity: 0;
+  transition: all .32s ease;
+  background: #C4C4C4;
+  color: #444;
+  padding: 5px 15px;
+  font-size: 13px;
+  position: absolute;
+  top: 5px; right: 45px;
+  border-radius: 30px;
+  .qcw-attachment__actions li:hover & {
+    opacity: 1;
+  }
+}
+.qcw-goto-bottom i {
+    color: #8a8a8a;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 30px;
+    cursor: pointer;
+}
+.qcw-goto-bottom {
+    background: #FFF;
+    color: #444;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 0 3px 5px rgba(0,0,0,.3);
+    border: 1px solid #ececec;
+    position: absolute;
+    z-index: 400;
+    bottom: 70px;
+    right: 15px;
+    text-align: center;
+    transition: all .32s ease;
+    transform: translateX(250%);
+}
+.widget-chat-wrapper:hover .qcw-goto-bottom {
+    transform: translateX(0);
 }

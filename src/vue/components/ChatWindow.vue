@@ -7,7 +7,14 @@
     <div class="comment-loading-container" v-if="isLoading">
       <loader width="150px" height="150px"></loader>
     </div>
-    <init-config v-if="!selected && !init"></init-config>
+    <init-config v-if="!selected && !init && dev_mode"></init-config>
+    <div v-if="!selected && !init && !dev_mode">
+      <div class="qcw-header">
+        Widget not yet initialized
+        <i class="fa fa-chevron-down" @click="toggleChatWindow"></i>
+      </div>
+      <h3 style="text-align: center">Please login first</h3>
+    </div>
     <div v-if="init && !selected">
       <div class="qcw-header">
         Welcome, <strong>{{ userdata.username }}</strong>
@@ -15,13 +22,17 @@
       </div>
       <h3 style="padding: 20px; text-align: center;">No Active Chat, please select participant to chat to</h3>
     </div>
-    <div v-if="init && selected">
+    <div v-if="init && selected" class="widget-chat-wrapper">
       <div class="qcw-header" @click="onHeaderClicked">
-        <img class="qcw-room-avatar" :src="selected.avatar" alt="Room Avatar" />
-        {{ selected.name }}
+        <img class="qcw-room-avatar" :src="selected.avatar || 'https://qiscuss3.s3.amazonaws.com/uploads/55c0c6ee486be6b686d52e5b9bbedbbf/2.png'" alt="Room Avatar" />
+        <div v-if="!selected.custom_title">{{ selected.name }}</div>
+        <div v-if="selected.custom_title">{{ selected.custom_title }}</div>
+        <div v-if="mqttData.typing != ''" class="isTypingText">{{ mqttData.typing }} is typing ...</div>
+        <div v-if="selected.custom_subtitle && !mqttData.typing" class="isTypingText">{{ selected.custom_subtitle }}</div>
         <i class="fa fa-chevron-down" @click="toggleChatWindow"></i>
       </div>
-      <ul id="messages__comments">
+      <div class="qcw-goto-bottom" @click="scrollToBottom" v-if="!scrollable && !showActions"><i class="fa fa-angle-double-down"></i></div>
+      <ul id="messages__comments" @scroll="handleScroll">
         <load-more v-if="haveMoreComments" :isLoadingComments="isLoadingComments" :clickHandler="loadMoreComments"></load-more>
         <li v-if="selected.comments.length > 0" v-for="(comment, index) in selected.comments" :key="comment.id">
           <comment :comment="comment"
@@ -35,22 +46,36 @@
         <li v-if="uploads.length > 0" v-for="upload in uploads">
           <div class="qcw-upload-info">Uploading {{ upload }} ...</div>
         </li>
-        <li v-if="mqttData.typing != ''" class="isTypingText">
-          {{ mqttData.typing }} is typing ...
+      </ul>
+      <!-- actions untuk attachment -->
+      <ul class="qcw-attachment__actions" :class="{'qcw-attachment__actions--active': showActions}">
+        <li>
+          <span class="qcw-attachment__label">Image</span>
+          <i class="fa fa-image"></i>
+          <input class="uploader__input" name="file" type="file" accept="image/*" @change="uploadFile" v-if="commentInput.length <= 0">
+        </li>
+        <li>
+          <span class="qcw-attachment__label">File</span>
+          <i class="fa fa-file-text"></i>
+          <input class="uploader__input" name="file" type="file" @change="uploadFile" v-if="commentInput.length <= 0">
         </li>
       </ul>
+      <!-- form untuk postcomment -->
       <div class="qcw-comment-form">
         <textarea placeholder="type your comment here ..."
+          row="2"
           @focus="publishTyping"
           @keyup="publishTyping"
-          @keyup.enter="trySubmitComment($event)"
+          @keydown.enter="trySubmitComment($event)"
           v-model="commentInput">
         </textarea>
-        <div class="uploader">
-          <i class="fa fa-paper-plane" v-if="commentInput.length > 0" @click="trySubmitComment($event)"></i>
-          <i class="fa fa-paperclip" v-if="commentInput.length <= 0"></i>
-          <input class="uploader__input" name="file" type="file" @change="uploadFile" v-if="commentInput.length <= 0">
-        </div>
+        <ul class="qcw-form-actions">
+          <li @click="toggleActions">
+            <i class="fa fa-paperclip" v-if="!showActions"></i>
+            <i class="fa fa-times" v-if="showActions"></i>
+          </li>
+          <li><i class="fa fa-paper-plane" @click="trySubmitComment($event)"></i></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -79,11 +104,12 @@ export default {
   components: {ChatParticipants, Comment, InitConfig, LoadMore, Loader},
   computed: {
     windowStatus: function(){ return this.$store.state.windowStatus },
-    selected: function() { return this.$store.state.qiscus.selected},
+    selected: function() { return this.$store.state.qiscus.selected || false},
     userdata: function() { return this.$store.state.qiscus.userData },
     mqtt: function() { return this.$store.state.mqtt },
     mqttData: function() { return this.$store.state.mqttData },
     init: function() { return this.$store.state.qiscus.isInit },
+    dev_mode: function() { return this.$store.state.dev_mode || false },
     haveMoreComments: function() { return this.selected.comments.length > 0 && this.selected.comments[0].before_id > 0 },
     isLoadingComments: function() { return this.$store.state.isLoadingComments },
     isLoading() {
@@ -94,7 +120,9 @@ export default {
   data() {
     return {
       commentInput: '',
-      uploads: []
+      uploads: [],
+      showActions: false,
+      scrollable: false
     }
   },
   created() {
@@ -103,7 +131,27 @@ export default {
     //   if(qiscus.selected) qiscus.sync()
     // }, 5000);
   },
+  updated () {
+    // this is basically UI business but we need to put default behaviour
+    // ---- autoscroll if the screen height is not exceeding 30% of the scrollTop -----
+    let commentContainer = document.getElementById('messages__comments')
+    if (!commentContainer) return
+    let commentContainerHeight = commentContainer.scrollHeight - commentContainer.clientHeight
+    let scrollTop = commentContainer.scrollTop
+    // let scrollTreshold = commentContainerHeight * 90 / 100
+    let scrollTreshold = commentContainerHeight - 170
+    this.scrollable = (scrollTop >= scrollTreshold) || false
+    
+    if(this.scrollable) {
+      window.setTimeout(function(){ 
+        commentContainer.scrollTop = commentContainerHeight 
+      }, 0)
+    } 
+  },
   methods: {
+    toggleActions() {
+      this.showActions = !this.showActions
+    },
     publishTyping() {
       const self = this;
       if(self.commentInput.length > 0){
@@ -130,10 +178,13 @@ export default {
       if(!e.shiftKey){
         e.preventDefault();
         e.stopPropagation();
+        let message = this.commentInput.trim()
+        if(typeof emojione != "undefined") message = emojione.shortnameToUnicode(message)
         if(this.commentInput.trim().length < 1) return;
-        this.submitComment(this.selected.last_comment_topic_id, this.commentInput.trim());
+        this.submitComment(this.selected.last_comment_topic_id, message);
         this.commentInput = ''
         this.mqtt.publish(`r/${this.selected.id}/${this.selected.last_comment_topic_id}/fikri@qiscus.com/t`, 0);
+        this.showActions = false;
       }
     },
     submitComment(topic_id, comment) {
@@ -159,7 +210,7 @@ export default {
       // var element = document.getElementById('messages__comments');
       // element.scrollTop = (element.scrollHeight - element.clientHeight) + 7000;
       // get id of latest comment from selected room
-      const latestCommentId = qiscus.selected.comments[qiscus.selected.comments.length-1].id;
+      const latestCommentId = qiscus.selected.comments[qiscus.selected.comments.length-1].id
       const element = document.getElementById(latestCommentId)
       if(element) {
         element.scrollIntoView({block: 'end', behaviour: 'smooth'})
@@ -167,6 +218,14 @@ export default {
     },
     onHeaderClicked() {
       if(qiscus) qiscus.emit('header-clicked', 'hohohoho');
+    },
+    handleScroll(e) {
+      let commentContainer = document.getElementById('messages__comments')
+      if (!commentContainer) return
+      let commentContainerHeight = commentContainer.scrollHeight - commentContainer.clientHeight
+      let scrollTop = commentContainer.scrollTop
+      let scrollTreshold = commentContainerHeight - 170
+      this.scrollable = (scrollTop >= scrollTreshold) || false
     },
     uploadFile(e) {
       var vm       = this;
@@ -184,6 +243,9 @@ export default {
           var url = JSON.parse(xhr.response).results.file.url
           vm.uploads.splice(vm.uploads.indexOf(files[0].name),1)
           vm.submitComment(vm.selected.last_comment_topic_id, `[file] ${url} [/file]`);
+        } else {
+          vm.$toasted.error('File uploading failed')
+          vm.uploads.splice(vm.uploads.indexOf(files[0].name), 1)
         }
       }
       xhr.send(formData);

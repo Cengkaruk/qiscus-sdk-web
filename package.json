@@ -1,8 +1,9 @@
 {
   "name": "qiscus-sdk-web",
-  "version": "1.4.7",
+  "version": "2.2.7",
   "description": "Qiscus Javascript SDK For Web",
   "author": "contact.us@qiscus.com",
+  "homepage": "sdk.qiscus.com",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -14,16 +15,17 @@
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
-    "embed-js": "^4.1.4",
+    "embed-js": "^4.2.3",
     "highlight.js": "^9.6.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "moment": "^2.14.1",
     "mqtt": "^2.0.1",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.5.0",
     "sass-loader": "^4.0.1",
     "superagent": "^2.2.0",
     "vue": "^2.0.1",
+    "vue-toasted": "^1.0.27",
     "vuex": "^2.0.0"
   },
   "devDependencies": {

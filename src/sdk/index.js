@@ -26,6 +26,7 @@ export class qiscusSDK extends EventEmitter {
     self.selected = null
     self.pendingCommentId = 0
     self.last_received_comment_id = 0
+    self.mqtt = null // I'll look into this later, basically we'll move mqtt from vuex to core
 
     // User Properties
     self.userData = {}
@@ -40,6 +41,7 @@ export class qiscusSDK extends EventEmitter {
     self.sync = 'both' // possible values 'socket', 'http', 'both'
     // there's two mode, widget and wide
     self.mode = 'widget'
+    self.plugins = []
 
     /**
      * This code below is wrapper for vStore object
@@ -59,6 +61,13 @@ export class qiscusSDK extends EventEmitter {
       },
       toggleChatWindow () {
         vStore.dispatch('toggleChatWindow')
+      },
+      scrollToBottom () {
+        const latestCommentId = this.selected.comments[qiscus.selected.comments.length-1].id
+        const element = document.getElementById(latestCommentId)
+        if(element) {
+          element.scrollIntoView({block: 'end', behaviour: 'smooth'})
+        }
       }
     }
 
@@ -79,24 +88,29 @@ export class qiscusSDK extends EventEmitter {
           vStore.dispatch('setRead', comment)
           // update last_received_comment_id
           self.last_received_comment_id = comment.id
+
+          // update comment status, if only self.selected isn't null and it is the correct room
+          if(self.selected && self.selected.id == comment.room_id) {
+            self.userAdapter.updateCommentStatus(self.selected.id, comment.id, comment.id)
+            .then( res => {
+              self.sortComments()
+            })
+          }
         }
       })(data)
-      // let's also update last_received_comment_id
-      if(data.length > 0) self.last_received_comment_id = data[data.length-1].id
-
+      
       if (self.options.newMessagesCallback) self.options.newMessagesCallback(data)
 
-      // let's also update comment status, but if only self.selected isn't null
-      if(!self.selected) return;
-      const comments = data;
-      const roomId = comments[0].room_id
-      const lastReadCommentId = self.selected.comments[self.selected.comments.length - 1].id
-      const lastReceivedCommentId = comments[comments.length - 1].id
-      this.userAdapter.updateCommentStatus(roomId, lastReadCommentId, lastReceivedCommentId)
-        .then((res) => {
-          this.sortComments()
-        })
-        .catch(error => console.error('Error when updating comment status', error))
+    //   if(!self.selected) return;
+    //   const comments = data;
+    //   const roomId = comments[0].room_id
+    //   const lastReadCommentId = self.selected.comments[self.selected.comments.length - 1].id
+    //   const lastReceivedCommentId = comments[comments.length - 1].id
+    //   this.userAdapter.updateCommentStatus(roomId, lastReadCommentId, lastReceivedCommentId)
+    //     .then((res) => {
+    //       this.sortComments()
+    //     })
+    //     .catch(error => console.error('Error when updating comment status', error))
     })
 
     /**
@@ -142,7 +156,7 @@ export class qiscusSDK extends EventEmitter {
 
     self.on('group-room-created', function (response) {
       self.isLoading = false
-      if (self.options.groupRoomCreated) self.options.groupRoomCreated(response)
+      if (self.options.groupRoomCreatedCallback) self.options.groupRoomCreatedCallback(response)
     })
     self.on('header-clicked', function (response) {
       if (self.options.headerClickedCallback) self.options.headerClickedCallback(response)
@@ -150,6 +164,10 @@ export class qiscusSDK extends EventEmitter {
 
     self.on('comment-read', function (response) {
       if (self.options.commentReadCallback) self.options.commentReadCallback(response)
+    })
+
+    self.on('login-error', function(error) {
+      console.error('Error login', error)
     })
   }
 
@@ -166,7 +184,13 @@ export class qiscusSDK extends EventEmitter {
     this.key = key
     this.username = username
     this.avatar_url = avatarURL
-    this.isInit = true
+
+    // Connect to Login or Register API
+    this.connectToQiscus().then((response) => {
+      if(response.status != 200) return this.emit('login-error', response.error)
+      this.isInit = true
+      this.emit('login-success', response)
+    })
   }
 
   /**
@@ -183,12 +207,12 @@ export class qiscusSDK extends EventEmitter {
     // setup how sdk will sync data: socket, http, both
     if (config.sync) this.sync = config.sync
     if (this.sync == 'http' || this.sync == 'both') this.activateSync()
-
-    // Connect to Login or Register API
-    this.connectToQiscus().then((response) => {
-      this.isInit = true
-      this.emit('login-success', response)
-    }, (err) => console.error('Failed connecting', err))
+    // setup how sdk will set the layout, widget or wide 
+    if (config.mode) this.mode = config.mode
+    // initconfig for developer
+    this.dev_mode = config.dev_mode || false
+    // add plugins
+    if (config.plugins && config.plugins.length>0) config.plugins.forEach(plugin => this.plugins.push(plugin))
   }
 
   connectToQiscus () {
@@ -201,9 +225,7 @@ export class qiscusSDK extends EventEmitter {
     return fetch(`${this.baseURL}/api/v2/sdk/login_or_register`, {
       method: 'POST',
       body: formData
-    }).then((response) => {
-      return response.json()
-    })
+    }).then((response) => response.json() , (err) => err)
   }
 
   // Activate Sync Feature if `http` or `both` is chosen as sync value when init
@@ -246,6 +268,30 @@ export class qiscusSDK extends EventEmitter {
     }
 
     // Create room
+    return this.roomAdapter.getOrCreateRoom(email, options, distinctId)
+      .then((response) => {
+        room = new Room(response)
+        self.room_name_id_map[email] = room.id
+        self.last_received_comment_id = (self.last_received_comment_id < room.last_comment_id) ? room.last_comment_id : self.last_received_comment_id
+        self.rooms.push(room)
+        self.isLoading = false
+        self.selected = room
+
+        if (!initialMessage) return room
+        const topicId = room.id
+        const message = initialMessage
+        self.submitComment(topicId, message)
+          .then(() => console.log('Comment posted'))
+          .catch(err => {
+            console.error('Error when submit comment', err)
+          })
+        return Promise.resolve(room)
+      }, (err) => {
+        console.error('Error when creating room', err) 
+        self.isLoading = false
+        return Promise.reject(err)
+      })
+
     return Promise
       .resolve(this.roomAdapter.getOrCreateRoom(email, options, distinctId))
       .then((res) => {
@@ -256,7 +302,8 @@ export class qiscusSDK extends EventEmitter {
         self.isLoading = false
         self.selected = room
         return room
-      }, (err) => { console.error('Error when creating room', err) })
+      }, (err) => { 
+      })
       // Post initial comment
       .then((room) => {
         if (!initialMessage) return room
@@ -316,7 +363,7 @@ export class qiscusSDK extends EventEmitter {
         self.last_received_comment_id = (self.last_received_comment_id < room.last_comment_id) ? room.last_comment_id : self.last_received_comment_id
         self.selected = room || roomToFind
         self.isLoading = false
-        self.emit('group-room-created', self.selected)
+        // self.emit('group-room-created', self.selected)
       }, (error) => {
         console.error('Error getting room by id', error)
       })
@@ -422,7 +469,7 @@ export class qiscusSDK extends EventEmitter {
    * @param {String} commentMessage - comment to be submitted
    * @return {Promise}
    */
-  submitComment (topicId, commentMessage, uniqueId) {
+  submitComment (topicId, commentMessage, uniqueId, type, payload) {
     var self = this
     var room = self._getRoomOfTopic(topicId)
     self.pendingCommentId--
@@ -439,7 +486,35 @@ export class qiscusSDK extends EventEmitter {
     // push this comment unto active room
     self.selected.comments.push(pendingComment)
 
-    return this.userAdapter.postComment(topicId, commentMessage, pendingComment.unique_id)
+    return this.userAdapter.postComment(topicId, commentMessage, pendingComment.unique_id, type, payload)
+    .then((res) => {
+      // When the posting succeeded, we mark the Comment as sent,
+      // so all the interested party can be notified.
+      pendingComment.markAsSent()
+      pendingComment.id = res.id
+      pendingComment.before_id = res.comment_before_id
+      return new Promise((resolve, reject) => resolve(self.selected))
+    }, (err) => {
+      pendingComment.markAsFailed()
+      return new Promise((resolve, reject) => reject(err))
+    })
+  }
+
+  resendComment(comment) {
+    var self = this
+    var room = self.selected
+    var pendingCommentDate = new Date()
+    var commentData = {
+      message: comment.message,
+      username_as: self.username,
+      username_real: self.email,
+      user_avatar: self.avatar_url,
+      id: comment.id,
+      unique_id: comment.unique_id
+    }
+    var pendingComment = qiscus.selected.comments.find( cmtToFind => cmtToFind.id == comment.id )
+
+    return this.userAdapter.postComment(qiscus.selected.id, pendingComment.message, pendingComment.unique_id, comment.type, comment.payload)
     .then((res) => {
       // When the posting succeeded, we mark the Comment as sent,
       // so all the interested party can be notified.
@@ -459,6 +534,7 @@ export class qiscusSDK extends EventEmitter {
     // We're gonna use timestamp for uniqueId for now.
     // "bq" stands for "Bonjour Qiscus" by the way.
     uniqueId = 'bq' + Date.now()
+    if(comment.unique_id) uniqueId = comment.unique_id
     commentToBeSubmitted.attachUniqueId(uniqueId)
     commentToBeSubmitted.markAsPending()
     commentToBeSubmitted.isDelivered = false
@@ -547,7 +623,18 @@ export class Room {
     this.isLoaded = false
     this.code_en = roomData.code_en
     this.unread_comments = []
+    this.custom_title = null
+    this.custom_subtitle = null
+    this.test = 'aaaa'
     this.receiveComments(roomData.comments)
+  }
+
+  setTitle ( title ) {
+    this.custom_title = title
+  }
+
+  setSubTitle ( subtitle ) {
+    this.custom_subtitle = subtitle
   }
 
   receiveComments (comments) {
@@ -648,11 +735,21 @@ export class Topic {
 /**
 * Qiscus Base Comment Class
 */
+function searchAndReplace(str, find, replace) {
+  return str.split(find).join(replace);
+}
+function escapeHTML(text) {
+  let comment;
+  comment = searchAndReplace(text, '<', '&lt;');
+  comment = searchAndReplace(comment, '>', '&gt;');
+  return comment;
+}
 export class Comment {
   constructor (comment) {
+    let escaped_message = escapeHTML(comment.message)
     this.id = comment.id
     this.before_id = comment.comment_before_id
-    this.message = comment.message
+    this.message = escaped_message
     this.username_as = comment.username_as || comment.username
     this.username_real = comment.username_real || comment.email
     let theDate = moment(comment.timestamp)
@@ -668,6 +765,11 @@ export class Comment {
     this.isRead = true
     this.isSent = true
     this.attachment = null
+    this.payload = comment.payload
+    // manage comment type
+    // supported comment type text, account_linking, buttons
+    let supported_comment_type = ['text','account_linking','buttons','reply']
+    this.type = (supported_comment_type.indexOf(comment.type) >= 0) ? comment.type : 'text'
   }
   isAttachment () {
     return (this.message.substring(0, '[file]'.length) == '[file]')
@@ -694,6 +796,7 @@ export class Comment {
   markAsSent () {
     this.isSent = true
     this.isPending = false
+    this.isFailed = false
   }
   markAsDelivered () {
     this.isSent = true

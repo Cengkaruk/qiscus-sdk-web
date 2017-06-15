@@ -1,147 +1,136 @@
-# Introduction
+# Qiscus SDK Web
 
-> Qiscus Javascript SDK For Web
-
-**qis**cus SDK helps you build Web Chat Application easy and fast. It uses **qis**cus server backend for the API.
+**Qis**cus SDK helps you build Web Chat Application easy and fast. It uses **qis**cus server backend for the API.
 There's two version of the SDK. The SDK Core Only version which you can use to build a custom chat app without opinionated view layer.
 The other version is the one with `View` layer already integrated in it (in this case we're using VueJs, other view layer already on TODO list).
-You can download all this files by navigating to the [release](https://github.com/qiscus/qiscus-sdk-web/releases) section.
+You can download files you need by navigating to the [release](https://github.com/qiscus/qiscus-sdk-web/releases) section.
 
-# Installation and Usage
+# Quick Start
+## Create a new app 
+Register on [dashboard.qiscus.com](https://dashboard.qiscus.com) using your email and password and then create new application
 
-## SDK with Integrated Widget View
-This version let you add a chat widget directly into your existing HTML web pages. 
-You just need to include the javascript and css files from the build directory. 
-And you also need to append `<div id="qiscus-widget"></div>` tag before closing body tag. Here's sample HTML:
+You should create one application per service, regardless of the platform. For example, an app released in Android, iOS or Web would require only one application to be created in the Dashboard.
+
+All users within the same **qis**cus application are able to communicate with each other, across all platforms. This means users using iOS, Android, web clients, etc. can all chat with one another. However, users in different Qiscus applications cannot talk to each other.
+
+Done! Now you can use the `APP_ID` into your apps and get chat functionality by implementing **qis**cus into your app.
+
+## Integrating SDK with an existing app 
+**qis**cus SDK let you add a chat widget directly into your existing HTML web pages. You just need to include the javascript and css files from the build directory. And you also need to append `<div id="qiscus-widget"></div>` tag before closing body tag. Here's sample HTML:
+
+You can just copy and paste this into your html file and it'll work directly.
 
 ``` html
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="path/to/css/qiscus-sdk.css"> 
+  <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css>
+  <link rel="stylesheet" type="text/css" href="https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/web/v2.2.7/css/qiscus-sdk.2.2.7.css">
+  <!-- add this CDN for emojione if you intend to support emoji -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script>
 </head>
 <body>
   <div id="qiscus-widget"></div>
-  <script src="path/to/js/qiscus-sdk.js"></script>
+  <script src="https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/web/v2.2.7/js/qiscus-sdk.2.2.7.js"></script>
   <script>
-     qiscus.setUser('your@email.com', 'key', 'username');
-     qiscus.init({AppId: 'dragongo'});
+     qiscus.init({
+        AppId: 'DRAGONGO',
+        options: {
+          // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
+          // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
+          loginSuccessCallback(data) { qiscus.UI.chatTarget('guest2@qiscus.com') },
+          // function below will be called when there's new message
+          newMessagesCallback(data) { console.log("new message : ", data) }
+        }
+     });
+     qiscus.setUser('guest@qiscus.com', 'password', 'Qiscus Demo');
   </script>
 </body>
 </html>
 ```
+We're using two CDN here, one for emoji support and one for the icon, in this case we're using FontAwesome. The *emojione* is optional though.
 
-The javascript file introduce a new global variable called `qiscus`. We'll use that to initiate our chat widget.
+If you already registered for your own AppId, just replace `dragongo` with your own `AppId`. In the example above we automatically open a chat roow with `guest2@qiscus.com` assuming that user already registered on `dragongo` AppId, if the user is not registered then it will be failed. 
 
-``` javascript
-// Set Current User for the Chat Widget
-qiscus.setUser('email@email.com', 'key', 'username');
-// Init the widget
-qiscus.init({AppId: 'dragongo'});
+On the code snippet above, we can pass several callbacks to init options, in the example we're using `loginSuccessCallback` which will be called when login is success. It'll automatically open 1-1 chat room with `guest2@qiscus.com`. There's also `newMessagesCallback` where in the example it just log what the messages are.
+
+#Authentication
+##Init with APP ID
+We can initialize **qis**cus SDK by using this line of code:
 ```
-
-You can get `AppId` by requesting one from [sdk.qiscus.com](http://sdk.qiscus.com)
-
-## SDK Core Only Version
-Download the javascript file from the [release](https://github.com/qiscus/qiscus-sdk-web/releases) page, then include in your main `js` file.
-
-```javascript
-// in case you have support for ES6 Syntax else just use good 'ol require
-import qiscus from 'path/to/qiscus-sdk-core.version_number'
-
-qiscus.setUser('email@email.com','key','username');
-qiscus.init({AppId: 'dragongo'});
+qiscus.init({
+  AppId: 'DRAGONGO',
+  options: {
+    // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
+    // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
+    loginSuccessCallback(data) { qiscus.UI.chatTarget('guest2@qiscus.com') },
+    // function below will be called when there's new message
+    newMessagesCallback(data) { console.log("new message : ", data) }
+  }
+});
 ```
+Here are list of available callbacks:
 
-![qiscus SDK demo](sdk.png)
+- loginSuccessCallback
+- loginErrorCallback
+- newMessagesCallback
+- chatRoomCreatedCallback
+- groupRoomCreatedCallback
+- headerClickedCallback
 
-# API
+After we initialize the SDK, we need to set `login` data for current user by using this code:
+`qiscus.setUser('[email / unique identifer]', '[password]', '[Display Name]');`
 
-## Init Options
-There are various options you can pass to init method. They are:
+## Updating a User Profile and Avatar
+You can use the previous login code to update your data:
+`qiscus.setUser('email', 'key', 'username', 'avatar_url');`
 
-| option              	| required 	| description                                                                                                                                                                                      	|
-|---------------------	|----------	|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| AppId               	| true     	| You can get this ID by contacting qiscus, this will be use to differentiate company or user using qiscus sdk                                                                                     	|
-| newMessagesCallBack 	| false    	| You can pass callback that will be run whenever there's incoming new message. It only accept one parameter `function newMessagesCallBack ( data ) {    console.log('incoming data', data); } ` 	  |
-
-## Core API
-The SDK Core file gives us access to properties and methods that we can use to create our own custom chat app.
-### Properties
-#### `rooms`
-return arrays of `Room` and also have this properties:
-- `id` Room ID
-- `last_comment_id` Last Comment ID of message received in this room
-- `room_type` single or group type chat room
-- `avatar` The avatar of the room
-- `participants` users inside this room
-- `name` Room name if any, if it is single type, room name is usually taken from `participants` name.
-- `comments` list of comments inside this room
-
-#### `selected`
-return currently active chat room. You can list comments using this properties. e.g.: `qiscus.selected.comments`
-
-#### `userData`
-gives us info on currently logged in user.
-
-#### `isLogin`
-return boolean Whether the user has already logged in or not
-
-#### `options`
-return option object filled by user when logging in. User can fill anything in this options. See `init` method.
-
-#### `isInit`
-return boolean whether the application has been initted or not.
-
-### Methods
-
-#### `setUser ( email, key, username, avatar_url )`
 - `email` email used by currently logged in user
 - `key` secret key for current user
 - `username` username to be displayed to other participant
 - `avatar_url` user avatar, fallback to default avatar if not provided
 
-#### `init ( config )`
-the `config` param consist of:
-- `AppId (required)` AppId for connecting to qiscus server, go to [sdk.qiscus.com](//sdk.qiscus.com) to get one
-- `options (optional)` custom user generated data. e.g.: description, link to websites, etc. In options we also pass several optional callback in case we want to add custom functionality to the default behaviour when these events happens
-  - `loginSuccessCallback`
-  - `newMessagesCallback`
-  - `commentDeliveredCallback`
-  - `commentReadCallback`
+#Room Types
+##Creating and starting 1-to-1 chat
+To create a 1-to-1 chat use this code:
+`qiscus.chatTarget('[email / unique identifier]')`
 
-#### `chatTarget ( email(s) )
-create or load chat Room based on the email(s) provided and also set `qiscus.selected` property to this newly loaded or created room. If the there's more than one email provided, separate using `,`
-Whenever this API Call succeeded, the SDK will emit an event of `chat-room-created` carrying data of room
+##Creating a Group Room
+`qiscus.createGroupRoom (name, ...emails)`
+where `email(s)` is in the type of `array`
 
-#### `submitComment ( topicId, commentMessage, uniqueId )
-- `topicId (required)` each room internally have topic id, for current active room you can through `qiscus.selected.last_comment_topic_id` or you can provide other room topic id.
-- `commentMessage (required)` string message.
-- `uniqueId (optional)` Unique ID for current message to be Submitted (usefull for differentiating visuals of already loaded comment and this new comment)
+##Start Group Chat
+`qiscus.chatGroup('group_room_id')`
 
-## UI API
-If you're using the version with integrated view then you can communicate with the view layer using this API.
+#Resources
+##Video
+Here's a video showing how you can set up sample app for qiscus SDK
+[![Qiscus-SDK Howto](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/master/qiscus-sdk-sample.png)](https://www.youtube.com/watch?v=x-l-TVfPiCQ)
 
-| API              	| how to use 	| description                                                                                                                                                                                      	|
-|---------------------	|----------	|----------------------------------------------------------------------------	|
-| UI.chatTarget            | `qiscus.UI.chatTarget('target@email.com')` | Have a chat with target email |
-| UI.toggleChatWindow 	    | `qiscus.UI.toggleChatWindow()` | Toggle Chat Window Widget (maximize and minimize state) 	  |
+#UI Customization
+In case you don't want to have the sdk displaying on a widget view, we can put the Chat inside a container by setting `mode` to `wide` on `init` as a parameter like this example.
 
-## CSS Classes
+```
+  qiscus.init({
+      AppId: 'DRAGONGO',
+      mode: 'wide',
+      options: {
+        // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
+        // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
+        loginSuccessCallback(data) { qiscus.UI.chatTarget('guest2@qiscus.com') },
+        // function below will be called when there's new message
+        newMessagesCallback(data) { console.log("new message : ", data) }
+      }
+   });
+ ```
+ 
+ The code above will put qiscus chat inside a container. Here's a working example on [codepen](https://codepen.io/desertlion/pen/MmdRBd)
 
-The widget is built using vuejs and divided into several components. We also use fontawesome for the icon, so you can target fontawesome css class directly. You can change the appearance of the widget by using these css selectors below.
 
-Widget components have namespaces of `qcw...`
 
-| css properties | description |
-|----- | ---- |
-| .qcw-trigger-button | Button for toggling the chat window | 
-| .qcw-container | Widget Window Wrapper div |
-| .qcw-header | Widget Header containing active chat title |
-| ul#messages__comments | Messages list container |
-| .qcw-comment-form | Comment Form container |
-| .qcw-comment-form textarea | Comment Text Input Field |
-| .qcw-comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
-| .comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
+
+
+
+
+

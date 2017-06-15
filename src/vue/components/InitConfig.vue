@@ -38,6 +38,7 @@
         username: 'Qiscus Demo',
         description: 'This account is used for demo purpose only',
         target_email: 'fikri@qiscus.com'
+        // target_email: '6281212345678@kiwari-prod.com'
       }
     },
     methods: {
@@ -46,9 +47,11 @@
       },
       activateChat() {
         const self = this;
-        qiscus.setUser(this.email, this.key, this.username);
         qiscus.init({
           AppId: 'dragongo',
+          // AppId: 'kiwari-prod',
+          plugins: ['emoji'],
+          mode: 'widget',
           options: {
             email: this.email,
             username: this.username,
@@ -62,6 +65,7 @@
             }
           }
         });
+        qiscus.setUser(this.email, this.key, this.username);
         this.$store.dispatch('toggleInit');
         this.toggleChatWindow();
       }

@@ -2,8 +2,8 @@
   <div class="qcw-modal-overlay" :class="{'qcw-modal-overlay--on': imageModalOn }" @click="closeHandler">
     <div class="qcw-image-modal">
       <img :src="imageModalLink" :alt="imageModalLink">
-      <span class="outlink-trigger" @click="openInNewTab">Open in New Tab</span>
       <i class="fa fa-times" @click="closeHandler"></i>
+      <i class="fa fa-external-link" @click="openInNewTab"></i>
     </div>
   </div>
 </template>
@@ -34,42 +34,29 @@
   }
   .qcw-image-modal {
     max-width: 80%;
-    max-height: 80%;
+    max-height: 80vh;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
     box-shadow: 0 0 17px rgba(0,0,0,.5);
     img {
-      max-width: 80%;
-      max-height: 80vh;
-      margin: 10px auto;
+      max-width: 100%;
       display: block;
+    }
+    i.fa {
+      position: absolute;
+      top: -30px;
+      color: #FFF;
+      text-shadow: 0 0 15px rgba(0,0,0,.3);
+      font-size: 20px;
+      cursor: pointer;
     }
     i.fa.fa-times {
-      position: absolute;
-      top: -15px; right: -15px;
-      background: #FFF;
-      border-radius: 50%;
-      font-size: 20px;
-      width: 35px; height: 35px;
-      padding: 7px 0 0 10px;
-      cursor: pointer;
-      box-shadow: 0 0 17px rgba(0,0,0,.5);
+      right: 0px;
     }
-    .outlink-trigger {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      cursor: pointer;
-      background: #8bc;
-      text-align: center;
-      color: #444;
-      text-decoration: none;
-      border: 0;
-      text-shadow: 0 1px 0 rgba(255,255,255,.5);
-      position: absolute;
-      bottom: 0;
+    i.fa.fa-external-link {
+      right: 30px;
     }
   }
 </style>
