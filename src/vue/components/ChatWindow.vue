@@ -197,6 +197,8 @@ export default {
         let message = this.commentInput.trim()
         if(typeof emojione != "undefined") message = emojione.shortnameToUnicode(message)
         if(this.commentInput.trim().length < 1) return;
+        this.$store.dispatch('setNewCommentText', '');
+        this.commentInput = '';
         this.submitComment(this.selected.last_comment_topic_id, message);
         this.commentFormHandler();
         this.mqtt.publish(`r/${this.selected.id}/${this.selected.last_comment_topic_id}/fikri@qiscus.com/t`, 0);
@@ -296,7 +298,7 @@ export default {
       // reader.readAsDataURL(files[0]);
     },
     commentFormHandler() {
-      new Promise(this.$store.dispatch('setNewCommentText', this.commentInput)).then(this.commentInput = '');
+      this.$store.dispatch('setNewCommentText', this.commentInput);
       this.publishTyping();
     },
   }
