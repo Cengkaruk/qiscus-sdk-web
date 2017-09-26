@@ -271,6 +271,8 @@ QiscusSDK.core.searchMessages({query: 'hello'})
 
 # Sample Code
 
+If you are developing an application from scratch, a convenient way to begin is by building your app on top of our Sample UI project.
+
 ## Codepen
 The code above will put qiscus chat inside a container. Here's a working example on [Codepen](https://codepen.io/desertlion/pen/MmdRBd)
 
