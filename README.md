@@ -251,9 +251,11 @@ QiscusSDK.core.searchMessages(params)
 **params**
 - **query** {string} keyword to search
 - **room_id** {int} search in specific room
-- **last_comment_id** {int} search query only on comments higher than this id
 
-Search messages API above return Javascript Promise. So you can work on the result after the promise is resolved. Example:
+Search messages API above return Javascript Promise. So you can work on the result after the promise is resolved. 
+
+
+Example:
 
 ```
 QiscusSDK.core.searchMessages({query: 'hello'})
