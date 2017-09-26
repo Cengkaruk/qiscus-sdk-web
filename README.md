@@ -123,7 +123,21 @@ Parameters:
 - `limit` [int] limit room results, default to `100`
 - `show_participants` [bool] whether to attach participant lists or not, default to `true`
 
+
+example : 
+
+```
+QiscusSDK.core.loadRoomsList(params).then((rooms) => {
+  
+  // you can list and display the rooms here
+  console.log(rooms);
+  
+})
+
+```
+
 ## Create 1-to-1 chat
+
 To create a 1-to-1 chat use this code:
 
 `QiscusSDK.core.UI.chatTarget('[email / unique identifier]')`
@@ -136,11 +150,11 @@ where `email(s)` is in the type of `array`
 
 ## Get Room by id
 
-`QiscusSDK.core.UI.chatGroup('group_room_id')`
+`QiscusSDK.core.UI.chatGroup('room_id')`
 
 # Event Handler
 
-During `Qiscus.init` you can put callbacks that will being called when the event triggered.
+During `QiscusSDK.core.init` you can put callbacks that will being called when the event triggered.
 
 ```
 QiscusSDK.core.init({
@@ -171,8 +185,8 @@ QiscusSDK.core.init({
 });
 ```
 
-
 # UI Customization
+
 In case you don't want to have the sdk displaying on a widget view, we can put the Chat inside a container by setting `mode` to `wide` on `init` as a parameter like this example.
 
 ```
@@ -202,7 +216,7 @@ Widget components have namespaces of `qcw-...`
 | .comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
 
 # Search Messages
-**qisc**us SDK provide API to search for Messages.
+Qiscus SDK provide API to search for Messages.
 
 ```
 QiscusSDK.core.searchMessages(params)
@@ -213,7 +227,7 @@ QiscusSDK.core.searchMessages(params)
 - **room_id** {int} search in specific room
 - **last_comment_id** {int} search query only on comments higher than this id
 
-Search message API above return Javascript Promise. So you can work on the result after the promise is resolved. Example:
+Search messages API above return Javascript Promise. So you can work on the result after the promise is resolved. Example:
 
 ```
 QiscusSDK.core.searchMessages({query: 'hello'})
@@ -224,16 +238,6 @@ QiscusSDK.core.searchMessages({query: 'hello'})
     QiscusSDK.Core.UI.gotoComment(messages[0]) // => navigate to the 1st room of search messages
   })
 ```
-
-# Load Room List
-```
-QiscusSDK.core.loadRoomList(params)
-```
-
-**params**
-- page {int} page number, default 1
-- show_participants {bool}, default to true
-- limit {int}, default to 100
 
 # Sample Code
 
