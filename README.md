@@ -67,7 +67,12 @@ If you already registered for your own AppId, just replace `dragongo` with your 
 On the code snippet above, we can pass several callbacks to init options, in the example we're using `loginSuccessCallback` which will be called when login is success. It'll automatically open 1-1 chat room with `guest2@qiscus.com`. There's also `newMessagesCallback` where in the example it just log what the messages are. After that we render the widget into our page by calling `QiscusSDK.render()`
 
 # Authentication
+
+Every user has to authenticate with Qiscus before using any Qiscus functionality. Authenticating with Qiscus may happen separately from logging into your app (especially if your app has functionality beyond messaging). There is also a corresponding deauthenticate action for authenticated users.
+
 ## Init with APP ID
+
+Qiscus first has to be connected before we authenticate.
 
 We can initialize Qiscus SDK by using this line of code:
 ```
@@ -78,12 +83,16 @@ QiscusSDK.core.init({
 });
 ```
 
-After we initialize the SDK, we need to set `login` data for current user by using this code:
-`QiscusSDK.core.setUser('[email / unique identifer]', '[password]', '[Display Name]');`
+After we initialize the SDK, we need to set `user` data:
+
+`QiscusSDK.core.setUser('[email / unique identifer]', '[password]', '[Display Name]', '[Avatar URL]');`
 
 ## Set User or Updating a User Profile
 
-You can use the previous login code to update your data:
+
+Your app can begin the authentication flow at any point before you try to load conversations or send/receive messages. If your app has captured user credentials at some other point, the entire flow can occur in the background without any user intervention.
+
+You can use the previous `setUser` code to update your data:
 
 `QiscusSDK.core.setUser('email', 'key', 'username', 'avatar_url');`
 
@@ -94,14 +103,21 @@ You can use the previous login code to update your data:
 
 ```
      // login to qiscus
-     QiscusSDK.core.setUser('guest@qiscus.com', 'password', 'Qiscus Demo');
+     QiscusSDK.core.setUser('guest@qiscus.com', 'password', 'Qiscus Demo', 'http://myimage.com/image.jpg');
      // render the widget
      QiscusSDK.render();
 ```
 
 # Chat Rooms
+
+Chat Room is a room for user to chat. In this room, user need to be participants to be able start chatting and get messages of the specific room. 
+
 ## Get Rooms List
+
+User will be able to be participants of many rooms and our Chat SDK provide functionality to list user rooms.
+
 `QiscusSDK.core.loadRoomsList(params)`
+
 Parameters:
 - `page` [int] page to load
 - `limit` [int] limit room results, default to `100`
