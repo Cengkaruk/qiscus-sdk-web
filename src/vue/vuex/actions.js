@@ -47,7 +47,6 @@ export default {
       commit('SUBMIT_COMMENT', QiscusSDK.core.selected)
       const selected = QiscusSDK.core.selected.comments
       const latestCommentId = (selected.length > 0) ? selected[selected.length-1].id : 0
-      dispatch('setNewCommentText', '');
       setTimeout(function(){
         if(latestCommentId > 0){
           const elementToScroll = document.getElementById(latestCommentId)
@@ -58,7 +57,6 @@ export default {
       }, 0)
       return Promise.resolve(QiscusSDK.core.selected);
     }, (error) => {
-      dispatch('setNewCommentText', '');
       return Promise.reject(error)
     })
   },
