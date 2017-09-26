@@ -241,6 +241,8 @@ Widget components have namespaces of `qcw-...`
 | .qcw-comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
 | .comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
 
+and many more element, you can inspect from our default element to find specific css class you want to override
+
 # Search Messages
 Qiscus SDK provide API to search for Messages.
 
