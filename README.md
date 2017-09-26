@@ -4,22 +4,21 @@
 
 Qiscus SDK helps you build Web Chat Application easy and fast. It uses Qiscus server backend for the API.
 
-You can download files you need by navigating to the [release](https://github.com/qiscus/qiscus-sdk-web/releases) section.
-
 # Quick Start
+
 ## Create a new app 
 Register on [www.qiscus.com/dashboard](https://www.qiscus.com/dashboard) using your email and password and then create new application
 
 You should create one application per service, regardless of the platform. For example, an app released in Android, iOS or Web would require only one application to be created in the Dashboard.
 
-All users within the same Qiscus application are able to communicate with each other, across all platforms. This means users using iOS, Android, web clients, etc. can all chat with one another. However, users in different Qiscus `APP_ID` cannot talk to each other.
+All users within the same Qiscus application are able to communicate with each other, across all platforms. This means users using iOS, Android, Web clients, etc. can all chat with one another. However, users in different Qiscus `APP_ID` cannot talk to each other.
 
-Now you can use the `APP_ID` into your apps and get chat functionality by implementing qiscus into your app.
+Now you can use the `APP_ID` into your apps and get chat functionality by implementing Qiscus Chat SDK into your app.
 
 ## Integrating SDK
-Qiscus SDK let you add a chat widget directly into your existing HTML web pages. You just need to include the javascript and css files from the build directory. And you also need to append `<div id="qiscus-widget"></div>` tag before closing body tag. Here's sample HTML:
+Qiscus Chat SDK let you add a chat widget directly into your existing HTML web pages. You just need to include the javascript and css files from the build directory. And you also need to append `<div id="qiscus-widget"></div>` tag before closing body tag. Here's sample HTML:
 
-You can just copy and paste this into your html file and it'll work directly.
+You can just copy and paste this into your html file and it will work right away.
 
 ``` html
 <html lang="en">
@@ -58,13 +57,9 @@ You can just copy and paste this into your html file and it'll work directly.
 <p align="center"><br/><img src="https://res.cloudinary.com/qiscus/image/upload/JnLaMVdypw/ss3.png" width="70%" /><br/></p>
 
 
-
-We're using two CDN here, one for emoji support and one for the icon, in this case we're using FontAwesome. 
-The *emojione* is optional though.
-
 If you already registered for your own AppId, just replace `dragongo` with your own `AppId`. In the example above we automatically open a chat roow with `guest2@qiscus.com` assuming that user already registered on `dragongo` AppId, if the user is not registered then it will be failed. 
 
-On the code snippet above, we can pass several callbacks to init options, in the example we're using `loginSuccessCallback` which will be called when login is success. It'll automatically open 1-1 chat room with `guest2@qiscus.com`. There's also `newMessagesCallback` where in the example it just log what the messages are. After that we render the widget into our page by calling `QiscusSDK.render()`
+On the code snippet above, we can pass several callbacks to init options, in the example we're using `loginSuccessCallback` which will be called when login is success. It'll automatically open 1-1 chat room with `user target`. There is also `newMessagesCallback` where in the example it just log what the messages are. After that we render the widget into our page by calling `QiscusSDK.render()`
 
 # Authentication
 
@@ -88,7 +83,6 @@ After we initialize the SDK, we need to set `user` data:
 `QiscusSDK.core.setUser('[email / unique identifer]', '[password]', '[Display Name]', '[Avatar URL]');`
 
 ## Set User or Updating a User Profile
-
 
 Your app can begin the authentication flow at any point before you try to load conversations or send/receive messages. If your app has captured user credentials at some other point, the entire flow can occur in the background without any user intervention.
 
@@ -138,19 +132,51 @@ QiscusSDK.core.loadRoomsList(params).then((rooms) => {
 
 ## Create 1-to-1 chat
 
+A Group Room can be created on demand by a user through the client SDK. Pass in two user IDs to create a single chat between two users.
+
+You would typically want a 1-to-1 chat to be single chat. If you create using single chat, users will chat using the same room with the previous messages they had conversations. If you want to have different room everytime those 2 users talk, you will need to create group with participants of 2 people.
+
 To create a 1-to-1 chat use this code:
 
-`QiscusSDK.core.UI.chatTarget('[email / unique identifier]')`
+`QiscusSDK.core.UI.chatTarget('[userID]')`
 
 ## Creating a Group Room
 
-`QiscusSDK.core.createGroupRoom (name, ...emails)`
+By creating group room you can have multiple users to chat inside specific room.
 
-where `email(s)` is in the type of `array`
+`QiscusSDK.core.createGroupRoom (name, [userID1, userID2, userID3])`
+
+Those `userID1`, `userID2`, `userID3` will be automatically participants of the group room.
+
+example : 
+
+```
+QiscusSDK.core.createGroupRoom (name, [userID1, userID2, userID3]).then((room) => {
+
+  // you can get room property here
+  console.log(room.id)
+
+})
+
+```
 
 ## Get Room by id
 
+After you get the roomID of any specific room, you can entering those room by using chatGroup API below : 
+
 `QiscusSDK.core.UI.chatGroup('room_id')`
+
+Example :
+
+```
+
+QiscusSDK.core.UI.chatGroup('room_id').then((room) => {
+
+  // you can get room property here
+  console.log(room.id)
+
+})
+```
 
 # Event Handler
 
