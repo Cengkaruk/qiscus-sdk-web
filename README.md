@@ -41,8 +41,6 @@ You can just copy and paste this into your html file and it will work right away
           // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
           // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
           loginSuccessCallback(data) { QiscusSDK.core.UI.chatTarget('guest2@qiscus.com') },
-          // function below will be called when there's new message
-          newMessagesCallback(data) { console.log("new message : ", data) }
         }
      });
      // login to qiscus
@@ -198,9 +196,6 @@ QiscusSDK.core.init({
     // called when user successfully open group chat. example: log the time, put analytic code, etc.
     groupRoomCreatedCallback(data) { console.log("group room created : ", data) },
      
-    // called when user click the header of chat room. example: put code to open user or group detail.
-    headerClickedCallback() { console.log("header clicked") },
-
     // called when comment we sent is already delivered to target user. example: put analytic code.
     commentDeliveredCallback(data) { console.log("message delivered : ", data) },
     
@@ -211,37 +206,6 @@ QiscusSDK.core.init({
 });
 ```
 
-# UI Customization
-
-In case you don't want to have the sdk displaying on a widget view, we can put the Chat inside a container by setting `mode` to `wide` on `init` as a parameter like this example.
-
-```
-  QiscusSDK.core.init({
-      AppId: 'DRAGONGO',
-      mode: 'wide',
-      options: {
-      }
-   });
- ```
-
-You can also enable / disable avatar by passing `avatar` options.
- 
-The widget is built using vuejs and divided into several components. We also use fontawesome for the icon, so you can target fontawesome css class directly. You can change the appearance of the widget by using these css selectors below.
-
-Widget components have namespaces of `qcw-...`
-
-| css properties | description |
-|----- | ---- |
-| .qcw-trigger-button | Button for toggling the chat window | 
-| .qcw-container | Widget Window Wrapper div |
-| .qcw-header | Widget Header containing active chat title |
-| ul#messages__comments | Messages list container |
-| .qcw-comment-form | Comment Form container |
-| .qcw-comment-form textarea | Comment Text Input Field |
-| .qcw-comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
-| .comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
-
-and many more element, you can inspect from our default element to find specific css class you want to override
 
 # Search Messages
 Qiscus SDK provide API to search for Messages.
@@ -268,6 +232,42 @@ QiscusSDK.core.searchMessages({query: 'hello'})
     QiscusSDK.Core.UI.gotoComment(messages[0]) // => navigate to the 1st room of search messages
   })
 ```
+
+
+# UI Customization
+
+Even though Qiscus Chat SDK already have built-in view, you can do lots of customization to make the UI exactly match your requirements.
+
+You can choose to display the view as widget or as view component inside some container that you defined by setting `mode` to `wide` on `init` as a parameter like this example.
+
+```
+  QiscusSDK.core.init({
+      AppId: 'DRAGONGO',
+      mode: 'wide',
+      options: {
+        avatar: false
+      }
+   });
+ ```
+
+You can also enable / disable avatar for displaying user's avatar by passing `avatar` options.
+ 
+The view is built using Vuejs and divided into several components. We also use Fontawesome for the icons, so you can target fontawesome CSS classes directly. You can change the appearance of the widget by using these css selectors below.
+
+View components have namespaces of `qcw-...`
+
+| css properties | description |
+|----- | ---- |
+| .qcw-trigger-button | Button for toggling the chat window | 
+| .qcw-container | Widget Window Wrapper div |
+| .qcw-header | Widget Header containing active chat title |
+| ul#messages__comments | Messages list container |
+| .qcw-comment-form | Comment Form container |
+| .qcw-comment-form textarea | Comment Text Input Field |
+| .qcw-comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
+| .comment-form i | Comment Form icons (paperclip and paper-plane icon) | 
+
+and many more element, you can inspect from our default element to find specific css class you want to override
 
 # Sample Code
 
