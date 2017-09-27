@@ -47,6 +47,9 @@
     created() {
       this.loadImage();
     },
+    destroyed() {
+      URL.revokeObjectURL(this.imageSrc);
+    },
     methods: {
       loadImage() {
         const self    = this;
@@ -57,6 +60,11 @@
         self.ext      = self.filename.split('.').pop();
         self.isLoading = true;
         self.error   = '';
+
+        if(!self.isImage) {
+          self.isLoading = false;
+          return false;
+        }
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {

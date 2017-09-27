@@ -102,11 +102,7 @@
         <!-- CommentType: "BUTTON" -->
         <div v-if="comment.type == 'buttons'">
           <div class="qcw-comment__content" v-html="comment.payload.text || message"></div>
-          <div class="action_buttons" v-for="button in comment.payload.buttons">
-            <button @click="postbackSubmit(button)" v-if="button.type == 'postback'">
-              {{ button.label }}
-            </button>
-          </div>
+          <comment-buttons :buttons="comment.payload.buttons" :postbackHandler="postbackSubmit"></comment-buttons>
         </div>
       </div>
       <avatar :src="comment.avatar" v-if="options.avatar && isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar>
@@ -126,6 +122,7 @@ import CommentCarousel from './CommentCarousel';
 import StaticMap from './StaticMap';
 import FileAttachment from './FileAttachment';
 import CommentRender from './CommentRender';
+import CommentButtons from './CommentButtons';
 
 function searchAndReplace(str, find, replace) {
   return str.split(find).join(replace);
@@ -138,7 +135,7 @@ function escapeHTML(text) {
 };
 export default {
   props: ['comment','onupdate', 'onClickImage', 'commentBefore', 'commentAfter', 'replyHandler'],
-  components: { Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, StaticMap, FileAttachment, CommentRender },
+  components: { Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, StaticMap, FileAttachment, CommentRender, CommentButtons },
   updated(){
     // this.onupdate();
   },

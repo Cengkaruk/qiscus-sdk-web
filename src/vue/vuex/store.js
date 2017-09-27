@@ -6,7 +6,7 @@ import MqttCallback from '../../MqttCallback'
 import QiscusSDK from '../../sdk/index'
 
 function unsetPresence(state) {
-  if(qiscus.selected && qiscus.selected.room_type != 'group') {
+  if(qiscus.selected) {
     const targetEmail = qiscus.selected.participants
       .find(target => target.email != qiscus.email);
     if(targetEmail) state.mqtt.unsubscribe(`u/${targetEmail.email}/s`);
@@ -79,9 +79,6 @@ const mutations = {
     if(state.selected) {
       state.mqtt.unsubscribe(`r/${oldSelected.id}/${oldSelected.last_comment_topic_id}/+/t`);
       state.mqtt.unsubscribe(`r/${oldSelected.id}/${oldSelected.last_comment_topic_id}/+/t`);
-      state.qiscus.chatmateStatus = (state.qiscus.selected.room_type == 'group')
-        ? `${state.qiscus.selected.getParticipants().join(", ").substr(0,30)} ...`
-        : '';
     }
     state.windowStatus = true;
     state.selected = state.qiscus.selected;

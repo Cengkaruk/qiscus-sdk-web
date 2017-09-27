@@ -13,7 +13,7 @@ import HttpAdapter from './adapters/http'
 import UserAdapter from './adapters/user'
 import RoomAdapter from './adapters/room'
 import TopicAdapter from './adapters/topic'
-import {GroupChatBuilder} from './utils'
+import {GroupChatBuilder,scrollToBottom} from './utils'
 
 export class qiscusSDK extends EventEmitter {
 
@@ -58,6 +58,10 @@ export class qiscusSDK extends EventEmitter {
       chatTarget (email, options) {
         if (!self.isInit) return
         vStore.dispatch('chatTarget', {email, options})
+        .then(() => {
+          const latestCommentId = qiscus.selected.last_comment_id;
+          scrollToBottom(latestCommentId, 'core');
+        })
       },
       chatGroup (id) {
         if (!self.isInit) return
@@ -65,6 +69,10 @@ export class qiscusSDK extends EventEmitter {
         self.getRoomById(id)
         .then((response) => {
           vStore.dispatch('chatGroup', {id, oldSelected})
+          .then(() => {
+            const latestCommentId = qiscus.selected.last_comment_id;
+            scrollToBottom(latestCommentId);
+          })
         })
       },
       getOrCreateRoomByUniqueId (unique_id, name, avatar_url) {

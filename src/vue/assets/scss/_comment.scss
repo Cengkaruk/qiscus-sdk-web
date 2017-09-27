@@ -296,7 +296,7 @@ code {
   text-align: left;
   color: #757575;
   max-height: 150px;
-  overflow-y: scroll;
+  overflow: hidden;
   scroll-behavior: smooth;
   margin-bottom: 10px;
   .reply-preview & {
