@@ -34,7 +34,9 @@
         </div>
         <i @click.stop="toggleChatWindow"><icon name="ic-chevron-down" class="icon--light"></icon></i>
       </div>
-      <div class="qcw-goto-bottom" @click="scrollToBottom" v-if="!scrollable && !showActions && replied_comment == null"><i class="fa fa-angle-double-down"></i></div>
+      <div class="qcw-goto-bottom" @click="scrollToBottom" v-if="!scrollable && !showActions && replied_comment == null">
+        <i><icon name="ic-chevron-down" fill="#CCC"></icon></i>
+      </div>
       <ul id="messages__comments" @scroll="handleScroll">
         <load-more v-if="haveMoreComments" :isLoadingComments="isLoadingComments" :clickHandler="loadMoreComments"></load-more>
         <li v-if="selected.comments.length > 0" v-for="(comment, index) in selected.comments" :key="comment.id">

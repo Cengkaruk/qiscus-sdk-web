@@ -11,8 +11,8 @@
       </transition-group>
     </div>
     <ul class="qcw-carousel__nav">
-      <li @click="pref"><i class="fa fa-chevron-left"></i></li>
-      <li @click="next"><i class="fa fa-chevron-right"></i></li>
+      <li @click="pref"><i><icon name="ic-chevron-left"></i></i></li>
+      <li @click="next"><i><icon name="ic-chevron-right"></i></i></li>
     </ul>
     <!-- bullets -->
     <ul class="carousel__bullets">
@@ -27,11 +27,12 @@
 
 <script>
 import CommentCard from './CommentCard';
+import Icon from './Icon';
 
 export default {
   name: 'QiscusCommentCarousel',
   props: ['cards'],
-  components: { CommentCard },
+  components: { CommentCard, Icon },
   data() {
     return {
       currentNumber: 0,

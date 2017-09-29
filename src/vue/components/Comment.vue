@@ -27,11 +27,8 @@
         <i @click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}"><icon name="ic-reply"></icon></i>
         <!-- CommentType: "contact_person" -->
         <div v-if="comment.type == 'contact_person'" class="qcw-comment--contact">
-          <i class="fa fa-user fa-fw"></i> <strong>{{ comment.payload.name }}</strong><br>
-          <i class="fa fa-fw" :class="{
-            'fa-phone': comment.payload.type == 'phone',
-            'fa-envelope': comment.payload.type == 'email'
-          }"></i> <span>{{ comment.payload.value }}</span>
+          <i><icon name="ic-user"></icon></i> <strong>{{ comment.payload.name }}</strong><br>
+          <i><icon :name="(comment.payload.type=='phone') ? 'ic-phone' : 'ic-envelope'"></icon></i> <span>{{ comment.payload.value }}</span>
         </div>
         <!-- CommentType: "location" -->
         <static-map :lat="comment.payload.latitude"
@@ -73,15 +70,14 @@
             {{comment.time}}
           </span>
           <div v-if="isMe">
-            <i class="qcw-comment__state fa fa-clock-o" v-if="comment.isPending"></i>
-            <!-- <i class="qcw-comment__state fa fa-check" v-if="comment.isSent && !comment.isDelivered"></i> -->
-            <i class="qcw-comment__state fa fa-times-circle" v-if="comment.isFailed" @click="resend(comment)"></i>
-            <i class="qcw-comment__state fa fa-refresh" v-if="comment.isFailed" @click="resend(comment)"></i>
+            <i class="qcw-comment__state"><icon name="ic-clock" class="icon--clock" v-if="comment.isPending"></icon></i>
+            <i class="qcw-comment__state"><icon name="ic-check" v-if="comment.isSent && !comment.isDelivered"></icon></i>
+            <i @click="resend(comment)" class="qcw-comment__state"><icon name="ic-resend" class="icon--resend" v-if="comment.isFailed"></icon></i>
             <div class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead">
-              <i class="fa fa-check"></i><i class="fa fa-check"></i>
+              <icon name="ic-doublecheck"></icon>
             </div>
             <div class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead">
-              <i class="fa fa-check"></i><i class="fa fa-check"></i>
+              <icon name="ic-doublecheck"></icon>
             </div>
           </div> <!-- end of comment icons -->
         </div>

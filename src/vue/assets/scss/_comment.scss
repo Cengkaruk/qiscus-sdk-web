@@ -167,12 +167,15 @@
       display: inline-block;
       color: #2c3e50;
   }
-  i.fa{
+  i{
     position: relative;
     font-size: 3em;
     color: #2c3e50;
     float: left;
     margin-right: 10px;
+    .qc-icon {
+      fill: #555;
+    }
   }
   .file-name{
     word-break: break-word;
@@ -183,38 +186,25 @@
   }
 }
 .qcw-comment__state {
-  font-size: 9px;
+  font-size: 11px;
   position: absolute;
-  top: 7px; left: -7px;
+  top: 7px; left: -15px;
   color: #ccc;
-  text-indent: -5px;
   transition: opacity .32s ease;
   opacity: .3;
-  &.fa.fa-refresh {
-    display: none;
+  .qc-icon:last-child {
+    margin-right: -5px;
   }
   .qcw-comment__message:hover & {
     opacity: 1;
   }
-  .qcw-comment__message:hover &.fa.fa-times-circle {
-    display: none;
+  &--read .qc-icon {
+    fill: #3498db;
   }
-  .qcw-comment__message:hover &.fa.fa-refresh {
-    display: unset;
-    color: #3b97ac;
-    font-size: 11px;
+  .icon--resend {
+    fill: red;
+    cursor: pointer;
   }
-  &.fa.fa-times-circle {
-    opacity: 1;
-    color: #e74c3c;
-    font-size: 11px;
-  }
-  &--read {
-    color: #3498db;
-  }
-}
-.fa.fa-times-circle:hover {
-  display: none;
 }
 .qcw-comment-date {
   text-align: center;
@@ -343,7 +333,7 @@ code {
   top: 8px;
   display: none;
   cursor: pointer;
-  .icon {
+  .qc-icon {
     fill: #999;
   }
   &.reply-btn--me {
@@ -409,6 +399,13 @@ strong.comment__card--title {
 }
 .slide-y-leave-active {
   position: absolute;
+}
+.qcw-carousel__nav i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12px;
+  height: 20px;
 }
 .qcw-carousel__item .comment__card--container {
   padding: 10px;
