@@ -29,15 +29,13 @@
   font-weight: bold;
   position: relative;
 }
-.qcw-header i.fa {
+.qcw-header i {
   position: absolute;
   cursor: pointer;
-  &.fa-chevron-down {
-    right: 10px; top: 15px;
-  }
-  &.fa-chevron-left {
-    left: 10px; top: 15px;
-  }
+  right: 10px; top: 15px;
+}
+.qcw-app--wide-mode .qcw-header i {
+  display: none;
 }
 .qcw-container .messages {
   flex: 3;
@@ -128,17 +126,20 @@ ul#messages__comments::-webkit-scrollbar-thumb {
 .qcw-form-actions {
   position: absolute;
   top: -9px; right: 5px;
+  display: flex;
   li {
-    display: inline-block;
-    position: relative;
     width: 35px; height: 35px;
     border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     &:hover {
       background: $primary-color;
     }
-    &:hover i {
-      color: #FFF;
+    &:hover .icon {
+      fill: #FFF;
     }
   }
   i {
@@ -166,6 +167,9 @@ ul#messages__comments::-webkit-scrollbar-thumb {
     color: #505050;
     margin-bottom: 10px;
     transition: all .32s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       background: $primary-color;
       color: #FFF;

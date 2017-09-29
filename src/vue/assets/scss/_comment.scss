@@ -332,21 +332,20 @@ code {
   position: absolute;
   top: 9px; right: 5px;
   cursor: pointer;
-  font-size: 24px;
   color: #aaa;
 }
-.fa.reply-btn {
+.reply-btn {
   position: absolute;
   right: -40px;
-  background: #b1c7c5;
-  width: 20px; height: 20px;
   border-radius: 50%;
   color: #FFF;
-  line-height: 20px;
   padding-left: 3px;
-  top: 7px;
+  top: 8px;
   display: none;
   cursor: pointer;
+  .icon {
+    fill: #999;
+  }
   &.reply-btn--me {
     right: auto;
     left: -40px;

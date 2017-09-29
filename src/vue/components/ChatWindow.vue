@@ -4,20 +4,21 @@
       'qcw-container--open': windowStatus,
       'qcw-container--not-init': !init
     }">
+    <svg-icon></svg-icon>
     <div class="comment-loading-container" v-if="isLoading">
       <loader width="150px" height="150px"></loader>
     </div>
     <div v-if="!selected && !init && !dev_mode">
       <div class="qcw-header">
         Widget not yet initialized
-        <i class="fa fa-chevron-down" @click="toggleChatWindow"></i>
+        <i @click.stop="toggleChatWindow"><icon name="ic-chevron-down" class="icon--light"></icon></i>
       </div>
       <h3 style="text-align: center">Please login first</h3>
     </div>
     <div v-if="init && !selected">
       <div class="qcw-header">
         Welcome, <strong>{{ userdata.username }}</strong>
-        <i class="fa fa-chevron-down" @click="toggleChatWindow"></i>
+        <i @click.stop="toggleChatWindow"><icon name="ic-chevron-down" class="icon--light"></icon></i>
       </div>
       <h3 style="padding: 20px; text-align: center;">No Active Chat, please select participant to chat to</h3>
     </div>
@@ -31,7 +32,7 @@
           <div v-if="!mqttData.typing && chatmateStatus && selected.room_type != 'group'" class="isTypingText">{{ chatmateStatus }}</div>
           <div v-if="selected.custom_subtitle && !mqttData.typing" class="isTypingText">{{ selected.custom_subtitle }}</div>
         </div>
-        <i class="fa fa-chevron-down" @click="toggleChatWindow"></i>
+        <i @click.stop="toggleChatWindow"><icon name="ic-chevron-down" class="icon--light"></icon></i>
       </div>
       <div class="qcw-goto-bottom" @click="scrollToBottom" v-if="!scrollable && !showActions && replied_comment == null"><i class="fa fa-angle-double-down"></i></div>
       <ul id="messages__comments" @scroll="handleScroll">
@@ -54,12 +55,12 @@
       <ul class="qcw-attachment__actions" :class="{'qcw-attachment__actions--active': showActions}">
         <li>
           <span class="qcw-attachment__label">Image</span>
-          <i class="fa fa-image"></i>
+          <icon name="ic-image"></icon>
           <input class="uploader__input" name="file" type="file" accept="image/*" @change="uploadFile" v-if="commentInput.length <= 0">
         </li>
         <li>
           <span class="qcw-attachment__label">File</span>
-          <i class="fa fa-file-text"></i>
+          <icon name="ic-docs-upload"></icon>
           <input class="uploader__input" name="file" type="file" @change="uploadFile" v-if="commentInput.length <= 0">
         </li>
       </ul>
@@ -81,10 +82,10 @@
         </textarea>
         <ul class="qcw-form-actions">
           <li @click="toggleActions">
-            <i class="fa fa-paperclip" v-if="!showActions"></i>
-            <i class="fa fa-times" v-if="showActions"></i>
+            <icon name="ic-attachment" v-if="!showActions"></icon>
+            <icon name="ic-close" v-if="showActions"></icon>
           </li>
-          <li><i class="fa fa-paper-plane" @click="trySubmitComment($event)"></i></li>
+          <li><icon name="ic-send" @click="trySubmitComment($event)"></icon></li>
         </ul>
       </div>
     </div>
@@ -99,19 +100,22 @@
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
+  border-radius: 50%;
 }
 </style>
 
 <script>
 import Loader from './Loader.vue'
 import Comment from './Comment.vue'
+import SvgIcon from './SVGIcon.vue'
+import Icon from './Icon.vue'
 // import {chatTarget,toggleChatWindow, backToHome, submitComment, loadComments} from '../vuex/actions'
 import ChatParticipants from './ChatParticipants.vue'
 import LoadMore from './LoadMore.vue'
 import ReplyPreview from './ReplyPreview.vue'
 
 export default {
-  components: {ChatParticipants, Comment, LoadMore, Loader, ReplyPreview},
+  components: {ChatParticipants, Comment, LoadMore, Loader, ReplyPreview, SvgIcon, Icon},
   computed: {
     windowStatus: function(){ return this.$store.state.windowStatus },
     selected: function() { return this.$store.state.qiscus.selected || false},

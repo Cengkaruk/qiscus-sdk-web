@@ -24,7 +24,7 @@
           <span class="qcw-comment__username">{{comment.username_as}}</span>
           <span class="qcw-comment__time" v-if="isParent">{{comment.time}}</span>
         </div>
-        <i class="fa fa-reply reply-btn" @click="replyHandler(comment)" :class="{'reply-btn--me': isMe}"></i>
+        <i @click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}"><icon name="ic-reply"></icon></i>
         <!-- CommentType: "contact_person" -->
         <div v-if="comment.type == 'contact_person'" class="qcw-comment--contact">
           <i class="fa fa-user fa-fw"></i> <strong>{{ comment.payload.name }}</strong><br>
@@ -74,7 +74,7 @@
           </span>
           <div v-if="isMe">
             <i class="qcw-comment__state fa fa-clock-o" v-if="comment.isPending"></i>
-            <i class="qcw-comment__state fa fa-check" v-if="comment.isSent && !comment.isDelivered"></i>
+            <!-- <i class="qcw-comment__state fa fa-check" v-if="comment.isSent && !comment.isDelivered"></i> -->
             <i class="qcw-comment__state fa fa-times-circle" v-if="comment.isFailed" @click="resend(comment)"></i>
             <i class="qcw-comment__state fa fa-refresh" v-if="comment.isFailed" @click="resend(comment)"></i>
             <div class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead">
@@ -94,7 +94,7 @@
         </div>
         <!-- CommentType: "ACCOUNT_LINKING" -->
         <div v-if="comment.type == 'account_linking'">
-          <div class="qcw-comment__content" v-html="message"></div>
+          <comment-render :text="message"></comment-render>
           <div class="action_buttons">
             <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
           </div>
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import EmbedJS from 'embed-js';
+// import EmbedJS from 'embed-js';
 // import marked from 'marked';
 import ImageLoader from './ImageLoader.vue';
 // import highlight from 'highlight.js';
@@ -123,6 +123,7 @@ import StaticMap from './StaticMap';
 import FileAttachment from './FileAttachment';
 import CommentRender from './CommentRender';
 import CommentButtons from './CommentButtons';
+import Icon from './Icon.vue'
 
 function searchAndReplace(str, find, replace) {
   return str.split(find).join(replace);
@@ -135,7 +136,10 @@ function escapeHTML(text) {
 };
 export default {
   props: ['comment','onupdate', 'onClickImage', 'commentBefore', 'commentAfter', 'replyHandler'],
-  components: { Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, StaticMap, FileAttachment, CommentRender, CommentButtons },
+  components: { 
+    Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, 
+    StaticMap, FileAttachment, CommentRender, CommentButtons, Icon 
+  },
   updated(){
     // this.onupdate();
   },
@@ -150,27 +154,27 @@ export default {
     renderedComment() { return (typeof emojione != "undefined") ? emojione.toShort(this.comment.message) : this.comment.message }
   },
   created() {
-    const self = this;
-    if(!self.comment.isAttachment(self.comment.message)) {
-      self.message = self.comment.message
-      self.x.text((data) => {
-        self.message = (typeof emojione != 'undefined') ? emojione.toImage(data) : data;
-      });
-    }
-    if(self.comment.type == 'reply') {
-      self.y.text((data) => {
-        self.replied_comment_message = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
-      })
-      new EmbedJS({
-        input: self.comment.payload.text,
-        excludeEmbed: ['github','youtube'],
-        emoji: false,
-        inlineText: false,
-        linkOptions: { target: '_blank' }
-      }).text( data => {
-        self.replied_comment_text = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
-      })
-    }
+    // const self = this;
+    // if(!self.comment.isAttachment(self.comment.message)) {
+    //   self.message = self.comment.message
+    //   self.x.text((data) => {
+    //     self.message = (typeof emojione != 'undefined') ? emojione.toImage(data) : data;
+    //   });
+    // }
+    // if(self.comment.type == 'reply') {
+    //   self.y.text((data) => {
+    //     self.replied_comment_message = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
+    //   })
+    //   new EmbedJS({
+    //     input: self.comment.payload.text,
+    //     excludeEmbed: ['github','youtube'],
+    //     emoji: false,
+    //     inlineText: false,
+    //     linkOptions: { target: '_blank' }
+    //   }).text( data => {
+    //     self.replied_comment_text = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
+    //   })
+    // }
   },
   methods: {
     gotoComment() {
@@ -211,24 +215,24 @@ export default {
       replied_comment_sender: (this.comment.type=='reply') ? this.comment.payload.replied_comment_sender_username : '',
       dateToday: new Date(this.comment.date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
       me: qiscus.email,
-      x: new EmbedJS({
-        input: this.comment.message,
-        excludeEmbed: ['github','youtube'],
-        locationEmbed: false,
-        emoji: false,
-        inlineText: false,
-        linkOptions: {
-          target: '_blank'
-        },
-      }),
-      y: new EmbedJS({
-        input: (this.comment.type == 'reply') ? this.comment.payload.replied_comment_message : '.',
-        excludeEmbed: ['github','youtube'],
-        locationEmbed: false,
-        emoji: false,
-        inlineText: false,
-        linkOptions: { target: '_blank' }
-      }),
+      // x: new EmbedJS({
+      //   input: this.comment.message,
+      //   excludeEmbed: ['github','youtube'],
+      //   locationEmbed: false,
+      //   emoji: false,
+      //   inlineText: false,
+      //   linkOptions: {
+      //     target: '_blank'
+      //   },
+      // }),
+      // y: new EmbedJS({
+      //   input: (this.comment.type == 'reply') ? this.comment.payload.replied_comment_message : '.',
+      //   excludeEmbed: ['github','youtube'],
+      //   locationEmbed: false,
+      //   emoji: false,
+      //   inlineText: false,
+      //   linkOptions: { target: '_blank' }
+      // }),
     }
   }
 }
