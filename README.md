@@ -207,33 +207,6 @@ QiscusSDK.core.init({
 ```
 
 
-# Search Messages
-Qiscus SDK provide API to search for Messages.
-
-```
-QiscusSDK.core.searchMessages(params)
-```
-
-**params**
-- **query** {string} keyword to search
-- **room_id** {int} search in specific room
-
-Search messages API above return Javascript Promise. So you can work on the result after the promise is resolved. 
-
-
-Example:
-
-```
-QiscusSDK.core.searchMessages({query: 'hello'})
-  .then(messages => {
-    // messages return Array of Qiscus SDK Comments
-    // You can use `gotoComment` API to navigate to specific comment in a room if only the comment is already loaded
-    // If not, it will only navigate to the Room where the comment is resided
-    QiscusSDK.Core.UI.gotoComment(messages[0]) // => navigate to the 1st room of search messages
-  })
-```
-
-
 # UI Customization
 
 Even though Qiscus Chat SDK already have built-in view, you can do lots of customization to make the UI exactly match your requirements.
