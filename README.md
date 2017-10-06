@@ -144,18 +144,27 @@ By creating group room you can have multiple users to chat inside specific room.
 
 `QiscusSDK.core.createGroupRoom (name, [userID1, userID2, userID3])`
 
-Those `userID1`, `userID2`, `userID3` will be automatically participants of the group room.
+Those `userID1`, `userID2`, `userID3` will be added automatically as participants of the group room.
 
 example : 
 
 ```
-QiscusSDK.core.createGroupRoom (name, [userID1, userID2, userID3]).then((room) => {
+QiscusSDK.core.createGroupRoom (name, [userID1, userID2, userID3])
+```
 
-  // you can get room property here
-  console.log(room.id)
+The method `createGroupRoom` when successfully doing its job (create Group Room) will emit an event called `group-room-created` which you can use by passing `groupRoomCreatedCallback` as options during `Qiscus.core.init`. See example below:
 
-})
-
+```
+QiscusSDK.core.init({
+  AppId: 'DRAGONGO',
+  options: {
+    groupRoomCreatedCallback(room) {
+      console.info('Room Data', room);
+      // automatically open that chat room after it is created
+      QiscusSDK.core.UI.chatGroup(room.id);
+    }
+  }
+});
 ```
 
 ## Get Room by id
