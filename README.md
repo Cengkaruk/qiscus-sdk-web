@@ -177,13 +177,20 @@ Example :
 
 ```
 
-QiscusSDK.core.UI.chatGroup('room_id').then((room) => {
-
-  // you can get room property here
-  console.log(room.id)
-
-})
+QiscusSDK.core.UI.chatGroup('room_id')
 ```
+
+This will not return anything since this function will affect UI.
+
+You can get the Room object by calling 
+
+```
+var current_room = qiscus.selected
+
+participants = current_room.participants // to get all participants in this room
+```
+
+
 
 # Event Handler
 
