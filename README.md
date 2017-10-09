@@ -170,13 +170,13 @@ QiscusSDK.core.init({
 
 After you get the roomID of any specific room, you can entering those room by using chatGroup API below : 
 
-`QiscusSDK.core.UI.chatGroup('room_id')`
+`QiscusSDK.core.UI.chatGroup(room_id)`
 
 Example :
 
 ```
 
-QiscusSDK.core.UI.chatGroup('room_id')
+QiscusSDK.core.UI.chatGroup(29183)
 ```
 
 This will not return anything since this function will affect UI.
