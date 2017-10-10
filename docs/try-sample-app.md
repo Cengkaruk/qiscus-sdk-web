@@ -13,15 +13,14 @@ In this section you will learn about:
 - [Requirement](##requirement)
 - [Cloning Sample App](##cloning-sample-app)
 - [Try Sample App Online](##try-sample-app-online)
-- [Experimenting on Sample App](##experimenting-on-sample-app)
 
 ## Requirement
 
-To run all of the sample code, you need to Install [Git](git-link)
-and [NodeJS](nodejs-link). Git will be used to clone the repository so you can
-play around with the code locally and Node JS to install and resolve
-dependencies used to run sample App. You can refer to their respected page to
-know how to install both.
+To run all of the sample code, you need to install [Git](git-scm.com) and
+[NodeJS](nodejs.com). Git will be used to clone the repository so you can
+play around with the code locally and NodeJS to install and resolve
+dependencies used to run Sample App. You can refer to their respected page
+to know how to install both.
 - [git-scm.com](http://git-scm.com)
 - [nodejs.com](http://nodejs.com)
 
@@ -33,9 +32,9 @@ if you already install Git you can just clone directly from your command line
 ```
 $ git clone https://www.github.com/qiscus/web-sdk-sample-js.git
 ```
-After cloning finished, You need to have a simple server to serve example file
-so you can play with it. In this example we use `http-server` from nodejs
-package manager
+After cloning finished, you will need to create simple server to run the sample
+app. In the example below, we use http-server from nodejs package manager as
+http server to serve Sample App locally.
 ```
 # Install http-server from npm globally
 $ npm install http-server -g
@@ -54,15 +53,9 @@ Well, we knew some people do not have time to setup everything on their laptop
 or desktop. That's why we also provide online sample. You can check it from the
 list below.
 - [Default SDK Usage](link-sample-default-sdk-usage)
-- [Chat with Chat list](link-sample-chat-with-chat-list)
-- [Event Example](link-sample-event-example)
 - [UI Customization](link-sample-ui-customization)
 
-## Experimenting on Sample App
-
-If you inspect thoroughly, we split the sample files into different folders.
-To customize the example go through config folder and set your own configuration
+> If you inspect thoroughly, we split the sample files into different folders.
+> To customize the example go through config folder and set your own configuration
 there.
 
-CSS files are located in assets folders, go to _variables.less to customize
-default values for colors, fonts, etc.
