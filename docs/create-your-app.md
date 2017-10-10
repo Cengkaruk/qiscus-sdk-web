@@ -58,7 +58,7 @@ else.
 To configure Qiscus Chat SDK, you need to include `qiscus-sdk.js` to your HTML
 file that you created before (see #defining container section). You can get
 `qiscus-sdk.js` files from Sample App or You can directly download it
-[here](link-download-qiscus-sdk-js).
+[here](https://github.com/qiscus/qiscus-sdk-web/releases/latest).
 
 ### Initiating Qiscus SDK
 
@@ -116,7 +116,7 @@ Here is some note to understand about parameters inside setUser function:
 
 You can learn from the figure below to understand what really happened when
 calling setUser() function:
-![setUser diagram](images/auth-diagram.png "setUser Authentication flow")
+![setUser diagram](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/auth-diagram.png "setUser Authentication flow")
 
 ## Rendering Chat UI
 
@@ -126,12 +126,13 @@ QiscusSDK.render()
 ```
 
 That's all. If everything is done proplerly you will get something like this
-![sdk screen](images/sdk-screen.png "SDK Screen")
+![sdk screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/sdk-screen.png "SDK Screen")
 
 The widget chat above appear and it seems inactive. This happened because
 you have not set any target to chat with. But don't worry, the step-by-step
 guidance to activate Chat Rooms will be explained in the next chapter
-(see [Chat Rooms section](link-chat-room-section)).
+(see [Chat Rooms section](https://sdk.qiscus.com/documentation/web/chat-rooms)).
 
 Here is the complete code.
-> Complete code example (this is a placeholder)
+<p data-height="265" data-theme-id="0" data-slug-hash="NayEMe" data-default-tab="html,result" data-user="notoriousb1t" data-embed-version="2" data-pen-title="Pumpkin Toss" class="codepen">See the Pen <a href="https://codepen.io/notoriousb1t/pen/NayEMe/">Pumpkin Toss</a> by Christopher Wallis (<a href="https://codepen.io/notoriousb1t">@notoriousb1t</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>

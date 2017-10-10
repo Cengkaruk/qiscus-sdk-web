@@ -3,16 +3,17 @@
 To make it easier for you to understand Qiscus Chat SDK, we provide
 Sample Apps for Web SDK. Inside this sample you can see our Web SDK power,
 try default feature, or UI Customization example. There are two option to try.
-First, clone from our [repository](sample-app-repo-link) and play with
-sample at your local Computer to have more access to our code so you can play
-with it locally but you will still need internet connection to function
-properly. You can also play with the example at [Codepen](sample-app-codepen-link)
+First, clone from our [repository](https://github.com/qiscus/qiscus-sdk-web-sample)
+and play with sample at your local Computer to have more access to our code so
+you can play with it locally but you will still need internet connection to
+function properly. You can also play with the example at
+[Codepen](sample-app-codepen-link)
 for another live example.
 
 In this section you will learn about:
-- [Requirement](##requirement)
-- [Cloning Sample App](##cloning-sample-app)
-- [Try Sample App Online](##try-sample-app-online)
+- [Requirement](#requirement)
+- [Cloning Sample App](#cloning-sample-app)
+- [Try Sample App Online](#try-sample-app-online)
 
 ## Requirement
 
@@ -27,15 +28,15 @@ to know how to install both.
 ## Cloning Sample App
 
 You can download sample app directly from github at
-[qiscus/web-sdk-sample-js](http://github.com/qiscus/web-sdk-sample-js) or
+[qiscus/qiscus-sdk-web-sample](http://github.com/qiscus/qiscus-sdk-web-sample) or
 if you already install Git you can just clone directly from your command line
-```
-$ git clone https://www.github.com/qiscus/web-sdk-sample-js.git
+```bash
+$ git clone https://www.github.com/qiscus/qiscus-sdk-web-sample
 ```
 After cloning finished, you will need to create simple server to run the sample
 app. In the example below, we use http-server from nodejs package manager as
 http server to serve Sample App locally.
-```
+```bash
 # Install http-server from npm globally
 $ npm install http-server -g
 

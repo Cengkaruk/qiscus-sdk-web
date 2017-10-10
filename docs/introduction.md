@@ -6,7 +6,7 @@ of real-time comunication infrastructure. You can customize the default
 feature so you can show off your branding indentity, favourite color, or
 customize event. It's very easy.
 
-![Qiscus Chat SDK](images/intro01.png "Qiscus Chat SDK")
+![Qiscus Chat SDK](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/intro01.png "Qiscus Chat SDK")
 
 When you try our Chat SDK, you will find the default built-in features such as:
 - Private & Group Chat
@@ -36,10 +36,10 @@ Web Browser
 Out IOS SDK supports IOS 9 to the latest IOS version. It also supports
 Swift 3.0 and Objective C.
 
-To Start using IOS SDK you can [try out sample app](sample-app-ios-link) or
+To Start using IOS SDK you can [try out sample app](https://github.com/qiscus/qiscus-sdk-ios/tree/master/Example) or
 read Qiscus Chat SDK documentation using
-[Swift](platform-ios-swift-documentation) or
-[Objective C](platform-ios-objc-documentation) to start crreating IOS chat app.
+[Swift](https://sdk.qiscus.com/documentation/ios/intro) or
+[Objective C](https://sdk.qiscus.com/documentation/ios/intro) to start crreating IOS chat app.
 
 ### Android
 
@@ -47,8 +47,8 @@ Our Android SDK is writter in Java and it supports Android Jelly Bean (API 16)
 to the latest version.
 
 To start your journey to understand our Android Chat SDK, You can
-[try our sample app](sample-app-android-link) or you can read
-[Qiscus Chat SDK documentation for Android](platform-android-documentation)
+[try our sample app](https://github.com/qiscus/qiscus-sdk-android-sample) or you can read
+[Qiscus Chat SDK documentation for Android](https://sdk.qiscus.com/documentation/android/intro)
 for more details.
 
 ### Web
