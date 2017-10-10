@@ -61,5 +61,5 @@ customer service administrators or agent who always talk with customers online.
 Our Web Chat SDK, for now, supports Chrome 40+, Firefox 48+, and Microsoft Edge.
 
 To start developing your Web App using our Qiscus Chat SDK, You can
-[try our sample app](sample-app-web-link) or you can read
-[Our Web Documentation](platform-web-documentation) for more details
+[try our sample app](https://github.com/qiscus/qiscus-sdk-web-sample) or you can read
+[Our Web Documentation](https://sdk.qiscus.com/documentation/web/intro) for more details
