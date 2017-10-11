@@ -23,7 +23,7 @@ play around with the code locally and NodeJS to install and resolve
 dependencies used to run Sample App. You can refer to their respected page
 to know how to install both.
 - [git-scm.com](http://git-scm.com)
-- [nodejs.com](http://nodejs.com)
+- [nodejs.org](http://nodejs.org)
 
 ## Cloning Sample App
 

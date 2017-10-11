@@ -1,20 +1,20 @@
 # Create Your App
 
 In this section you will learn about:
-- [Get your APP ID](link-get-your-app-id)
-- [Step-by-setp building your app](link-step-by-step-building-your-app)
+- [Get your APP ID](#get-your-app-id)
+- [Step-by-setp building your app](#step-by-step-building-your-app)
 
 ## Get Your APP ID
 
 To start building app using Qiscus Chat SDK you need a key called APP ID. This
 APP ID acts as identifier of your Application so that Qiscus Chat SDK can
 connect your user to other users on the sample APP ID.
-You can get your APP ID [here](link-get-app-id)
+You can get your APP ID [here](https://www.qiscus.com/dashboard/register)
 
 You can find your APP ID on your Qiscus app dashboard. Here you can see the
 picture as a reference.
 
-![App ID Location](images/app-id.png "Your APP ID location")
+![App ID Location](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/app-id.png "Your APP ID location")
 
 > All users within the same APP ID are able to communicate with each other,
 > across all platforms. This means users using iOS, Android, Web clients, etc.
@@ -25,12 +25,12 @@ picture as a reference.
 
 To build your app using Qiscus Chat SDK, here are fundamental steps to begin
 with:
-- [Configuration](link-configuration)
-  - [Defining Container](link-defining-container)
-  - [Initiating Qiscus Chat SDK](link-initiating-qiscus-chat-sdk)
-- [Authentication](link-authentication)
-  - [Setting User Information](link-setting-user-information)
-- [Rendering Chat UI](link-rendering-chat-ui)
+- [Configuration](#configuration)
+  - [Defining Container](#defining-container)
+  - [Initiating Qiscus Chat SDK](#initiating-qiscus-chat-sdk)
+- [Authentication](#authentication)
+  - [Setting User Information](#setting-user-information)
+- [Rendering Chat UI](#rendering-chat-ui)
 
 ## Configuration
 
@@ -134,5 +134,5 @@ guidance to activate Chat Rooms will be explained in the next chapter
 (see [Chat Rooms section](https://sdk.qiscus.com/documentation/web/chat-rooms)).
 
 Here is the complete code.
-<p data-height="265" data-theme-id="0" data-slug-hash="NayEMe" data-default-tab="html,result" data-user="notoriousb1t" data-embed-version="2" data-pen-title="Pumpkin Toss" class="codepen">See the Pen <a href="https://codepen.io/notoriousb1t/pen/NayEMe/">Pumpkin Toss</a> by Christopher Wallis (<a href="https://codepen.io/notoriousb1t">@notoriousb1t</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<p data-height="265" data-theme-id="dark" data-slug-hash="aLKJap" data-default-tab="html,result" data-user="ap13p" data-embed-version="2" data-pen-title="aLKJap" data-preview="true" class="codepen">See the Pen <a href="https://codepen.io/ap13p/pen/aLKJap/">aLKJap</a> by Afief Sholichuddin (<a href="https://codepen.io/ap13p">@ap13p</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
