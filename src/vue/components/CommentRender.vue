@@ -1,31 +1,22 @@
 <template>
+<div>
   <div v-html="rendered_text" class="qcw-comment__content"></div>
 </template>
 
 <script>
-import EmbedJS from 'embed-js';
+import QiscusTextParser from '../../sdk/textparser';
 
 export default {
   name: 'CommentRender',
   props: ['text'],
   data() {
     return {
-      renderer: new EmbedJS({
-        input: this.text,
-        excludeEmbed: ['github','youtube'],
-        locationEmbed: false,
-        emoji: false,
-        inlineText: false,
-        linkOptions: { target: '_blank' }
-      }),
       rendered_text: this.text
     };
   },
   created() {
-    const self = this;
-    self.renderer.text((data) => {
-      self.rendered_text= (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
-    })
+    this.rendered_text = QiscusTextParser.parse(this.text);
+    this.rendered_text = (typeof emojione != 'undefined') ? emojione.toImage(this.rendered_text) : this.rendered_text;
   }
 }
 </script>

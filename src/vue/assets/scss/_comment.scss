@@ -144,7 +144,7 @@
 .qcw-image-container {
   height: 100px; overflow: hidden;
   border-radius: 0 0 5px 5px;
-  
+
   img {
     min-width: 200px;
     min-height: 110px;
@@ -167,12 +167,15 @@
       display: inline-block;
       color: #2c3e50;
   }
-  i.fa{
+  i{
     position: relative;
     font-size: 3em;
     color: #2c3e50;
     float: left;
     margin-right: 10px;
+    .qc-icon {
+      fill: #555;
+    }
   }
   .file-name{
     word-break: break-word;
@@ -183,22 +186,24 @@
   }
 }
 .qcw-comment__state {
-  font-size: 9px;
+  font-size: 11px;
   position: absolute;
-  top: 7px; left: -7px;
+  top: 7px; left: -15px;
   color: #ccc;
-  text-indent: -5px;
   transition: opacity .32s ease;
   opacity: .3;
+  .qc-icon:last-child {
+    margin-right: -5px;
+  }
   .qcw-comment__message:hover & {
     opacity: 1;
   }
-  &.fa.fa-times-circle {
-    color: #e74c3c;
-    font-size: 11px;
+  &--read .qc-icon {
+    fill: #3498db;
   }
-  &--read {
-    color: #3498db;
+  .icon--resend {
+    fill: red;
+    cursor: pointer;
   }
 }
 .qcw-comment-date {
@@ -280,6 +285,9 @@ code {
   font-size: 12px;
   text-align: left;
   color: #757575;
+  max-height: 150px;
+  overflow: hidden;
+  scroll-behavior: smooth;
   margin-bottom: 10px;
   .reply-preview & {
     margin-bottom: 0;
@@ -304,28 +312,30 @@ code {
   position: absolute;
   bottom: 40px;
   width: 100%;
+  max-height: 50%;
   line-height: 1.7em;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
   z-index: 2;
 }
 .reply-preview__close-btn {
   position: absolute;
   top: 9px; right: 5px;
   cursor: pointer;
-  font-size: 24px;
   color: #aaa;
 }
-.fa.reply-btn {
+.reply-btn {
   position: absolute;
-  right: -40px;
-  background: #b1c7c5;
-  width: 20px; height: 20px;
+  right: -20px;
   border-radius: 50%;
   color: #FFF;
-  line-height: 20px;
   padding-left: 3px;
-  top: 7px;
+  top: 8px;
   display: none;
   cursor: pointer;
+  .qc-icon {
+    fill: #999;
+  }
   &.reply-btn--me {
     right: auto;
     left: -40px;
@@ -389,6 +399,13 @@ strong.comment__card--title {
 }
 .slide-y-leave-active {
   position: absolute;
+}
+.qcw-carousel__nav i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12px;
+  height: 20px;
 }
 .qcw-carousel__item .comment__card--container {
   padding: 10px;

@@ -7,14 +7,17 @@
         <span v-html="imageSrc"></span>
       </div>
       <div v-html="replied_comment.message" v-else></div>
-      <i class="fa fa-times reply-preview__close-btn" @click="onDismiss"></i>
+      <i class="reply-preview__close-btn" @click="onDismiss"><icon name="ic-close"></icon></i>
     </div>
   </div>
 </template>
 <script>
+import Icon from './Icon.vue'
+
 export default {
   name: 'ReplyPreview',
   props: ['replied_comment','onDismiss'],
+  components: { Icon },
   data() {
     return {
       commentType: 'text',

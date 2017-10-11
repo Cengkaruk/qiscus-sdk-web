@@ -2,14 +2,14 @@
   <div class="qcw-comment-container" :id="comment.id" :class="commentClass">
     <!-- comment data -->
     <div class="qcw-comment-date" v-if="showDate">
-      - {{ dateToday }} - 
+      - {{ dateToday }} -
     </div>
     <!-- CommentType: "system_event" -->
     <div v-if="comment.type == 'system_event'" class="qcw-comment--system-event">
       {{ comment.message }}
     </div>
     <!-- for text type comment -->
-    <div class="qcw-comment" 
+    <div class="qcw-comment"
       v-if="comment.type != 'system_event'"
       :class="{
         'comment--me': comment.username_real == myemail,
@@ -17,21 +17,18 @@
         'comment--mid': isMid,
         'comment--last': isLast
       }">
-      <avatar :src="comment.avatar" v-if="options.avatar && !isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar> 
+      <avatar :src="comment.avatar" v-if="options.avatar && !isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar>
       <div class="qcw-comment__message">
         <!-- Comment Time -->
         <div class="qcw-comment__info" v-if="isParent">
           <span class="qcw-comment__username">{{comment.username_as}}</span>
           <span class="qcw-comment__time" v-if="isParent">{{comment.time}}</span>
         </div>
-        <i class="fa fa-reply reply-btn" @click="replyHandler(comment)" :class="{'reply-btn--me': isMe}"></i>
+        <i @click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}"><icon name="ic-reply"></icon></i>
         <!-- CommentType: "contact_person" -->
         <div v-if="comment.type == 'contact_person'" class="qcw-comment--contact">
-          <i class="fa fa-user fa-fw"></i> <strong>{{ comment.payload.name }}</strong><br>
-          <i class="fa fa-fw" :class="{
-            'fa-phone': comment.payload.type == 'phone',
-            'fa-envelope': comment.payload.type == 'email'
-          }"></i> <span>{{ comment.payload.value }}</span>
+          <i><icon name="ic-user"></icon></i> <strong>{{ comment.payload.name }}</strong><br>
+          <i><icon :name="(comment.payload.type=='phone') ? 'ic-phone' : 'ic-envelope'"></icon></i> <span>{{ comment.payload.value }}</span>
         </div>
         <!-- CommentType: "location" -->
         <static-map :lat="comment.payload.latitude"
@@ -64,28 +61,28 @@
             :onClickImage="onClickImage"
             :callback="onupdate"
           ></comment-reply>
-          <comment-render 
+          <comment-render
             :text="comment.message" v-if="!comment.isAttachment(comment.message) && comment.type=='text'" >
           </comment-render>
-          <span class="qcw-comment__time qcw-comment__time--children" 
+          <span class="qcw-comment__time qcw-comment__time--children"
             v-if="!isParent"
             :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}">
             {{comment.time}}
           </span>
           <div v-if="isMe">
-            <i class="qcw-comment__state fa fa-clock-o" v-if="comment.isPending"></i>
-            <i class="qcw-comment__state fa fa-check" v-if="comment.isSent && !comment.isDelivered"></i>
-            <i class="qcw-comment__state fa fa-times-circle" v-if="comment.isFailed" @click="resend(comment)"></i>
+            <i class="qcw-comment__state"><icon name="ic-clock" class="icon--clock" v-if="comment.isPending"></icon></i>
+            <i class="qcw-comment__state"><icon name="ic-check" v-if="comment.isSent && !comment.isDelivered"></icon></i>
+            <i @click="resend(comment)" class="qcw-comment__state"><icon name="ic-resend" class="icon--resend" v-if="comment.isFailed"></icon></i>
             <div class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead">
-              <i class="fa fa-check"></i><i class="fa fa-check"></i>
+              <icon name="ic-doublecheck"></icon>
             </div>
             <div class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead">
-              <i class="fa fa-check"></i><i class="fa fa-check"></i>
+              <icon name="ic-doublecheck"></icon>
             </div>
           </div> <!-- end of comment icons -->
         </div>
         <!-- CommentType: "CARD" -->
-        <comment-card :data="comment.payload" 
+        <comment-card :data="comment.payload"
           v-if="comment.type==='card'"></comment-card>
         <!-- CommentType: "CUSTOM" -->
         <div v-if="comment.type === 'custom'">
@@ -93,7 +90,7 @@
         </div>
         <!-- CommentType: "ACCOUNT_LINKING" -->
         <div v-if="comment.type == 'account_linking'">
-          <div class="qcw-comment__content" v-html="message"></div>
+          <comment-render :text="comment.payload.text || message"></comment-render>
           <div class="action_buttons">
             <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
           </div>
@@ -101,20 +98,16 @@
         <!-- CommentType: "BUTTON" -->
         <div v-if="comment.type == 'buttons'">
           <div class="qcw-comment__content" v-html="comment.payload.text || message"></div>
-          <div class="action_buttons" v-for="button in comment.payload.buttons">
-            <button @click="postbackSubmit(button)" v-if="button.type == 'postback'">
-              {{ button.label }}
-            </button>
-          </div>
+          <comment-buttons :buttons="comment.payload.buttons" :postbackHandler="postbackSubmit"></comment-buttons>
         </div>
       </div>
-      <avatar :src="comment.avatar" v-if="options.avatar && isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar> 
+      <avatar :src="comment.avatar" v-if="options.avatar && isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar>
     </div>
   </div>
 </template>
 
 <script>
-import EmbedJS from 'embed-js';
+// import EmbedJS from 'embed-js';
 // import marked from 'marked';
 import ImageLoader from './ImageLoader.vue';
 // import highlight from 'highlight.js';
@@ -125,6 +118,8 @@ import CommentCarousel from './CommentCarousel';
 import StaticMap from './StaticMap';
 import FileAttachment from './FileAttachment';
 import CommentRender from './CommentRender';
+import CommentButtons from './CommentButtons';
+import Icon from './Icon.vue'
 
 function searchAndReplace(str, find, replace) {
   return str.split(find).join(replace);
@@ -137,7 +132,10 @@ function escapeHTML(text) {
 };
 export default {
   props: ['comment','onupdate', 'onClickImage', 'commentBefore', 'commentAfter', 'replyHandler'],
-  components: { Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, StaticMap, FileAttachment, CommentRender },
+  components: { 
+    Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, 
+    StaticMap, FileAttachment, CommentRender, CommentButtons, Icon 
+  },
   updated(){
     // this.onupdate();
   },
@@ -152,27 +150,27 @@ export default {
     renderedComment() { return (typeof emojione != "undefined") ? emojione.toShort(this.comment.message) : this.comment.message }
   },
   created() {
-    const self = this;
-    if(!self.comment.isAttachment(self.comment.message)) {
-      self.message = self.comment.message
-      self.x.text((data) => {
-        self.message = (typeof emojione != 'undefined') ? emojione.toImage(data) : data;
-      });
-    }
-    if(self.comment.type == 'reply') {
-      self.y.text((data) => {
-        self.replied_comment_message = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
-      })
-      new EmbedJS({
-        input: self.comment.payload.text,
-        excludeEmbed: ['github','youtube'],
-        emoji: false,
-        inlineText: false,
-        linkOptions: { target: '_blank' }
-      }).text( data => {
-        self.replied_comment_text = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
-      })
-    }
+    // const self = this;
+    // if(!self.comment.isAttachment(self.comment.message)) {
+    //   self.message = self.comment.message
+    //   self.x.text((data) => {
+    //     self.message = (typeof emojione != 'undefined') ? emojione.toImage(data) : data;
+    //   });
+    // }
+    // if(self.comment.type == 'reply') {
+    //   self.y.text((data) => {
+    //     self.replied_comment_message = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
+    //   })
+    //   new EmbedJS({
+    //     input: self.comment.payload.text,
+    //     excludeEmbed: ['github','youtube'],
+    //     emoji: false,
+    //     inlineText: false,
+    //     linkOptions: { target: '_blank' }
+    //   }).text( data => {
+    //     self.replied_comment_text = (typeof emojione != 'undefined') ? emojione.toImage(data) : self.data;
+    //   })
+    // }
   },
   methods: {
     gotoComment() {
@@ -213,24 +211,24 @@ export default {
       replied_comment_sender: (this.comment.type=='reply') ? this.comment.payload.replied_comment_sender_username : '',
       dateToday: new Date(this.comment.date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
       me: qiscus.email,
-      x: new EmbedJS({
-        input: this.comment.message,
-        excludeEmbed: ['github','youtube'],
-        locationEmbed: false,
-        emoji: false,
-        inlineText: false,
-        linkOptions: {
-          target: '_blank'
-        },
-      }),
-      y: new EmbedJS({
-        input: (this.comment.type == 'reply') ? this.comment.payload.replied_comment_message : '.',
-        excludeEmbed: ['github','youtube'],
-        locationEmbed: false,
-        emoji: false,
-        inlineText: false,
-        linkOptions: { target: '_blank' }
-      }),
+      // x: new EmbedJS({
+      //   input: this.comment.message,
+      //   excludeEmbed: ['github','youtube'],
+      //   locationEmbed: false,
+      //   emoji: false,
+      //   inlineText: false,
+      //   linkOptions: {
+      //     target: '_blank'
+      //   },
+      // }),
+      // y: new EmbedJS({
+      //   input: (this.comment.type == 'reply') ? this.comment.payload.replied_comment_message : '.',
+      //   excludeEmbed: ['github','youtube'],
+      //   locationEmbed: false,
+      //   emoji: false,
+      //   inlineText: false,
+      //   linkOptions: { target: '_blank' }
+      // }),
     }
   }
 }

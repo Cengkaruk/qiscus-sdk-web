@@ -5,12 +5,12 @@
       <img :src="imageSrc" :alt="imageSrc" />
     </div>
     <div v-if="error">
-      <p><i class="fa fa-times fa-fw fa-2x"></i> {{ error }}</p>
+      <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>
       <button @click="loadImage" class="reload-image-btn">Reload Image</button>
     </div>
     <div class="qcw-file-container" v-if="!isImage && !isLoading">
       <a :href="uri" target="_blank">
-        <i class="fa" aria-hidden="true" :class="fileClassName"></i>
+        <i><icon :name="fileClassName"></icon></i>
         <div class="file-name">{{ filename }}</div>
       </a>
     </div>
@@ -18,8 +18,11 @@
 </template>
 
 <script>
+  import Icon from './Icon';
+
   export default {
     name: 'ImageLoader',
+    components: {Icon},
     props: ['comment', 'message', 'callback', 'onClickImage'],
     data() {
       return {
@@ -38,14 +41,15 @@
         const videos = ['mov','mp4','avi','mkv']
         const images = ['jpg','jpeg','gif','webp','png']
         const archives = ['tar', 'zip', 'rar', 'iso']
-        if ( videos.indexOf(ext) > -1 ) return 'fa-file-video-o';
-        if ( images.indexOf(ext) > -1 ) return 'fa-file-image-o';
-        if ( archives.indexOf(ext) > -1 ) return 'fa-file-archive-o';
-        return 'fa-file-text'
+        if ( images.indexOf(ext) > -1 ) return 'ic-image';
+        return 'ic-docs-attachment-render-buble'
       }
     },
     created() {
       this.loadImage();
+    },
+    destroyed() {
+      URL.revokeObjectURL(this.imageSrc);
     },
     methods: {
       loadImage() {
@@ -57,6 +61,11 @@
         self.ext      = self.filename.split('.').pop();
         self.isLoading = true;
         self.error   = '';
+
+        if(!self.isImage) {
+          self.isLoading = false;
+          return false;
+        }
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {

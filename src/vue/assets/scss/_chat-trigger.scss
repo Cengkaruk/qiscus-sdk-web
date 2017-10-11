@@ -16,15 +16,10 @@
   &:hover {
     transform: translateY(-3px);
   }
-  i.fa.fa-comments {
-    font-size: 15px;
-    margin-right: 10px;
-  }
-  i.fa.fa-chevron-up {
-    font-size: 15px;
-    margin-left: 10px;
-  }
   .qcw-app--wide-mode & {
     display: none;
+  }
+  .qc-icon {
+    vertical-align: middle;
   }
 }

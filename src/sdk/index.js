@@ -13,7 +13,7 @@ import HttpAdapter from './adapters/http'
 import UserAdapter from './adapters/user'
 import RoomAdapter from './adapters/room'
 import TopicAdapter from './adapters/topic'
-import {GroupChatBuilder} from './utils'
+import {GroupChatBuilder,scrollToBottom} from './utils'
 
 export class qiscusSDK extends EventEmitter {
 
@@ -58,6 +58,10 @@ export class qiscusSDK extends EventEmitter {
       chatTarget (email, options) {
         if (!self.isInit) return
         vStore.dispatch('chatTarget', {email, options})
+        .then(() => {
+          const latestCommentId = qiscus.selected.last_comment_id;
+          scrollToBottom(latestCommentId, 'core');
+        })
       },
       chatGroup (id) {
         if (!self.isInit) return
@@ -65,6 +69,10 @@ export class qiscusSDK extends EventEmitter {
         self.getRoomById(id)
         .then((response) => {
           vStore.dispatch('chatGroup', {id, oldSelected})
+          .then(() => {
+            const latestCommentId = qiscus.selected.last_comment_id;
+            scrollToBottom(latestCommentId);
+          })
         })
       },
       getOrCreateRoomByUniqueId (unique_id, name, avatar_url) {
@@ -74,6 +82,9 @@ export class qiscusSDK extends EventEmitter {
         .then((response) => {
           vStore.dispatch('chatGroup', {id:QiscusSDK.core.selected.id, oldSelected})
         })
+      },
+      getOrCreateRoomByChannel(channel, name, avatar_url) {
+        self.UI.getOrCreateRoomByUniqueId(channel, name, avatar_url);
       },
       toggleChatWindow () {
         vStore.dispatch('toggleChatWindow')
@@ -444,6 +455,10 @@ export class qiscusSDK extends EventEmitter {
       })
   }
 
+  getOrCreateRoomByChannel(channel, name, avatar_url) {
+    this.getOrCreateRoomByUniqueId(channel, name, avatar_url);
+  }
+
   /**
    * Set read status for selected comment
    * 
@@ -539,14 +554,16 @@ export class qiscusSDK extends EventEmitter {
   }
 
   loadComments (topic_id, last_comment_id = 0) {
-    return this.topicAdapter.loadComments(topic_id, last_comment_id)
-    .then((response) => {
-      this.selected.receiveComments(reverse(response))
-      this.sortComments()
-      return new Promise((resolve, reject) => resolve(response))
-    }, (error) => {
-      console.error('Error loading comments', error)
-    })
+    const self = this;
+    return self.topicAdapter.loadComments(topic_id, last_comment_id)
+      .then((response) => {
+        self.selected.receiveComments(response.reverse())
+        self.sortComments()
+        return new Promise((resolve, reject) => resolve(response))
+      }, (error) => {
+        console.error('Error loading comments', error)
+        return new Promise(reject => reject(error));
+      });
   }
 
   /**

@@ -61,3 +61,15 @@ export class GroupChatBuilder {
   }
 
 }
+
+export function scrollToBottom(latestCommentId) {
+  requestAnimationFrame(function(){
+    if(latestCommentId > 0){
+      const elementToScroll = document.getElementById(latestCommentId)
+      if(!elementToScroll) return false;
+      elementToScroll.scrollIntoView({block: 'end', behavior: 'smooth'})
+    }
+    //on entering the room, wait for data processed then focus on comment form
+    document.getElementsByClassName('qcw-comment-form').item(0).getElementsByTagName('textarea').item(0).focus();
+  })
+}

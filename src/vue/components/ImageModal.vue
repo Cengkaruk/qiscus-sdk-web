@@ -2,22 +2,25 @@
   <div class="qcw-modal-overlay" :class="{'qcw-modal-overlay--on': imageModalOn }" @click="closeHandler">
     <div class="qcw-image-modal">
       <img :src="imageModalLink" :alt="imageModalLink">
-      <i class="fa fa-times" @click="closeHandler"></i>
-      <i class="fa fa-external-link" @click="openInNewTab"></i>
+      <i @click="closeHandler" class="icon--close"><icon name="ic-close"></icon></i>
+      <i @click="openInNewTab" class="icon--link-out"><icon name="ic-link-out"></icon></i>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'ImageModal',
-    props: ['imageModalLink', 'imageModalOn', 'closeHandler'],
-    methods: {
-      openInNewTab() {
-        window.open(this.imageModalLink)
-      }
+import Icon from './Icon';
+
+export default {
+  name: 'ImageModal',
+  components: {Icon},
+  props: ['imageModalLink', 'imageModalOn', 'closeHandler'],
+  methods: {
+    openInNewTab() {
+      window.open(this.imageModalLink)
     }
   }
+}
 </script>
 
 <style lang="scss">
@@ -44,7 +47,7 @@
       max-width: 100%;
       display: block;
     }
-    i.fa {
+    i {
       position: absolute;
       top: -30px;
       color: #FFF;
@@ -52,10 +55,13 @@
       font-size: 20px;
       cursor: pointer;
     }
-    i.fa.fa-times {
+    i .qc-icon {
+      fill: #FFF;
+    }
+    i.icon--close {
       right: 0px;
     }
-    i.fa.fa-external-link {
+    i.icon--link-out {
       right: 30px;
     }
   }

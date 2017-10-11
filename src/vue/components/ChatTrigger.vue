@@ -1,25 +1,21 @@
 <template>
   <div>
-    <button class="qcw-trigger-btn" @click="toggleChatWindow" v-if="init">
+    <button class="qcw-trigger-btn" @click="toggleChatWindow">
       <Loader v-if="loading"></Loader>
-      <i class="fa fa-comments" v-if="!loading"></i>
+      <icon name="ic-chat-buble" v-if="!loading" class="icon--light"></icon>
       {{ label || 'Chat' }}
-      <i class="fa fa-chevron-up"></i>
-    </button>
-    <button class="qcw-trigger-btn" @click="toggleChatWindow" v-if="!init">
-      <i class="fa fa-gear"></i>
-      Chat Config
     </button>
   </div>
 </template>
 
 <script>
+import Icon from './Icon.vue'
 import Loader from './Loader.vue'
 
 export default {
   props: ['label', 'loading'],
   name: 'QiscusWidgetTrigger',
-  components: { Loader },
+  components: { Loader, Icon },
   computed: {
     init: function() { return this.$store.state.qiscus.isInit; }
   },
