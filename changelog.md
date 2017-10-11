@@ -4,6 +4,10 @@
 - `QiscusSDK.core.UI.gotoComment` API
 - `QiscusSDK.core.loadRoomList` API
 - Fixing chatTarget sending the wrong options
+- Make alias for `getOrCreateRoomByUniqueId` into `getOrCreateRoomByChannel`
+- fix textparser giving wrong url for link text
+- Fix issue with responsive css
+- Remove extra dependencies
 
 # SDK v.2.5.8
 - Add contact rendering

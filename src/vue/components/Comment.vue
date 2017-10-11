@@ -90,7 +90,7 @@
         </div>
         <!-- CommentType: "ACCOUNT_LINKING" -->
         <div v-if="comment.type == 'account_linking'">
-          <comment-render :text="message"></comment-render>
+          <comment-render :text="comment.payload.text || message"></comment-render>
           <div class="action_buttons">
             <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
           </div>

@@ -87,7 +87,7 @@
             <icon name="ic-attachment" v-if="!showActions"></icon>
             <icon name="ic-close" v-if="showActions"></icon>
           </li>
-          <li><icon name="ic-send" @click="trySubmitComment($event)"></icon></li>
+          <li @click="trySubmitComment($event)"><icon name="ic-send"></icon></li>
         </ul>
       </div>
     </div>
