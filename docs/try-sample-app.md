@@ -25,7 +25,7 @@ for more detail installing them both.
 ## Cloning Sample App
 You can download sample directly from our github at
 [qiscus/qiscus-sdk-web-sample](http://github.com/qiscus/qiscus-sdk-web-sample)
-or if you already installed Gti,m you can just clone directly from your
+or if you already installed Git you can just clone directly from your
 command line.
 ```bash
 $ git clone https://github.com/qiscus/qiscus-sdk-web-sample.git

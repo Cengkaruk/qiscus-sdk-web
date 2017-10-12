@@ -23,7 +23,7 @@ QiscusSDK.core.init({
 
 In the snippet above, we put `chatTarget` function inside an Event Handler
 called `loginSuccessCallback`
-(read [in the next chapter for more detail about Event Handler](link-event-handler)),
+(read in the next chapter for more detail about [Event Handler](link-event-handler)),
 to enable chatting after user successfully logged into the app.
 
 > Please be noted that you can put chatTarget function anywhere you like.
@@ -39,7 +39,7 @@ room event if you chat with the same user. This can be usefull when you need
 it for specific case, for example customer service chat app.
 ```javascript
 QiscusSDK.core.UI.chatTarget('user@email.com', {
-  distinctId: 'uniqueId'
+  distinctId: 'userKey'
 })
 ```
 
@@ -48,9 +48,9 @@ QiscusSDK.core.UI.chatTarget('user@email.com', {
 By creating group room you can have multiple users to chat inside specific room.
 To create Group Chat Room you can do it like this:
 ```javascript
-QiscusSDK.core.createGroupRoom(name, [userID1, userID2, userID3])
+QiscusSDK.core.createGroupRoom(name, [userKey1, userKey2, userKey3])
 ```
-Those `userID1`, `userID2`, `userID3` will automatically be participants of
+Those `userKey1`, `userKey2`, `userKey3` will automatically be participants of
 the group room.
 
 ## Get Room List

@@ -49,7 +49,7 @@ CSS. Here are main CSS selectors being use in Qiscus Chat SDK:
 
 > Please be noted that Qiscus Chat SDK CSS classes is prefixed with qcw-
 
-There are more that just 3 properties that are unlisted in the table above.
+There are more than just 3 properties that are unlisted in the table above.
 You can find more customizable properties in the css file in the sample app,
 which you can modify it as you like.
 
