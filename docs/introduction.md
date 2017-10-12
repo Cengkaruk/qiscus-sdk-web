@@ -26,32 +26,7 @@ You also can access more advance and customizable features suc as
 - Enable Push noticiation
 - Export and import messages from you app
 
-## Platform
-
-Qiscus supports popular paltform at this momment such as Android, IOS, and
-Web Browser
-
-### IOS
-
-Out IOS SDK supports IOS 9 to the latest IOS version. It also supports
-Swift 3.0 and Objective C.
-
-To Start using IOS SDK you can [try out sample app](https://github.com/qiscus/qiscus-sdk-ios/tree/master/Example) or
-read Qiscus Chat SDK documentation using
-[Swift](https://sdk.qiscus.com/documentation/ios/intro) or
-[Objective C](https://sdk.qiscus.com/documentation/ios/intro) to start crreating IOS chat app.
-
-### Android
-
-Our Android SDK is writter in Java and it supports Android Jelly Bean (API 16)
-to the latest version.
-
-To start your journey to understand our Android Chat SDK, You can
-[try our sample app](https://github.com/qiscus/qiscus-sdk-android-sample) or you can read
-[Qiscus Chat SDK documentation for Android](https://sdk.qiscus.com/documentation/android/intro)
-for more details.
-
-### Web
+## Qiscus Web Chat SDK
 
 Mobile users increased year after year, but it does not mean we can forget Web
 App user. There are always people who prefer to use web app rather than their
