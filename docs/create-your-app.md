@@ -2,14 +2,13 @@
 
 In this section you will learn about:
 - [Get your APP ID](#get-your-app-id)
-- [Step-by-setp building your app](#step-by-step-building-your-app)
+- [Step-by-setp building your app from scratch](#step-by-step-building-your-app-from-scratch)
 
 ## Get Your APP ID
-
-To start building app using Qiscus Chat SDK you need a key called APP ID. This
-APP ID acts as identifier of your Application so that Qiscus Chat SDK can
-connect your user to other users on the sample APP ID.
-You can get your APP ID [here](https://www.qiscus.com/dashboard/register)
+To start building app using Qiscus Web Chat SDK you need a key called APP ID.
+This APP ID acts as identifier of your Application so that Qiscus can connect
+user to other users on the sample APP ID. You can get your APP ID
+[here](https://www.qiscus.com/dashboard/register).
 
 You can find your APP ID on your Qiscus app dashboard. Here you can see the
 picture as a reference.
@@ -21,8 +20,7 @@ picture as a reference.
 > can all chat with one another. However, users in different Qiscus
 > applications cannot talk to each other.
 
-## Step-by-step building your app
-
+## Step-by-step building your app from scratch
 To build your app using Qiscus Chat SDK, here are fundamental steps to begin
 with:
 - [Configuration](#configuration)
@@ -35,9 +33,8 @@ with:
 ## Configuration
 
 ### Defining Container
-
-Container is an element where Qiscus Web SDK Chat feature will be rendered into.
-To define container you need to append `<div id="qiscus-widget"></div>` tag
+Container is an element where qiscus Web SDK Chat feature will be rendered into.
+To define container you need to include `<div id="qiscus-widget"></div>` tag
 before closing body tag. Here's code example.
 ```html
 <html lang="en">
@@ -53,28 +50,26 @@ before closing body tag. Here's code example.
 ```
 Do not forget to save your file as HTML file.
 > id value "qiscus-widget" is fixed. For now you cannot change it to anything
-else.
+> else.
 
+
+### Initiating Qiscus SDK
 To configure Qiscus Chat SDK, you need to include `qiscus-sdk.js` to your HTML
 file that you created before (see #defining container section). You can get
 `qiscus-sdk.js` files from Sample App or You can directly download it
 [here](https://github.com/qiscus/qiscus-sdk-web/releases/latest).
-
-### Initiating Qiscus SDK
-
 ```html
 <script src="path/to/qiscus-sdk.js"></script>
 ```
-To  initiate your chat app using Qiscus Chat SDK, you need to include the
-APP ID that you got from your dashboard. Inside this init function you can more
-"options" according to what your app needs. For example, here we put an Event
-Handler (loginSuccessCallback) which will return information after user
-successfully logged in. You can, then, do something with that information
-inside the Event Handler. You can learn more about Event Handler, here, in
-the next chapter.
-
-Here is the sample code of how to initiate your APP ID and calling Event
-Handler:
+To initiate your chat app using Qiscus Chat SDK, you need to include the APP ID
+that you got from your dashboard. Inside this init function you can put more
+"options" according what your app needs. For example, here we put an
+Event Handler (loginSuccessCallback) which will return informatin after user
+received a message (userData). You can, then, do something with that information
+inside the Event Handler. You can learn more about Event Handler,
+[here](http://sdk.qiscus.com/documentation/web/event-handler),
+in the next chapter. Here is the sample code of how to initiate your
+APP ID and calling Event Handler:
 ```javascript
 QiscusSDK.core.init({
   AppId: 'YOUR_APP_ID',
@@ -92,17 +87,13 @@ QiscusSDK.core.init({
 ## Authentication
 
 ### Setting User Information
-
 After getting your APP ID, you need to do user authentication. You can do this
-easily by calling `QiscusSDK.core.setUser()` function. This function is being
-used for authentication purpose, it will login the user if the User ID
-already exists and the User Key match, or it will register the user
-if the User ID does not exists yet and use the User Key as authentication for
-the next authentication process.
+easily by calling `QiscusSDK.core.setUser()` function. This function is used to
+login or register your user as well as setting and updating user profile.
+Here is example:
 ```javascript
 QiscusSDK.core.setUser('userId', 'userKey', 'Qiscus Demo', 'http://some-url.com/avatar.png');
 ```
-
 Here is some note to understand about parameters inside setUser function:
 - *userId* (string, unique): A User identifier that will be used to identify
   a user and used whenever another user need to chat with this user. It can
@@ -115,7 +106,7 @@ Here is some note to understand about parameters inside setUser function:
   default avatar if not provided.
 
 You can learn from the figure below to understand what really happened when
-calling setUser() function:
+calling `setUser()` function:
 ![setUser diagram](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/auth-diagram.png "setUser Authentication flow")
 
 ## Rendering Chat UI

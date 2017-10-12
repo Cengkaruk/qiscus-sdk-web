@@ -1,62 +1,54 @@
+
 # Try Sample App
 
-To make it easier for you to understand Qiscus Chat SDK, we provide
-Sample Apps for Web SDK. Inside this sample you can see our Web SDK power,
-try default feature, or UI Customization example. There are two option to try.
-First, clone from our [repository](https://github.com/qiscus/qiscus-sdk-web-sample)
-and play with sample at your local Computer to have more access to our code so
-you can play with it locally but you will still need internet connection to
-function properly. You can also play with the example at
-[Codepen](sample-app-codepen-link)
-for another live example.
+To understand Qiscus Chat SDK easier, we provide some Sample Apps. Inside these
+samples, you can see our how Qiscus Chat SDK can power your app. You can
+directly try some default feature or UI customization. To start with the sample
+apps, you can clone from
+[repository](https://github.com/qiscus/qiscus-sdk-web-sample) or try the
+[live samples](#try-sample-app-online) online via codepen.
 
 In this section you will learn about:
 - [Requirement](#requirement)
-- [Cloning Sample App](#cloning-sample-app)
+- [Cloing Sample App](#cloning-sample-app)
 - [Try Sample App Online](#try-sample-app-online)
 
 ## Requirement
-
-To run all of the sample code, you need to install [Git](git-scm.com) and
-[NodeJS](nodejs.com). Git will be used to clone the repository so you can
-play around with the code locally and NodeJS to install and resolve
-dependencies used to run Sample App. You can refer to their respected page
-to know how to install both.
+To run all of the sample code, you need to install [Git](http://git-scm.com) and
+[NodeJS](http://nodejs.org). Git will be used to clone the repository so you
+can play around with the code locally. NodeJS is needed to install and resolve
+dependencies to run the Sample App. You can refer to their respected page
+for more detail installing them both.
 - [git-scm.com](http://git-scm.com)
 - [nodejs.org](http://nodejs.org)
 
-## Cloning Sample App
-
-You can download sample app directly from github at
-[qiscus/qiscus-sdk-web-sample](http://github.com/qiscus/qiscus-sdk-web-sample) or
-if you already install Git you can just clone directly from your command line
+# Cloning Sample App
+You can download sample directly from our github at
+[qiscus/qiscus-sdk-web-sample](http://github.com/qiscus/qiscus-sdk-web-sample)
+or if you already installed Gti,m you can just clone directly from your
+command line.
 ```bash
-$ git clone https://www.github.com/qiscus/qiscus-sdk-web-sample
+$ git clone https://github.com/qiscus/qiscus-sdk-web-sample.git
 ```
 After cloning finished, you will need to create simple server to run the sample
-app. In the example below, we use http-server from nodejs package manager as
-http server to serve Sample App locally.
+app. In the example below, we use http-server from nodejs package manager to
+serve Sample App locally.
 ```bash
 # Install http-server from npm globally
 $ npm install http-server -g
-
 # Choose folder and run Web SDK Sample
-$ cd web-sdk-sample-js/default-SDK-usage
+$ cd qiscus-sdk-web-sample/sample-default
 $ http-server
 ```
+> There are 3 folders inside Web SDK Sample APP: sample-default, sample-native,
+> sample-customized
 
-There are 4 folders inside Web SDK sample App: default-SDK-usage,
-Chat-with-chat-list, Event, UI-customization.
-
-## Try Sample App Online
-
-Well, we knew some people do not have time to setup everything on their laptop
-or desktop. That's why we also provide online sample. You can check it from the
-list below.
+## Try sample App Online
+If You are too busy to clone and do steps above, you can simply try
+the sample app online. You can check the sample app from the list below:
 - [Default SDK Usage](https://codepen.io/desertlion/pen/MmdRBd)
 - [UI Customization](https://codepen.io/desertlion/pen/VWgrQE)
 
 > If you inspect thoroughly, we split the sample files into different folders.
-> To customize the example go through config folder and set your own configuration
-there.
-
+> To customize the example go through config folder and set your own
+> configuratiuon there.
