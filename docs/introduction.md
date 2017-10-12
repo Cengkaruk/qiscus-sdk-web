@@ -20,7 +20,7 @@ When you try our Chat SDK, you will find the default built-in features such as:
 - Emoji support
 
 You also can access more advance and customizable features suc as
-- Server side integration with Server PAI and Webhook
+- Server side integration with Server API and Webhook
 - Customize your user interface
 - Embed bot engine in your app
 - Enable Push noticiation
