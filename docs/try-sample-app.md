@@ -53,8 +53,8 @@ Chat-with-chat-list, Event, UI-customization.
 Well, we knew some people do not have time to setup everything on their laptop
 or desktop. That's why we also provide online sample. You can check it from the
 list below.
-- [Default SDK Usage](link-sample-default-sdk-usage)
-- [UI Customization](link-sample-ui-customization)
+- [Default SDK Usage](https://codepen.io/desertlion/pen/MmdRBd)
+- [UI Customization](https://codepen.io/desertlion/pen/VWgrQE)
 
 > If you inspect thoroughly, we split the sample files into different folders.
 > To customize the example go through config folder and set your own configuration

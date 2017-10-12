@@ -235,4 +235,39 @@ headerClickedCallback: function () {
 ```
 
 ## commentDeliveredCallback
+commentDeliveredCallback event handler will be called when user's comment
+has been delivered to it's participants. You can use this for analytics
+purpose, user delivery receipt, etc. commentDeliveredCallback returns an
+object of delivered message data.
+```javascript
+commentDeliveredCallback: function (comment) {
+  // Do everything you want here
+}
+```
+
 ## commentReadCallback
+commentReadCallback event handler will be called when user's comment has
+been delivered and read by targeted user. You can use this for analytics
+purpose, user delivery receipt, etc. commentDeliveredCallback returns an
+object of read message data.
+```javascript
+commentReadCallback: function (comment) {
+  // Do everything you want here
+}
+```
+
+When you put the code altogether, it will look like this:
+```javascript
+QiscusSDK.core.init({
+  AppId: 'YOUR_APP_ID',
+  options: {
+    loginSuccessCallback: function (loginResponse) {},
+    newMessageCallback: function (message) {},
+    chatRoomCallback: function (chatRoom) {},
+    groupRoomCreatedCallback: function (groupRoom) {},
+    headerClickedCallback: function () {},
+    commentDeliveredCallback: function (comment) {},
+    commentReadCallback: function (comment) {}
+  }
+})
+```
