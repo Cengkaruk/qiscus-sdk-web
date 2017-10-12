@@ -31,7 +31,7 @@ to enable chatting after user successfully logged into the app.
 
 When everything is done correctly, you will see Qiscus Chat UI as showed in
 the figure below:
-![sdk screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/sdk-screen.png "SDK Screen")
+![1-on-1 Screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/1-on-1-screen.png "1-on-1 Screen")
 
 In some cases, you may need to create a room, which enable you to always
 entering a unique or different

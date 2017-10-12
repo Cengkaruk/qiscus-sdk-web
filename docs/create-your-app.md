@@ -134,5 +134,5 @@ guidance to activate Chat Rooms will be explained in the next chapter
 (see [Chat Rooms section](https://sdk.qiscus.com/documentation/web/chat-rooms)).
 
 Here is the complete code.
-<p data-height="265" data-theme-id="dark" data-slug-hash="aLKJap" data-default-tab="html,result" data-user="ap13p" data-embed-version="2" data-pen-title="aLKJap" data-preview="true" class="codepen">See the Pen <a href="https://codepen.io/ap13p/pen/aLKJap/">aLKJap</a> by Afief Sholichuddin (<a href="https://codepen.io/ap13p">@ap13p</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<p data-height="286" data-theme-id="0" data-slug-hash="aLKJap" data-default-tab="html" data-user="ap13p" data-embed-version="2" data-pen-title="Qiscus Chat SDK Complete Code" class="codepen">See the Pen <a href="https://codepen.io/ap13p/pen/aLKJap/">Qiscus Chat SDK Complete Code</a> by Afief Sholichuddin (<a href="https://codepen.io/ap13p">@ap13p</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
