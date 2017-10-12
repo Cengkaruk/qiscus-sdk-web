@@ -22,7 +22,7 @@ for more detail installing them both.
 - [git-scm.com](http://git-scm.com)
 - [nodejs.org](http://nodejs.org)
 
-# Cloning Sample App
+## Cloning Sample App
 You can download sample directly from our github at
 [qiscus/qiscus-sdk-web-sample](http://github.com/qiscus/qiscus-sdk-web-sample)
 or if you already installed Gti,m you can just clone directly from your

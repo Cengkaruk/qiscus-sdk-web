@@ -53,7 +53,7 @@ Do not forget to save your file as HTML file.
 > else.
 
 
-### Initiating Qiscus SDK
+### Initiating Qiscus Chat SDK
 To configure Qiscus Chat SDK, you need to include `qiscus-sdk.js` to your HTML
 file that you created before (see #defining container section). You can get
 `qiscus-sdk.js` files from Sample App or You can directly download it
@@ -67,7 +67,7 @@ that you got from your dashboard. Inside this init function you can put more
 Event Handler (loginSuccessCallback) which will return informatin after user
 received a message (userData). You can, then, do something with that information
 inside the Event Handler. You can learn more about Event Handler,
-[here](http://sdk.qiscus.com/documentation/web/event-handler),
+[here](/documentation/web/event-handler),
 in the next chapter. Here is the sample code of how to initiate your
 APP ID and calling Event Handler:
 ```javascript
@@ -122,7 +122,7 @@ That's all. If everything is done proplerly you will get something like this
 The widget chat above appear and it seems inactive. This happened because
 you have not set any target to chat with. But don't worry, the step-by-step
 guidance to activate Chat Rooms will be explained in the next chapter
-(see [Chat Rooms section](https://sdk.qiscus.com/documentation/web/chat-rooms)).
+(see [Chat Rooms section](/documentation/web/chat-rooms)).
 
 Here is the complete code.
 <p data-height="286" data-theme-id="0" data-slug-hash="aLKJap" data-default-tab="html" data-user="ap13p" data-embed-version="2" data-pen-title="Qiscus Chat SDK Complete Code" class="codepen">See the Pen <a href="https://codepen.io/ap13p/pen/aLKJap/">Qiscus Chat SDK Complete Code</a> by Afief Sholichuddin (<a href="https://codepen.io/ap13p">@ap13p</a>) on <a href="https://codepen.io">CodePen</a>.</p>
