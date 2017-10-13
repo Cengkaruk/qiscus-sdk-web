@@ -1,34 +1,34 @@
 # Event Handler
 
-An Event Handler is a callback routine that operates asynchronously and hanles
+An Event Handler is a callback routine that operates asynchronously and handles
 inputs received into a program. Event Handlers are important in Qiscus because
 it allows a client to react to any events happening in Qiscus Chat SDK.
 For example, if a client wants to know any important events from server, such
 as success login event, client's app can be notified by calling a specific
-event handler. Client, then, can do things with data returned by the event.
+Event Handler. Client, then, can do things with data returned by the event.
 
-In the previous section, during Qiscus.init (see Configuration section), you
+In the previous section, during `Qiscus.init` (see [Configuration](/documentation/web/create-your-app#configuration) section), you
 can put callbacks inside options as parameters that will be called when there's
-event being triggered. You can see it inside options in the Qiscus.core.init
+event being triggered. You can see it inside options in the `Qiscus.core.init`
 function when you initialize Qiscus Chat SDK.
 
-Here are the complete event handlers list that are supported by
-Qiscus Chat SDK. If you cannot find event handler that suit your need, you
+Here are the complete Event Handlers list that are supported by
+Qiscus Chat SDK. If you cannot find Event Handler that suit your need, you
 can contact us at [contact.us@qiscus.com](mailto:contact.us@qiscus.com), so
 that we can consider it for your need.
-- [loginSuccessCallback](login-success-callback)
-- [newMessageCallback](new-message-callback)
-- [chatRoomCreatedCallback](chat-room-created-callback)
-- [groupRoomCreatedCallback](group-room-created-callback)
-- [headerClickedCallback](header-clicked-callback)
-- [commentDeliveredCallback](comment-delivered-callback)
-- [commentReadCallback](comment-read-callback)
+- [loginSuccessCallback](#loginsuccesscallback)
+- [newMessageCallback](#newmessagecallback)
+- [chatRoomCreatedCallback](#chatroomcreatedcallback)
+- [groupRoomCreatedCallback](#grouproomcreatedcallback)
+- [headerClickedCallback](#headerclickedcallback)
+- [commentDeliveredCallback](#commentdeliveredcallback)
+- [commentReadCallback](#commentreadcallback)
 
 ## loginSuccessCallback
 
 `loginSuccessCallback` is called when user is successfully logged in to
-Qiscus Chat SDk using `setUser` function. This event handler can be used either
-to notify your user or do something inside your application. This event handler
+Qiscus Chat SDk using `setUser` function. This Event Handler can be used either
+to notify your user or do something inside your application. This Event Handler
 return an object of the corresponding user data.
 ```javascript
 /**
@@ -73,9 +73,9 @@ Where `loginResponse` are an object as follow:
 
 ## newMesagesCallback
 
-`newMessagesCallback` is called when there is new incoming message. This event
-handler can be used either to notify your user using desktop notification, or
-somethhing else. This event handler returns data of incoming message.
+`newMessagesCallback` is called when there is new incoming message. This Event
+Handler can be used either to notify your user using desktop notification, or
+somethhing else. This Event handler returns data of incoming message.
 ```javascript
 /**
  * @params message {Message}
@@ -235,9 +235,9 @@ headerClickedCallback: function () {
 ```
 
 ## commentDeliveredCallback
-commentDeliveredCallback event handler will be called when user's comment
+`commentDeliveredCallback` event handler will be called when user's comment
 has been delivered to it's participants. You can use this for analytics
-purpose, user delivery receipt, etc. commentDeliveredCallback returns an
+purpose, user delivery receipt, etc. `commentDeliveredCallback` returns an
 object of delivered message data.
 ```javascript
 commentDeliveredCallback: function (comment) {
@@ -246,9 +246,9 @@ commentDeliveredCallback: function (comment) {
 ```
 
 ## commentReadCallback
-commentReadCallback event handler will be called when user's comment has
+`commentReadCallback` event handler will be called when user's comment has
 been delivered and read by targeted user. You can use this for analytics
-purpose, user delivery receipt, etc. commentDeliveredCallback returns an
+purpose, user delivery receipt, etc. `commentReadCallback` returns an
 object of read message data.
 ```javascript
 commentReadCallback: function (comment) {
