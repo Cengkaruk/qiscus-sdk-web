@@ -10,7 +10,7 @@ apps, you can clone from
 
 In this section you will learn about:
 - [Requirement](#requirement)
-- [Cloing Sample App](#cloning-sample-app)
+- [Cloning Sample App](#cloning-sample-app)
 - [Try Sample App Online](#try-sample-app-online)
 
 ## Requirement
