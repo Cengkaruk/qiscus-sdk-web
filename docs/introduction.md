@@ -12,14 +12,14 @@ When you try our Chat SDK, you will find the default built-in features such as:
 - Private & Group Chat
 - Typing indicator
 - Delivery indicator
-- Image and file sharing
+- Image and file attachment
 - Online presence
 - Read receipt
 - Reply message
 - Offline messaging
 - Emoji support
 
-You also can access more advance and customizable features suc as
+You also can access more advance and customizable features such as:
 - Server side integration with Server API and Webhook
 - Customize your user interface
 - Embed bot engine in your app
@@ -37,4 +37,4 @@ Our Web Chat SDK, for now, supports Chrome 40+, Firefox 48+, and Microsoft Edge.
 
 To start developing your Web App using our Qiscus Chat SDK, You can
 [try our sample app](https://github.com/qiscus/qiscus-sdk-web-sample) or you can read
-Our [Web Documentation](#top) for more details
+Our [Web Documentation](#top) for more details.
