@@ -18,6 +18,7 @@ QiscusSDK.core.init({
 ```
 
 Here what You will get.
+
 ![Wide Mode](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/view-mode-screen.png "Wide Mode")
 
 ### Remote Avatar
@@ -35,6 +36,7 @@ QiscusSDK.core.init({
 })
 ```
 Here what you will get by passing avatar parameter inside option brackets:
+
 ![Without Avatar](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/no-avatar.png "No Avatar")
 
 ## Advance UI Customization
