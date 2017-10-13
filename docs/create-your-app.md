@@ -35,7 +35,7 @@ with:
 ### Defining Container
 Container is an element where qiscus Web SDK Chat feature will be rendered into.
 To define container you need to include `<div id="qiscus-widget"></div>` tag
-before closing body tag. Here's code example.
+before closing body tag. Here's code example:
 ```html
 <html lang="en">
 <head>
@@ -55,8 +55,8 @@ Do not forget to save your file as HTML file.
 
 ### Initiating Qiscus Chat SDK
 To configure Qiscus Chat SDK, you need to include `qiscus-sdk.js` to your HTML
-file that you created before (see #defining container section). You can get
-`qiscus-sdk.js` files from Sample App or You can directly download it
+file that you created before (see [#defining container](#defining-container) section). You can get
+`qiscus-sdk.js` files from Sample App or you can directly download it
 [here](https://github.com/qiscus/qiscus-sdk-web/releases/latest).
 ```html
 <script src="path/to/qiscus-sdk.js"></script>
@@ -64,8 +64,8 @@ file that you created before (see #defining container section). You can get
 To initiate your chat app using Qiscus Chat SDK, you need to include the APP ID
 that you got from your dashboard. Inside this init function you can put more
 "options" according what your app needs. For example, here we put an
-Event Handler (loginSuccessCallback) which will return informatin after user
-received a message (userData). You can, then, do something with that information
+Event Handler `loginSuccessCallback` which will return informatin after user
+received a message `userData`. You can, then, do something with that information
 inside the Event Handler. You can learn more about Event Handler,
 [here](/documentation/web/event-handler),
 in the next chapter. Here is the sample code of how to initiate your
@@ -80,7 +80,7 @@ QiscusSDK.core.init({
   }
 })
 ```
-> Please be noted that calling Event Handler is an option. not a mandatory
+> Please be noted that calling Event Handler is an option, not a mandatory
 > thing to be included. You can still get your chat up and running without
 > calling any of the Event Handler.
 
@@ -94,13 +94,13 @@ Here is example:
 ```javascript
 QiscusSDK.core.setUser('userId', 'userKey', 'Qiscus Demo', 'http://some-url.com/avatar.png');
 ```
-Here is some note to understand about parameters inside setUser function:
+Here is some note to understand about parameters inside `setUser` function:
 - *userId* (string, unique): A User identifier that will be used to identify
   a user and used whenever another user need to chat with this user. It can
   be anything, wheter is is user's email, your user database index, etc.
   As long as it is unique and a string.
-- *userKey* (string): userKey is used as for authentication purpose, so event
-  if a stranger knows your userId, he can not access the user data.
+- *userKey* (string): userKey is used as for authentication purpose, so even
+  if a stranger knows your userId, he cannot access the user data.
 - *username* (string): Username is used as a display name inside chat room.
 - *avatarURL* (string, optional): used to display user's avatar, fallback to
   default avatar if not provided.
@@ -116,7 +116,8 @@ Final step, you need to render chat UI by calling render function.
 QiscusSDK.render()
 ```
 
-That's all. If everything is done proplerly you will get something like this
+That's all. If everything is done proplerly you will get something like this:
+
 ![sdk screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/sdk-screen.png "SDK Screen")
 
 The widget chat above appear and it seems inactive. This happened because
