@@ -31,6 +31,7 @@ to enable chatting after user successfully logged into the app.
 
 When everything is done correctly, you will see Qiscus Chat UI as showed in
 the figure below:
+
 ![1-on-1 Screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/1-on-1-screen.png "1-on-1 Screen")
 
 In some cases, you may need to create a room, which enable you to always
@@ -48,7 +49,7 @@ QiscusSDK.core.UI.chatTarget('user@email.com', {
 By creating group room you can have multiple users to chat inside specific room.
 To create Group Chat Room you can do it like this:
 ```javascript
-QiscusSDK.core.createGroupRoom(name, [userKey1, userKey2, userKey3])
+QiscusSDK.core.createGroupRoom('name', ['userKey1', 'userKey2', 'userKey3'])
 ```
 Those `userKey1`, `userKey2`, `userKey3` will automatically be participants of
 the group room.
@@ -91,12 +92,12 @@ Here some parameters you should provide when calling `loadRoomList()`:
 After successfully get your room list, you may want to enter a specific room.
 Remember that there are 2 type of rooms, 1-on-1 Chat Room and Group Room.
 You can enter to 1-on-1 Chat Room by simply using `chatTarget(user)`
-by passing userID to chat with a single user. However, In Group Chat Room,
-instead of userID, you need to pass roomId by using `chatGroup()` function.
-This roomID can be obtained by loading room list, which has been explained in
+by passing `userID` to chat with a single user. However, In Group Chat Room,
+instead of `userID`, you need to pass `roomId` by using `chatGroup()` function.
+This `roomID` can be obtained by loading room list, which has been explained in
 the previous chapter.
 
 Example:
 ```javascript
-QiscusSDK.core.UI.chatGroup('room_id')
+QiscusSDK.core.UI.chatGroup('roomID')
 ```
