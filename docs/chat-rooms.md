@@ -23,7 +23,7 @@ QiscusSDK.core.init({
 
 In the snippet above, we put `chatTarget` function inside an Event Handler
 called `loginSuccessCallback`
-(read in the next chapter for more detail about [Event Handler](link-event-handler)),
+(read in the next chapter for more detail about [Event Handler](/documentation/web/event-handler)),
 to enable chatting after user successfully logged into the app.
 
 > Please be noted that you can put chatTarget function anywhere you like.
