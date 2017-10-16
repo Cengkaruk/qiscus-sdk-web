@@ -17,7 +17,7 @@ Qiscus Chat SDK. If you cannot find Event Handler that suit your need, you
 can contact us at [contact.us@qiscus.com](mailto:contact.us@qiscus.com), so
 that we can consider it for your need.
 - [loginSuccessCallback](#loginsuccesscallback)
-- [newMessageCallback](#newmessagecallback)
+- [newMessageCallback](#newmesagescallback)
 - [chatRoomCreatedCallback](#chatroomcreatedcallback)
 - [groupRoomCreatedCallback](#grouproomcreatedcallback)
 - [headerClickedCallback](#headerclickedcallback)
