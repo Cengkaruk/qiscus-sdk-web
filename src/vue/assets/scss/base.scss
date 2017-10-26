@@ -26,7 +26,7 @@
     overflow: hidden;
   }
   ul#messages__comments {
-    height: calc(100vh - 98px) !important;
+    height: calc(100% - 98px) !important;
   }
 }
 @import '_chat-trigger.scss';

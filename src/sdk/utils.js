@@ -1,5 +1,3 @@
-
-
 export class GroupChatBuilder {
   /**
    * Create a group chat room builder.

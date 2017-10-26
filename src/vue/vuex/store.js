@@ -31,7 +31,7 @@ const state = {
   participants: QiscusSDK.participants,
   plugins: QiscusSDK.plugins,
   // mqtt: new MqttAdapter("wss://mqtt.qiscus.com:1886", callbacks),
-  mqtt: new MqttAdapter(mqttURL, MqttCallback),
+  mqtt: new MqttAdapter(mqttURL, MqttCallback, QiscusSDK),
   mqttData: {
     typing: ''
   },

@@ -27,6 +27,8 @@ export class qiscusSDK extends EventEmitter {
     self.pendingCommentId = 0
     self.last_received_comment_id = 0
     self.mqtt = null // I'll look into this later, basically we'll move mqtt from vuex to core
+    self.mqttURL = null
+    self.AppId = null
     self.chatmateStatus = ''
 
     // User Properties
@@ -152,7 +154,7 @@ export class qiscusSDK extends EventEmitter {
 
       // now that we have the token, etc, we need to set all our adapters
       // /////////////// API CLIENT /////////////////
-      self.HTTPAdapter = new HttpAdapter(self.baseURL)
+      self.HTTPAdapter  = new HttpAdapter(self.baseURL, self.AppId, self.email);
       self.HTTPAdapter.setToken(self.userData.token)
 
       // ////////////// CORE BUSINESS LOGIC ////////////////////////
@@ -241,8 +243,11 @@ export class qiscusSDK extends EventEmitter {
   init (config) {
     // Let's initialize the app based on options
     if (config.options) this.options = Object.assign({}, this.options, config.options)
-    this.baseURL = `https://${config.AppId}.qiscus.com`
     if (!config.AppId) throw new Error('AppId Undefined')
+    this.AppId = config.AppId;
+    this.baseURL = `https://${config.AppId}.qiscus.com`
+    if (config.baseURL) this.baseURL = config.baseURL;
+    if (config.mqttURL) this.mqttURL = config.mqttURL;
     // setup how sdk will sync data: socket, http, both
     if (config.sync) this.sync = config.sync
     // setup how sdk will set the layout, widget or wide 
@@ -376,7 +381,7 @@ export class qiscusSDK extends EventEmitter {
    * @param {string[]} emails - Participant to be invited
    * @returns {Promise.<Room, Error>} - Room detail
    */
-  createGroupRoom (name, emails, options) {
+  createGroupRoom (name, emails, options = {}) {
     const self = this
     if (!this.isLogin) throw new Error('Please initiate qiscus SDK first')
     return new GroupChatBuilder(this.roomAdapter)
@@ -386,6 +391,7 @@ export class qiscusSDK extends EventEmitter {
       .create()
       .then((res) => {
         self.emit('group-room-created', res)
+        return Promise.resolve(res);
       })
   }
 

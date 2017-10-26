@@ -2,7 +2,9 @@ import mqtt from 'mqtt';
 import {format} from 'date-fns';
 
 export default class MqttAdapter {
-  constructor(url, callbacks) {
+  constructor(url, callbacks, context) {
+    this.context = context;
+    if(this.context.mqttURL) url = this.context.mqttURL;
     this.mqtt = mqtt.connect(url, {
       will: {
         topic: `u/${qiscus.userData.email}/s`,

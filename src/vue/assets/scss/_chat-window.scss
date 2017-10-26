@@ -125,8 +125,10 @@ ul#messages__comments::-webkit-scrollbar-thumb {
 }
 .qcw-form-actions {
   position: absolute;
-  top: -9px; right: 5px;
+  bottom: 7px;
+  right: 5px;
   display: flex;
+  margin: 0;
   li {
     width: 35px; height: 35px;
     border-radius: 50%;
