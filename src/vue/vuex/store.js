@@ -31,7 +31,7 @@ const state = {
   participants: QiscusSDK.participants,
   plugins: QiscusSDK.plugins,
   // mqtt: new MqttAdapter("wss://mqtt.qiscus.com:1886", callbacks),
-  mqtt: new MqttAdapter(mqttURL, MqttCallback, QiscusSDK),
+  mqtt: null,
   mqttData: {
     typing: ''
   },
@@ -44,6 +44,9 @@ const state = {
 
 // Create an object storing various mutations. We will write the mutation
 const mutations = {
+  ACTIVATE_MQTT(state) {
+    state.mqtt = new MqttAdapter(mqttURL, MqttCallback, state.qiscus);
+  },
   TOGGLE_DEV_MODE (state) {
     state.dev_mode = !state.dev_mode
   },

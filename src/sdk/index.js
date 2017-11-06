@@ -149,7 +149,7 @@ export class qiscusSDK extends EventEmitter {
     self.on('login-success', function (response) {
       self.isLogin = true
       self.userData = response.results.user
-      
+
       if (this.sync == 'http' || this.sync == 'both') this.activateSync.call(this);
 
       // now that we have the token, etc, we need to set all our adapters
@@ -162,6 +162,7 @@ export class qiscusSDK extends EventEmitter {
       self.userAdapter = new UserAdapter(self.HTTPAdapter)
       self.roomAdapter = new RoomAdapter(self.HTTPAdapter)
       self.topicAdapter = new TopicAdapter(self.HTTPAdapter)
+      vStore.dispatch('activateMqtt');
       vStore.dispatch('subscribeUserChannel');
       if (self.options.loginSuccessCallback) self.options.loginSuccessCallback(response)
     })
@@ -250,7 +251,7 @@ export class qiscusSDK extends EventEmitter {
     if (config.mqttURL) this.mqttURL = config.mqttURL;
     // setup how sdk will sync data: socket, http, both
     if (config.sync) this.sync = config.sync
-    // setup how sdk will set the layout, widget or wide 
+    // setup how sdk will set the layout, widget or wide
     if (config.mode) this.mode = config.mode
     // initconfig for developer
     this.dev_mode = config.dev_mode || false
@@ -343,7 +344,7 @@ export class qiscusSDK extends EventEmitter {
           })
         return Promise.resolve(room)
       }, (err) => {
-        console.error('Error when creating room', err) 
+        console.error('Error when creating room', err)
         self.isLoading = false
         return Promise.reject(err)
       })
@@ -358,7 +359,7 @@ export class qiscusSDK extends EventEmitter {
         self.isLoading = false
         self.selected = room
         return room
-      }, (err) => { 
+      }, (err) => {
       })
       // Post initial comment
       .then((room) => {
@@ -411,14 +412,14 @@ export class qiscusSDK extends EventEmitter {
         if (!roomToFind) {
           let roomData = response.results.room
           roomData.name = roomData.room_name
-          roomData.room_type = 'group' 
+          roomData.room_type = 'group'
           roomData.comments = response.results.comments.reverse()
           room = new Room(roomData)
           self.room_name_id_map[room.name] = room.id
           self.rooms.push(room)
         } else {
           room = roomToFind
-        } 
+        }
         self.last_received_comment_id = (self.last_received_comment_id < room.last_comment_id) ? room.last_comment_id : self.last_received_comment_id
         self.selected = room || roomToFind
         self.isLoading = false
@@ -451,7 +452,7 @@ export class qiscusSDK extends EventEmitter {
           self.rooms.push(room)
         } else {
           room = roomToFind
-        } 
+        }
         self.last_received_comment_id = (self.last_received_comment_id < room.last_comment_id) ? room.last_comment_id : self.last_received_comment_id
         self.selected = room || roomToFind
         self.isLoading = false
@@ -467,9 +468,9 @@ export class qiscusSDK extends EventEmitter {
 
   /**
    * Set read status for selected comment
-   * 
-   * @param {int} room_id 
-   * @param {obj} comment 
+   *
+   * @param {int} room_id
+   * @param {obj} comment
    * @memberof qiscusSDK
    */
   updateCommentStatus(room_id, comment) {
@@ -485,7 +486,7 @@ export class qiscusSDK extends EventEmitter {
    * If comment count > 0 then we have new message
    */
   synchronize () {
-    vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, `1:${format(new Date(), 'x')}`);
+    vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, 1, {retain: true});
     this.userAdapter.sync(this.last_received_comment_id)
     .then((comments) => {
       if (comments.length > 0) this.emit('newmessages', comments)
@@ -605,7 +606,7 @@ export class qiscusSDK extends EventEmitter {
       // get the comment for current replied id
       var parsedPayload = JSON.parse(payload)
       var replied_message = self.selected.comments.find(cmt => cmt.id == parsedPayload.replied_comment_id)
-      parsedPayload.replied_comment_message = 
+      parsedPayload.replied_comment_message =
         (replied_message.type == 'reply') ? replied_message.payload.text
                                           : replied_message.message;
       parsedPayload.replied_comment_sender_username = replied_message.username_as
@@ -734,15 +735,17 @@ export class qiscusSDK extends EventEmitter {
     return rooms.map(room => {
       room.last_comment_id = room.last_comment.id;
       room.last_comment_message = room.last_comment.message;
+      room.last_comment_message_created_at = room.last_comment.timestamp;
+      room.room_type = room.chat_type;
       return new Room(room)
     });
   }
 
   /**
-   * 
+   *
    * Search Qiscus Messages
-   * 
-   * @param {any} [params={query,room_id,last_comment_id}] 
+   *
+   * @param {any} [params={query,room_id,last_comment_id}]
    * @memberof qiscusSDK
    */
   async searchMessages(params = {}) {
@@ -870,7 +873,7 @@ export class Comment {
 
     // supported comment type text, account_linking, buttons
     let supported_comment_type = [
-      'text','account_linking','buttons','reply','system_event','card', 'custom', 
+      'text','account_linking','buttons','reply','system_event','card', 'custom',
       'contact_person', 'location', 'file_attachment'
     ];
     this.type = (supported_comment_type.indexOf(comment.type) >= 0) ? comment.type : 'text';

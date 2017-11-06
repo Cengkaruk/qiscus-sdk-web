@@ -62,9 +62,9 @@ export default class HttpAdapter {
   setupHeaders (req, headers) {
     // let's give this default Authorization Header
     // req.set('Authorization', `Token token=${this.token}`);
-    req.set('QISCUS_SDK_APP_ID', `${this.AppId}`);
-    req.set('QISCUS_SDK_USER_ID', `${this.userId}`);
-    req.set('QISCUS_SDK_TOKEN', `${this.token}`);
+    req.set('qiscus_sdk_app_id', `${this.AppId}`);
+    req.set('qiscus_sdk_user_id', `${this.userId}`);
+    req.set('qiscus_sdk_token', `${this.token}`);
     // Return the req if no headers attached
     if (Object.keys(headers).length < 1) return req
     // now let's process custom header

@@ -122,5 +122,6 @@ export default {
   closeImageModal: ({commit}) => commit('CLOSE_IMAGE_MODAL'),
   subscribeUserChannel: ({commit}) => commit('SUBSCRIBE_USER_CHANNEL'),
   setNewCommentText: ({commit}, payload) => commit('SET_NEW_COMMENT_TEXT', payload),
+  activateMqtt: ({commit}) => commit('ACTIVATE_MQTT'),
 }
 // topic_id, last_comment_id, timestamp, after

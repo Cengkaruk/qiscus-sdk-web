@@ -8,7 +8,7 @@ export default class MqttAdapter {
     this.mqtt = mqtt.connect(url, {
       will: {
         topic: `u/${qiscus.userData.email}/s`,
-        payload: `0:${format(new Date(), 'x')}`,
+        payload: `0`,
         retain: true
       }
     })
@@ -46,7 +46,7 @@ export default class MqttAdapter {
   unsubscribe(topic) {
     this.mqtt.unsubscribe(topic);
   }
-  publish(topic, payload) {
-    this.mqtt.publish(topic, payload);
+  publish(topic, payload, options = {}) {
+    this.mqtt.publish(topic, payload, options);
   }
 }
