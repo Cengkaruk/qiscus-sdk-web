@@ -37,11 +37,9 @@ serve Sample App locally.
 # Install http-server from npm globally
 $ npm install http-server -g
 # Choose folder and run Web SDK Sample
-$ cd qiscus-sdk-web-sample/sample-default
+$ cd qiscus-sdk-web-sample
 $ http-server
 ```
-> There are 3 folders inside Web SDK Sample APP: sample-default, sample-native,
-> sample-customized
 
 ## Try sample App Online
 If You are too busy to clone and do steps above, you can simply try
