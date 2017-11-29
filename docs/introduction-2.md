@@ -114,7 +114,11 @@ to know more about Server API.
 > Note: We assume that you already downloaded the sample app. The sample app
 > will be needed to work together with the sample dashboard.
 
-To start with sample dashboard, you should do the following steps:
+You can explore the sample dashboard [here](https://dashboard-sample.herokuapp.com)
+to try it online, or you also can download the source code to deploy it locally or to
+your own server.
+
+To start trying sample dashboard on your end, you should do the following steps:
 clone sample dashboard [here](https://github.com/qiscus/dashboard-sample),
 or just copy the following code:
 ```bash
