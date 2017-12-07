@@ -140,12 +140,25 @@ To enable your client app to get list of users, you need to set your APP ID and 
 Example: //dashboard-sample.herokuapp.com/api/contacts
 ```
 You will get the response as follow:
-```json
-{"results":{ "meta":{ "total_data":123, "total_page":6 },
-"users":[ { "avatar_url":"https:\/\/d1edrlpyc25xu0.cloudfront.net\/kiwari-prod\/image\/upload\/75r6s_jOHa\/1507541871-avatar-mine.png",
- "created_at":"2017-12-05T08:07:58.405896Z",
-"email":"tesweqeq", "id":452773,
-"name":"tesweqeq",
-"updated_at":"2017-12-05T08:07:58.405896Z",
-"username":"tesweqeq" } ] }, "status":200 }
+```JSON
+{
+   "results":{
+      "meta":{
+         "total_data":123,
+         "total_page":6
+      },
+      "users":[
+         {
+            "avatar_url":"https:\/\/d1edrlpyc25xu0.cloudfront.net\/kiwari-prod\/image\/upload\/75r6s_jOHa\/1507541871-avatar-mine.png",
+            "created_at":"2017-12-05T08:07:58.405896Z",
+            "email":"sample@email.com",
+            "id":452773,
+            "name":"sample",
+            "updated_at":"2017-12-05T08:07:58.405896Z",
+            "username":"sample"
+         }
+      ]
+   },
+   "status":200
+}
 ```
