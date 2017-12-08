@@ -27,10 +27,13 @@ picture as a reference.
 ## Authentication
 
 To authenticate to SDK server, app needs to have user credential locally stored for further requests. The credential consists of a token that will identify a user in SDK server. When you want to disconnect from SDK server, terminating authentication will be done by clearing the stored credential. You can learn more about disconnecting from Qiscus Chat SDK in the next section. Qiscus SDK authentication can be done separately with your main app authentication, especially if your main app has functionality before the messaging features.
-There are 2 type of authentication that you can opt to use: Client Authentication and Server Authentication. Here some comparison to help you decide between the two options:
 
-Client Authentication can be done simply by providing userID and userKey through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend.
-The Client Authentication is easier to implement but Server Authentication is more secure.
+There are 2 type of authentication that you can opt to use: Client Authentication and Server Authentication.
+Here some comparison to help you decide between the two options:
+
+* Client Authentication can be done simply by providing userID and userKey through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend. 
+* The Client Authentication is easier to implement but Server Authentication is more secure.
+
 
 ### Configuration
 
