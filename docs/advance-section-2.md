@@ -16,7 +16,7 @@ The steps to authenticate with JWT goes like this:
 <p align="center"><br/><img src="https://raw.githubusercontent.com/qiscus/qiscus-sdk-android/develop/screenshot/jwt.png" width="80%" /><br/></p>
 
 You need to request Nonce from Qiscus Chat SDK Server. Nonce (Number Used Once) is a unique, randomly generated string used to identify a single request. Please be noted that a Nonce will expire in 10 minutes. So you need to implement your code to request JWT from your backend right after you got the returned Nonce. Here is how to authenticate to Qiscus Chat SDK using JWT :
-
+```javascript
 QiscusSDK.core.getNonce()
         .then((res) => {
         
@@ -25,7 +25,7 @@ QiscusSDK.core.getNonce()
 
 
         }, err => this.setErrorMessage(`Failed getting auth nonce ${err}`));
-
+```
 The code above is a sample of method you can implement in your app. By calling QiscusSDK.core.getNonce(), you will request Nonce from Qiscus SDK server and a Nonce will be returned. If it is success, you can request JWT from your backend by sending Nonce you got from Qiscus SDK Server. 
 When you got the JWT Token, you can pass that JWT to QiscusSDK.core.verifyIdentityToken method to allow Qiscus to authenticate your user and return user account through QiscusSDK.core.setUserWithIdentityToken(Response), as shown in the code below :
 
