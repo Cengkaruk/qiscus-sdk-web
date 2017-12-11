@@ -104,15 +104,15 @@ You can explore the sample dashboard http://dashboard-sample.herokuapp.com/login
 To start trying the sample dashboard on your end, you should carry out the following steps:
 Clone sample dashboard in our [github](https://github.com/qiscus/dashboard-sample), or just copy the following code.
 ```bash
-$ git clone https://github.com/qiscus/dashboard-sample.git
-$ cd dashboard-sample
+git clone https://github.com/qiscus/dashboard-sample.git
+cd dashboard-sample
 ```
 
 Before running the sample app on your local, first, you need to install
 composer.
 ```bash
-$ composer install
-$ php -S localhost:8000
+composer install
+php -S localhost:8000
 ```
 > The sample dashboard provided Client API to enable your sample app get list of users. This API is based on PHP and used Composer as its dependency manager. Thus, you need to have PHP and composer installed to use the API.
 
