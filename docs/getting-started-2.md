@@ -4,9 +4,7 @@
 
 Qiscus Web Chat SDK, for now , supports Chrome 40+, Firefox 48+, and Microsoft Edge.
 
-You will need to get our Web Chat SDK files either from our [repository](https://github.com/qiscus/qiscus-sdk-web/releases)page manually, or from our CDN.
-To get it via CDN, You need first to download the [JavaScript file](https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.js) and [CSS file.](https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.css)
-
+You will need to get our Web Chat SDK files either from our CDN by including `https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.js` for the js file and `https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.css` for the css file.
 
 ## Get Your App ID
 
