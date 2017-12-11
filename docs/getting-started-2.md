@@ -69,10 +69,10 @@ QiscusSDK.core.setUser('sample@qiscus.com', 'userKey', 'Qiscus Demo' , ‘http:/
 ```
 Below are some notes to understand parameters within the ```setUser()``` function: 
 
-**userID** (string, unique): A User identifier that will be used to identify a user and used whenever another user needs to chat with this user. It can be anything, whether it is the user's email address, your user database index, etc. as long as it is unique and a string. 
-**userKey** (string) : userKey is used as for authentication purposes, so even if a stranger knows your userId, he cannot access the user data. 
-**username** (string) : Username is used as a display name inside chat room. 
-**avatar_url** (string, optional) : used to display user’s avatar, and fallback to default avatar if not provided. 
+* **userID** (string, unique): A User identifier that will be used to identify a user and used whenever another user needs to chat with this user. It can be anything, whether it is the user's email address, your user database index, etc. as long as it is unique and a string. 
+* **userKey** (string) : userKey is used as for authentication purposes, so even if a stranger knows your userId, he cannot access the user data. 
+* **username** (string) : Username is used as a display name inside chat room. 
+* **avatar_url** (string, optional) : used to display user’s avatar, and fallback to default avatar if not provided. 
 
 You can learn from the figure below to understand what really happens when calling ```setUser()``` function :
 
