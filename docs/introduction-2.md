@@ -72,7 +72,7 @@ be used to clone the repository so you can play around with the code locally.
 NodeJS is needed to install and resolve dependencies to run the Sample App.
 You can refer to their respected page for more detail installing them both.
 
-You can download sample directly from out github [here](https://github.com/qiscus/qiscus-sdk-web-sample),
+You can download the sample app directly from our [github](https://github.com/qiscus/qiscus-sdk-web-sample),
 or if you already installed Git you can just clone directly from your command
 line.
 ```bash
