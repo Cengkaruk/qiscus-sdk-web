@@ -784,16 +784,21 @@ export class qiscusSDK extends EventEmitter {
   getNonce() {
     // request.set('qiscus_sdk_user_id', `${this.userId}`);
     // request.set('qiscus_sdk_to', `${this.token}`);
-    return request.post(`${this.baseURL}/api/v2/sdk/auth/nonce`)
-      .send().set('qiscus_sdk_app_id', `${this.AppId}`)
-      .then(res => Promise.resolve(res.body.results), 
+    console.log('getNonce ->', 'this.AppId ->', this.AppId)
+    return request
+    .post(`${this.baseURL}/api/v2/sdk/auth/nonce`)
+    .send()
+    .set('qiscus_sdk_app_id', `${this.AppId}`)
+    .then(res => Promise.resolve(res.body.results),
         err => Promise.reject(err));
   }
 
   verifyIdentityToken(identity_token) {
-    return request.post(`${this.baseURL}/api/v2/sdk/auth/verify_identity_token`)
-      .send({identity_token}).set('qiscus_sdk_app_id', `${this.AppId}`)
-      .then(res => Promise.resolve(res.body.results), 
+    return request
+      .post(`${this.baseURL}/api/v2/sdk/auth/verify_identity_token`)
+      .send({identity_token})
+      .set('qiscus_sdk_app_id', `${this.AppId}`)
+      .then(res => Promise.resolve(res.body.results),
         err => Promise.reject(err));
   }
 
