@@ -65,7 +65,7 @@ To meet your expectations, we suggest you try out our sample app. The sample app
 1. Try Sample App only or
 2. Try Sample App with Sample Dashboard
 
-## Try Sample App Only
+### Try Sample App Only
 
 To run all of the sample code, you need to install Git and NodeJS. Git will
 be used to clone the repository so you can play around with the code locally.
