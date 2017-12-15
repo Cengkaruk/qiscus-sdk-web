@@ -7,6 +7,7 @@ import compose from 'lodash/fp/compose'
 import reverse from 'lodash/fp/reverse'
 import value from 'lodash/fp/value'
 import reduce from 'lodash/fp/reduce'
+import request from 'superagent'
 import {distanceInWordsToNow, format} from 'date-fns'
 
 import HttpAdapter from './adapters/http'
@@ -39,6 +40,7 @@ export class qiscusSDK extends EventEmitter {
       avatar: true,
       mode: 'widget',
     }
+    self.extras = null;
 
     // SDK Configuration
     self.baseURL     = null
@@ -57,7 +59,7 @@ export class qiscusSDK extends EventEmitter {
      * This code below is wrapper for vStore object
      */
     self.UI = {
-      chatTarget (email, options) {
+      chatTarget (email, options = {}) {
         if (!self.isInit) return
         vStore.dispatch('chatTarget', {email, options})
         .then(() => {
@@ -148,7 +150,7 @@ export class qiscusSDK extends EventEmitter {
      */
     self.on('login-success', function (response) {
       self.isLogin = true
-      self.userData = response.results.user
+      self.userData = response.user
 
       if (this.sync == 'http' || this.sync == 'both') this.activateSync.call(this);
 
@@ -231,8 +233,18 @@ export class qiscusSDK extends EventEmitter {
     this.connectToQiscus().then((response) => {
       if(response.status != 200) return this.emit('login-error', response.error)
       this.isInit = true
-      this.emit('login-success', response)
+      this.emit('login-success', response.results)
     })
+  }
+
+  setUserWithIdentityToken(data) {
+    if(!data || !'user' in data) return this.emit('login-error', data);
+    this.email = data.user.email;
+    this.key = data.identity_token;
+    this.username = data.user.username;
+    this.avatar_url = data.user.avatar_url;
+    this.isInit = true;
+    this.emit('login-success', data)
   }
 
   /**
@@ -588,6 +600,8 @@ export class qiscusSDK extends EventEmitter {
   submitComment (topicId, commentMessage, uniqueId, type = 'text', payload) {
     var self = this
     var room = self._getRoomOfTopic(topicId)
+    // set extra data, etc
+    if (self.options.prePostCommentCallback) self.options.prePostCommentCallback(commentMessage);
     self.pendingCommentId--
     var pendingCommentDate = new Date()
     var commentData = {
@@ -616,7 +630,8 @@ export class qiscusSDK extends EventEmitter {
     }
     self.selected.comments.push(pendingComment)
 
-    return this.userAdapter.postComment(topicId, commentMessage, pendingComment.unique_id, type, payload)
+    const extrasToBeSubmitted = self.extras;
+    return this.userAdapter.postComment(topicId, commentMessage, pendingComment.unique_id, type, payload, extrasToBeSubmitted)
     .then((res) => {
       // When the posting succeeded, we mark the Comment as sent,
       // so all the interested party can be notified.
@@ -728,12 +743,16 @@ export class qiscusSDK extends EventEmitter {
 
   sortComments () {
     this.selected.comments.sort(function (leftSideComment, rightSideComment) {
-      return leftSideComment.id - rightSideComment.id
+      if(rightSideComment.id < 0) return 0
+      if(rightSideComment.id < leftSideComment.id) return 1
+      if(rightSideComment.id > leftSideComment.id) return -1
+      return 0
+      // return leftSideComment.id - rightSideComment.id
     })
   }
 
   async loadRoomList (params = {}) {
-    const rooms = await this.userAdapter.loadRoomList({query: params});
+    const rooms = await this.userAdapter.loadRoomList(params);
     return rooms.map(room => {
       room.last_comment_id = room.last_comment.id;
       room.last_comment_message = room.last_comment.message;
@@ -755,6 +774,24 @@ export class qiscusSDK extends EventEmitter {
     return messages.map(message => {
       return new Comment(message);
     });
+  }
+
+  getNonce() {
+    request.set('qiscus_sdk_app_id', `${this.AppId}`);
+    // request.set('qiscus_sdk_user_id', `${this.userId}`);
+    // request.set('qiscus_sdk_token', `${this.token}`);
+    return request.post(`${this.baseURL}/api/v2/sdk/auth/nonce`)
+      .send()
+      .then(res => Promise.resolve(res.body.results), 
+        err => Promise.reject(err));
+  }
+
+  verifyIdentityToken(identity_token) {
+    request.set('qiscus_sdk_app_id', `${this.AppId}`);
+    return request.post(`${this.baseURL}/api/v2/sdk/auth/verify_identity_token`)
+      .send({identity_token})
+      .then(res => Promise.resolve(res.body.results), 
+        err => Promise.reject(err));
   }
 
 }
@@ -858,6 +895,7 @@ export class Comment {
     this.unique_id             = comment.unique_temp_id || comment.unique_id
     this.avatar                = comment.user_avatar_url
     this.room_id               = comment.room_id
+    this.extras                = comment.extras
     /* comment status */
     this.isPending             = false
     this.isFailed              = false

@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
+var WebpackBundleSizeAnalyzerPlugin = require('webpack-bundle-size-analyzer').WebpackBundleSizeAnalyzerPlugin;
 
 module.exports = {
   entry: {
@@ -17,7 +18,8 @@ module.exports = {
     libraryTarget: 'umd'
   },
   plugins: [
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new WebpackBundleSizeAnalyzerPlugin('./plain-report.txt')
   ],
   resolve: {
     extensions: ['', '.js', '.vue'],

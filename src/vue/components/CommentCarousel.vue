@@ -11,8 +11,8 @@
       </transition-group>
     </div>
     <ul class="qcw-carousel__nav">
-      <li @click="pref"><i><icon name="ic-chevron-left"></i></i></li>
-      <li @click="next"><i><icon name="ic-chevron-right"></i></i></li>
+      <li @click="pref"><i><icon name="ic-chevron-left"></icon></i></li>
+      <li @click="next"><i><icon name="ic-chevron-right"></icon></i></li>
     </ul>
     <!-- bullets -->
     <ul class="carousel__bullets">

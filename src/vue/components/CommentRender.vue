@@ -1,6 +1,7 @@
 <template>
-<div>
-  <div v-html="rendered_text" class="qcw-comment__content"></div>
+  <div>
+    <div v-html="rendered_text" class="qcw-comment__content"></div>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,3 @@
-// import store from 'store';
-
 export default class User {
   /**
   * Params used in this class
@@ -12,13 +10,15 @@ export default class User {
     this.token = HTTPAdapter.token
   }
 
-  postComment (topicId, commentMessage, uniqueId, type, payload) {
-    return this.HTTPAdapter.post(`api/v2/sdk/post_comment`, {
+  postComment (topicId, commentMessage, uniqueId, type, payload, extras) {
+    const body = {
       token: this.token, comment: commentMessage, 
       topic_id: topicId, unique_temp_id: uniqueId,
       type: type,
-      payload: payload
-    })
+      payload: payload,
+      extras
+    }
+    return this.HTTPAdapter.post(`api/v2/sdk/post_comment`, body)
     .then((res) => {
       return new Promise((resolve, reject) => {
         if (res.body.status !== 200) return reject(res)
@@ -58,9 +58,9 @@ export default class User {
 
   loadRoomList(params = {}) {
     let body = `?token=${this.token}`;
-    (params.page) ? body += '&page' + params.page : null;
-    (params.show_participants) ? body += '&show_participants' + params.show_participants : true;
-    (params.limit) ? body += '&limit' + params.limit : null;
+    (params.page) ? body += '&page=' + params.page : null;
+    (params.show_participants) ? body += '&show_participants=' + params.show_participants : true;
+    (params.limit) ? body += '&limit=' + params.limit : null;
     return this.HTTPAdapter.get(`api/v2/sdk/user_rooms${body}`)
     .then((res) => {
       return new Promise((resolve, reject) => {
@@ -85,5 +85,4 @@ export default class User {
       .then((res) => Promise.resolve(res.body.results.comments))
       .catch((error) => Promise.reject(error))
   }
-
 }

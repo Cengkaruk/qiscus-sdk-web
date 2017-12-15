@@ -9,7 +9,7 @@ function unsetPresence(state) {
   if(qiscus.selected) {
     const targetEmail = qiscus.selected.participants
       .find(target => target.email != qiscus.email);
-    if(targetEmail) state.mqtt.unsubscribe(`u/${targetEmail.email}/s`);
+    if(targetEmail) state.mqtt.unsubscribe(`u/+/s`);
   }
 }
 function setPresence(state, email) {
@@ -70,12 +70,7 @@ const mutations = {
     state.mqttData.typing = '';
 
     // set presence, ambil email yang lama
-    setPresence(state);
-    if(qiscus.selected) {
-      const targetEmail = qiscus.selected.participants
-        .find(target => target.email != qiscus.email);
-      if(targetEmail) state.mqtt.unsubscribe(`u/${targetEmail.email}/s`);
-    }
+    setPresence(state, email);
   },
   CHAT_GROUP (state, {id, oldSelected}) {
     unsetPresence(state);
@@ -121,8 +116,8 @@ const mutations = {
     }
   },
   SET_READ (state, payload) {
-    state.mqtt.publish(`r/${state.selected.id}/${state.selected.last_comment_topic_id}/${state.qiscus.email}/d`, `${payload.id}:${payload.unique_id}`);
-    state.mqtt.publish(`r/${state.selected.id}/${state.selected.last_comment_topic_id}/${state.qiscus.email}/r`, `${payload.id}:${payload.unique_id}`);
+    state.mqtt.publish(`r/${payload.room_id}/${payload.id}/${state.qiscus.email}/d`, `${payload.id}:${payload.unique_id}`);
+    state.mqtt.publish(`r/${payload.room_id}/${payload.id}/${state.qiscus.email}/r`, `${payload.id}:${payload.unique_id}`);
     state.selected = QiscusSDK.selected;
   },
   SET_DELIVERED(state, payload) {

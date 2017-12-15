@@ -6,7 +6,7 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script>
     <style>
       *, *:before, *:after { box-sizing: border-box; }
       body { font-family: sans-serif; color: #444; margin: 0 auto; padding: 0; background: #4c4c4c; }
@@ -52,32 +52,50 @@
     </div>
     <script>
       $(function(){
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var curUser = url.searchParams.get("login_as");
+        var targetUser = url.searchParams.get("target") || 'guest@qiscus.com';
         // add listener to li
         $('.participants li').on('click', function(){
           QiscusSDK.core.UI.chatTarget($(this).data('email'));
         });
         
         QiscusSDK.core.init({
-          AppId: 'dragongo',
-          // baseURL: 'http://52.77.222.229:5003',
-          // mqttURL: 'wss://52.77.222.229:5003',
+          AppId: 'sdksample',
           options: {
             avatar: false,
+            prePostCommentCallback(data) {
+              QiscusSDK.core.extras = JSON.stringify({title:'Test extras',body: data});
+            },
+            loginSuccessCallback(response) {
+              QiscusSDK.core.UI.chatTarget(targetUser);
+            },
             headerClickedCallback(response) {
               console.info('header di click', response);
             },
             newMessagesCallback(response) {
               console.info('incoming new message', response);
+            },
+            presenceCallback(response) {
+              console.info('presence', response);
             }
           }
         });
-        QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'fikri');
+        // QiscusSDK.core.getNonce()
+        //   .then(res => {
+        //     return QiscusSDK.core.setUserWithIdentityToken(res.nonce);
+        //   }, err => console.info('isi error', err))
+        //   .then(res => {
+        //     QiscusSDK.core.render();
+        //   })
+        if(curUser){
+          QiscusSDK.core.setUser(curUser, 'password', 'Qiscus Guest', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/s322Ji9RLe/1507605762-Rubick_icon.png');
+        } else {
+          QiscusSDK.core.setUser('e@qiscus.com', 'password', 'Evan', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/ixIrQHwz2w/1507605797-Lifestealer_icon.png');
+        }
+        // QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'fikri');
         QiscusSDK.render();
-        // qiscus.init({
-        //   AppId: 'dragongo',
-        //   plugins: ['emoji'],
-        //   mode: 'wide',
-        // });
       })
     </script>
     <!-- built files will be auto injected -->
