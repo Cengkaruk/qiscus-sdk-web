@@ -189,12 +189,12 @@ export default {
       }, 0)
     }
   },
-  watch: {
-    // whenever question changes, this function will run
-    newCommentText: function (newInput) {
-      this.commentInput = newInput
-    }
-  },
+  // watch: {
+  //   // whenever question changes, this function will run
+  //   newCommentText: function (newInput) {
+  //     this.commentInput = newInput
+  //   }
+  // },
   methods: {
     // toggleEmoji() {
     //   this.showEmojiPicker = !this.showEmojiPicker;
