@@ -5,6 +5,9 @@
       'qcw-container--not-init': !init
     }">
     <svg-icon></svg-icon>
+    <!-- <picker set="emojione" :exclude="excludedEmoji" title="" 
+      @click="addEmoji" class="qcw-emoji-picker" 
+      :class="{'qcw-emoji-picker--active': toggleEmoji}" v-if="showEmojiPicker" /> -->
     <div class="comment-loading-container" v-if="isLoading">
       <loader width="150px" height="150px"></loader>
     </div>
@@ -83,6 +86,9 @@
           v-model="commentInput">
         </textarea>
         <ul class="qcw-form-actions">
+          <!-- <li v-if="emojione" @click="toggleEmoji">
+            <icon name="ic-smiley"></icon>
+          </li>end of picker -->
           <li @click="toggleActions">
             <icon name="ic-attachment" v-if="!showActions"></icon>
             <icon name="ic-close" v-if="showActions"></icon>
@@ -96,17 +102,31 @@
 
 <style lang='scss'>
 .qcw-room-avatar {
-  max-width: 25px;
-  max-height: 25px;
+  width: 25px;
+  height: 25px;
   position: absolute;
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
   border-radius: 50%;
 }
+.emoji-mart.qcw-emoji-picker {
+  position: absolute;
+  bottom: 50px;
+  z-index: 998;
+}
+.qcw-container .emoji-mart-scroll {
+  height: 150px !important;
+}
+.qcw-comment__content .emojione {
+  max-width: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
 </style>
 
 <script>
+// import { Picker } from 'emoji-mart-vue'
 import Loader from './Loader.vue'
 import Comment from './Comment.vue'
 import SvgIcon from './SVGIcon.vue'
@@ -142,6 +162,11 @@ export default {
       showActions: false,
       scrollable: false,
       replied_comment: null,
+      emojione: (typeof emojione != 'undefined') ? true : false,
+      // showEmojiPicker: false,
+      // excludedEmoji: ['flags', 'objects', 'recent'],
+      // emojiSize: 16,
+      // sheetSize: 16,
     }
   },
   created() {
@@ -164,16 +189,22 @@ export default {
       }, 0)
     }
   },
-  watch: {
-    // whenever question changes, this function will run
-    newCommentText: function (newInput) {
-      this.commentInput = newInput
-    }
-  },
+  // watch: {
+  //   // whenever question changes, this function will run
+  //   newCommentText: function (newInput) {
+  //     this.commentInput = newInput
+  //   }
+  // },
   methods: {
+    // toggleEmoji() {
+    //   this.showEmojiPicker = !this.showEmojiPicker;
+    // },
     toggleActions() {
       this.showActions = !this.showActions
     },
+    // addEmoji(emoji) {
+    //   this.commentInput = this.commentInput + emoji.native;
+    // },
     publishTyping() {
       const self = this;
       if(self.commentInput.length > 0){
