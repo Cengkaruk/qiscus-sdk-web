@@ -13,7 +13,7 @@ Talking about chat app, you may figure out such messenger app like Whatsapp. You
 might have familiar with the flow, how to start conversation, and do things,
 like sharing image inside chat room. If you want to create chat app, for
 customer service, for instance, Qiscus Chat SDK enable you to establish chat UI
-and functionalities easily. But before dive into it, there are essential basic
+and functionalities easily. But before diving into it, there are essential basic
 knowledges you need to know about chat app.
 
 ### 3 Basic Flow of Chat App
@@ -36,7 +36,7 @@ comunication infrastructure that resides inside a chat room.
 In spite or real-time chat, Qiscus Chat SDK provides UI that can be customized
 according to your needs. But please keep in mind that, by default, Qiscus
 provides UI for chat room only. If you need to create contact list and
-conversation list UI, for example, you need to create it your own. However,
+conversation list UI, for example, you need to create it on your own. However,
 we provide essential data that you can get and utilize for your app.
 
 ## Qiscus Chat SDK Features
@@ -107,14 +107,14 @@ git clone https://github.com/qiscus/dashboard-sample.git
 cd dashboard-sample
 ```
 
-Before running the sample app on your local, first, you need to install composer.
+Before running the sample app on your local machine, first, you need to install dependencies using composer.
 ```bash
 composer install
 php -S localhost:8000
 ```
-> The sample dashboard provided Client API to enable your sample app get list of users. This API is based on PHP and used Composer as its dependency manager. Thus, you need to have PHP and Composer installed to use the API.
+> The sample dashboard provided Client API to enable your sample app getting list of users. This API is based on PHP and used Composer as its dependency manager. Thus, you need to have PHP and Composer installed to use the API.
 
-Now you would have successfully run the sample dashboard. However, do note that the sample app is running using our App ID. If you want the sample dashboard to be connected to your app with your own App ID, you need to change it inside *.env file*. You can find your own App ID and Secret Key in your own [Qiscus SDK dashboard](https://www.qiscus.com/dashboard).
+Now you would have successfully run the sample dashboard. However, do note that the sample app is running using our `App ID`. If you want the sample dashboard to be connected to your app with your own App ID, you need to change it inside *.env file*. You can find your own App ID and Secret Key in your own [Qiscus SDK dashboard](https://www.qiscus.com/dashboard).
 
 If you are wondering how our sample app with dashboard worked, here some
 ilustration:
@@ -125,7 +125,7 @@ There are 2 Server API that are used inside Qiscus Sample Dashboard:
 1. ```.qiscus.com/api/v2.1/rest/get_user_list``` to get list of users from Qiscus SDK database, and
 2. ```.qiscus.com/api/v2/rest/login_or_register``` to enable user login or register via Sample Dashboard.
 
-The Sample Dashboard called these APIs inside main.js file. To use these APIs, you need to pass your APP ID and  set method and request parameter. 
+The Sample Dashboard called these APIs inside `main.js file`. To use these APIs, you need to pass your `APP ID` then set method and request parameter. 
 
 To set method and request parameter, you can refer to [Get User List](https://www.qiscus.com/documentation/rest/list-api#get-user-list) and [Login and Register](https://www.qiscus.com/documentation/rest/list-api#login-or-register) in Server API Documentation.
 
@@ -133,7 +133,7 @@ To set method and request parameter, you can refer to [Get User List](https://ww
 //your-domain.com/api/contacts
 Example: //dashboard-sample.herokuapp.com/api/contacts
 ```
-You will get the response as follow:
+You will get response as follow:
 ```JSON
 {
    "results":{
@@ -160,7 +160,7 @@ You will get the response as follow:
 
 ## Requirement 
 
-Qiscus Web Chat SDK, for now , supports Chrome 40+, Firefox 48+, and Microsoft Edge.
+Qiscus Web Chat SDK, for now, supports Chrome 40+, Firefox 48+, and Microsoft Edge.
 You will need to get our Web Chat SDK files from our CDN by including the Js and Css file.
 **Qiscus SDK Js File**
 ```
@@ -172,11 +172,11 @@ https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.c
 ```
 ## Get Your App ID
 
-To start building app using Qiscus Web Chat SDK you need a key called APP ID.
-This APP ID acts as identifier of your Application so that Qiscus can connect
-your user to other users on the same APP ID. You can get your APP ID here.
+To start building app using Qiscus Web Chat SDK you need a key called `APP ID`.
+This `APP ID` acts as identifier of your Application so that Qiscus can connect
+your user to other users on the same `APP ID`. You can get your `APP ID` [here](https://www.qiscus.com/dashboard).
 
-You can find your APP ID on your Qiscus app dashboard. Here you can see the
+You can find your `APP ID` on your Qiscus app dashboard. Here you can see the
 picture as a reference.
 
 ![App ID Location](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/app-id.png "Your APP ID location")
@@ -193,7 +193,7 @@ To authenticate to SDK server, app needs to have user credential locally stored 
 There are 2 type of authentication that you can opt to use: Client Authentication and Server Authentication.
 Here some comparison to help you decide between the two options:
 
-* Client Authentication can be done simply by providing userID and userKey through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend. 
+* Client Authentication can be done simply by providing `userID` and `userKey` through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need to prepare your own Backend. 
 * The Client Authentication is easier to implement but Server Authentication is more secure.
 
 
@@ -207,7 +207,7 @@ To configure Qiscus Web Chat SDK, you need to include SDK files that you get fro
 <!-- put on before closing tag of body tag -->
 <script src="path/to/qiscus-sdk.js"></script>
 ```
-To initiate your chat app using Qiscus Chat SDK, you need to include the APP ID that you obtained from your dashboard. Inside this init function, you can put more "options" according to what your app needs. For example, here we put an Event Handler ( ```loginSuccessCallback```) which will return information after the user has received a message (userData). You can, then, do something with that information inside the Event Handler. You can learn more about [Event Handler](https://www.qiscus.com/documentation/web/advanced-section), in the next chapter. Here is the sample code of how to initiate your APP ID and calling Event Handler : 
+To initiate your chat app using Qiscus Chat SDK, you need to include the `APP ID` that you obtained from your dashboard. Inside this `init function`, you can put more "options" according to what your app needs. For example, here we put an Event Handler ( ```loginSuccessCallback```) which will return information after the user has received a message (`userData`). You can, then, do something with that information inside the Event Handler. You can learn more about [Event Handler](https://www.qiscus.com/documentation/web/advanced-section), in the next chapter. Here is the sample code of how to initiate your APP ID and calling Event Handler : 
 
 ```html
 QiscusSDK.core.init({
@@ -224,16 +224,16 @@ QiscusSDK.core.init({
 
 ### Client Authentication
 
-You can do this easily authenticate your user by calling QiscusSDK.core.setUser() function. This function is used to login or register your user as well as setting and updating user profiles. Here is an example⁠⁠⁠⁠ :
+You can easily authenticate your user by calling `QiscusSDK.core.setUser()` function. This function is used to login or register your user as well as setting and updating user profiles. Here is an example⁠⁠⁠⁠ :
 
 ```html
 QiscusSDK.core.setUser('sample@qiscus.com', 'userKey', 'Qiscus Demo' , ‘http://some-url.com/avatar.png’);
 ```
 Below are some notes to understand parameters within the ```setUser()``` function: 
 
-* **userID** (string, unique): A User identifier that will be used to identify a user and used whenever another user needs to chat with this user. It can be anything, whether it is the user's email address, your user database index, etc. as long as it is unique and a string. 
-* **userKey** (string) : userKey is used as for authentication purposes, so even if a stranger knows your userId, he cannot access the user data. 
-* **username** (string) : Username is used as a display name inside chat room. 
+* **userID** (string, unique): A User identifier that will be used to identify a user and used whenever another user needs to chat with this user. It can be anything, whether it is the user's email address, your user database index, etc. as long as it is **unique** and a **string**. 
+* **userKey** (string) : `userKey` is used as for authentication purposes, so even if a stranger knows your userId, he cannot access the user data. 
+* **username** (string) : `Username` is used as a display name inside chat room. 
 * **avatar_url** (string, optional) : used to display user’s avatar, and fallback to default avatar if not provided. 
 
 You can learn from the figure below to understand what really happens when calling ```setUser()``` function :
@@ -242,25 +242,28 @@ You can learn from the figure below to understand what really happens when calli
 
 ## Create Chat Room
 
-**Chat Room** is a place where 2 or more users can chat with one another**.** There are 2 types of Chat Rooms that can be created using Qiscus Chat SDK: 1-on-1 Chat Room and Group Chat Room. For some cases, a room can be identified by the room's unique id or room name. All activities under Qiscus Chat SDK is inside this Chat Room. You can do whatever you need with the available chat features.
+**Chat Room** is a place where 2 or more users can chat with one another**.** There are 2 types of Chat Rooms that can be created using Qiscus Chat SDK: `1-on-1 Chat Room` and `Group Chat Room`. For some cases, a room can be identified by the room's `unique id` or `room name`. All activities under Qiscus Chat SDK is inside this Chat Room. You can do whatever you need with the available chat features.
 
-To start creating Chat Room you need to first creating a container, then rendering Chat UI. Container is an element where Qiscus Web SDK Chat feature will be rendered into. To define container, you need to include ```<div id="qiscus-widget"></div>``` tag before closing the body tag. Here’s an example: 
+To start creating Chat Room you need to create a container first, then render the Chat UI. `Container` is an element where Qiscus Web SDK Chat feature will be rendered into. To define container, you need to include ```<div id="qiscus-widget"></div>``` tag before the closing body tag. Here’s an example: 
 
 ```html
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link rel="stylesheet" href="path/to/qiscus-sdk.css">
 </head>
 <body>
   <!-- append the snippet below, before closing body tag -->
   <div id="qiscus-widget"></div>
+  <script src="path/to/qiscus-sdk.js"></script>
+  ...
 </body>
 </html>
 ```
 Don’t forget to save your file as HTML file.
 
->id value “qiscus-widget” is fixed. For now you cannot change it to anything else.
+> id value “qiscus-widget” is fixed. For now you cannot change it to anything else.
 
 After creating a container, you need to render Qiscus Chat UI by calling render function.
 ```html
@@ -281,11 +284,13 @@ Here is the complete code.
 
 ## 1-on-1 Chat Room
 
-1-on-1 Chat Room is a room which contains only 2 participants. In this room,
+`1-on-1 Chat Room` is a room which contains only 2 participants. In this room,
 users will always enter the same room to chat each other and load previous
 conversations. Here is the code to create 1-on-1 Chat Room using Qiscus Chat SDK.
 
 `QiscusSDK.core.UI.chatTarget('[userId]')`
+
+The code will load chat room previously created with the intended participants or create a new one if there is no record of it. It will also trigger the widget to expand if it's in minimized mode.
 
 Here is the complete example of how to put `chatTarget` function:
 ```javascript
@@ -299,7 +304,7 @@ QiscusSDK.core.init({
 })
 ```
 
-In the snippet above, we put chatTarget function inside an Event Handler called
+In the snippet above, we put `chatTarget` function inside an Event Handler called
 `loginSuccessCallback` (read in the next chapter for more detail about
 _Event Handler_), to enable chatting after user successfully logged into the app.
 
@@ -315,12 +320,29 @@ figure below:
 
 By creating group room you can have multiple users to chat inside specific room.
 To create Group Chat Room you can do it like this:
+
 ```javascript
 QiscusSDK.core.createGroupRoom(name, [userId1, userId2, userId3], { avatarURL: 'http://avatar_url.com/avatar.png' })
 ```
 
-Those `userId1`, `userId2`, `userId3` will automatically be participants of
-the group room.
+Those `userId1`, `userId2`, `userId3` will automatically be participants of the group room.
+
+The code above will emit a `group-room-created` event which we can make use of by creating a `groupRoomCreated` callback method passed as init options the same way we did with `loginSuccessCallback` in the previous section.
+
+```javascript
+QiscusSDK.core.init({
+  AppId: 'YOUR-APP-ID',
+  options: {
+    loginSuccessCallback: function (userData) {
+      QiscusSDK.core.UI.chatTarget('userId')
+    },
+    groupRoomCreatedCallback: function(room) {
+      console.info('newly created room', room);
+      // or QiscusSDK.core.UI.chatGroup(room.id) <- will be discussed later
+    }
+  }
+})
+```
 
 ## More About Rooms
 

@@ -1,5 +1,4 @@
 # SDK v.2.5.10
-- Implement emoji picker
 - Add login method using nonce and JWT identity_token
 
 # SDK v.2.5.9
