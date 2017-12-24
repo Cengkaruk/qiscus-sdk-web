@@ -12,13 +12,13 @@ https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.j
 ```
 https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.9/qiscus-sdk.2.5.9.css
 ```
-## Get Your App ID
+## Getting Your App ID
 
-To start building app using Qiscus Web Chat SDK you need a key called APP ID.
-This APP ID acts as identifier of your Application so that Qiscus can connect
-your user to other users on the same APP ID. You can get your APP ID here.
+To start building app using Qiscus Web Chat SDK you need a key called `APP ID`.
+This `APP ID` acts as identifier of your Application so that Qiscus can connect
+your user to other users on the same `APP ID`. You can get your `APP ID` [here](https://www.qiscus.com/dashboard).
 
-You can find your APP ID on your Qiscus app dashboard. Here you can see the
+You can find your `APP ID` on your Qiscus app dashboard. Here you can see the
 picture as a reference.
 
 ![App ID Location](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/app-id.png "Your APP ID location")
@@ -49,7 +49,7 @@ To configure Qiscus Web Chat SDK, you need to include SDK files that you get fro
 <!-- put on before closing tag of body tag -->
 <script src="path/to/qiscus-sdk.js"></script>
 ```
-To initiate your chat app using Qiscus Chat SDK, you need to include the APP ID that you obtained from your dashboard. Inside this init function, you can put more "options" according to what your app needs. For example, here we put an Event Handler ( ```loginSuccessCallback```) which will return information after the user has received a message (userData). You can, then, do something with that information inside the Event Handler. You can learn more about [Event Handler](https://www.qiscus.com/documentation/web/advanced-section), in the next chapter. Here is the sample code of how to initiate your APP ID and calling Event Handler : 
+To initiate your chat app using Qiscus Chat SDK, you need to include the `APP ID` that you obtained from your dashboard. Inside this `init function`, you can put more "options" according to what your app needs. For example, here we put an Event Handler ( ```loginSuccessCallback```) which will return information after the user has received a message (`userData`). You can, then, do something with that information inside the Event Handler. You can learn more about [Event Handler](https://www.qiscus.com/documentation/web/advanced-section), in the next chapter. Here is the sample code of how to initiate your APP ID and calling Event Handler : 
 
 ```html
 QiscusSDK.core.init({
@@ -66,16 +66,16 @@ QiscusSDK.core.init({
 
 ### Client Authentication
 
-You can do this easily authenticate your user by calling QiscusSDK.core.setUser() function. This function is used to login or register your user as well as setting and updating user profiles. Here is an example⁠⁠⁠⁠ :
+You can easily authenticate your user by calling `QiscusSDK.core.setUser()` function. This function is used to login or register your user as well as setting and updating user profiles. Here is an example⁠⁠⁠⁠ :
 
 ```html
 QiscusSDK.core.setUser('sample@qiscus.com', 'userKey', 'Qiscus Demo' , ‘http://some-url.com/avatar.png’);
 ```
 Below are some notes to understand parameters within the ```setUser()``` function: 
 
-* **userID** (string, unique): A User identifier that will be used to identify a user and used whenever another user needs to chat with this user. It can be anything, whether it is the user's email address, your user database index, etc. as long as it is unique and a string. 
-* **userKey** (string) : userKey is used as for authentication purposes, so even if a stranger knows your userId, he cannot access the user data. 
-* **username** (string) : Username is used as a display name inside chat room. 
+* **userID** (string, unique): A User identifier that will be used to identify a user and used whenever another user needs to chat with this user. It can be anything, whether it is the user's email address, your user database index, etc. as long as it is **unique** and a **string**. 
+* **userKey** (string) : `userKey` is used as for authentication purposes, so even if a stranger knows your userId, he cannot access the user data. 
+* **username** (string) : `Username` is used as a display name inside chat room. 
 * **avatar_url** (string, optional) : used to display user’s avatar, and fallback to default avatar if not provided. 
 
 You can learn from the figure below to understand what really happens when calling ```setUser()``` function :
@@ -84,19 +84,22 @@ You can learn from the figure below to understand what really happens when calli
 
 ## Create Chat Room
 
-**Chat Room** is a place where 2 or more users can chat with one another**.** There are 2 types of Chat Rooms that can be created using Qiscus Chat SDK: 1-on-1 Chat Room and Group Chat Room. For some cases, a room can be identified by the room's unique id or room name. All activities under Qiscus Chat SDK is inside this Chat Room. You can do whatever you need with the available chat features.
+**Chat Room** is a place where 2 or more users can chat with one another**.** There are 2 types of Chat Rooms that can be created using Qiscus Chat SDK: `1-on-1 Chat Room` and `Group Chat Room`. For some cases, a room can be identified by the room's `unique id` or `room name`. All activities under Qiscus Chat SDK is inside this Chat Room. You can do whatever you need with the available chat features.
 
-To start creating Chat Room you need to first creating a container, then rendering Chat UI. Container is an element where Qiscus Web SDK Chat feature will be rendered into. To define container, you need to include ```<div id="qiscus-widget"></div>``` tag before closing the body tag. Here’s an example: 
+To start creating Chat Room you need to create a container first, then render the Chat UI. `Container` is an element where Qiscus Web SDK Chat feature will be rendered into. To define container, you need to include ```<div id="qiscus-widget"></div>``` tag before the closing body tag. Here’s an example: 
 
 ```html
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link rel="stylesheet" href="path/to/qiscus-sdk.css">
 </head>
 <body>
   <!-- append the snippet below, before closing body tag -->
   <div id="qiscus-widget"></div>
+  <script src="path/to/qiscus-sdk.js"></script>
+  ...
 </body>
 </html>
 ```
@@ -123,11 +126,13 @@ Here is the complete code.
 
 ## 1-on-1 Chat Room
 
-1-on-1 Chat Room is a room which contains only 2 participants. In this room,
+`1-on-1 Chat Room` is a room which contains only 2 participants. In this room,
 users will always enter the same room to chat each other and load previous
 conversations. Here is the code to create 1-on-1 Chat Room using Qiscus Chat SDK.
 
 `QiscusSDK.core.UI.chatTarget('[userId]')`
+
+The code will load chat room previously created with the intended participants or create a new one if there is no record of it. It will also trigger the widget to expand if it's in minimized mode.
 
 Here is the complete example of how to put `chatTarget` function:
 ```javascript
@@ -141,7 +146,7 @@ QiscusSDK.core.init({
 })
 ```
 
-In the snippet above, we put chatTarget function inside an Event Handler called
+In the snippet above, we put `chatTarget` function inside an Event Handler called
 `loginSuccessCallback` (read in the next chapter for more detail about
 _Event Handler_), to enable chatting after user successfully logged into the app.
 
@@ -157,19 +162,36 @@ figure below:
 
 By creating group room you can have multiple users to chat inside specific room.
 To create Group Chat Room you can do it like this:
+
 ```javascript
 QiscusSDK.core.createGroupRoom(name, [userId1, userId2, userId3], { avatarURL: 'http://avatar_url.com/avatar.png' })
 ```
 
-Those `userId1`, `userId2`, `userId3` will automatically be participants of
-the group room.
+Those `userId1`, `userId2`, `userId3` will automatically be participants of the group room.
+
+The code above will emit a `group-room-created` event which we can make use of by creating a `groupRoomCreated` callback method passed as init options the same way we did with `loginSuccessCallback` in the previous section.
+
+```javascript
+QiscusSDK.core.init({
+  AppId: 'YOUR-APP-ID',
+  options: {
+    loginSuccessCallback: function (userData) {
+      QiscusSDK.core.UI.chatTarget('userId')
+    },
+    groupRoomCreatedCallback: function(room) {
+      console.info('newly created room', room);
+      // or QiscusSDK.core.UI.chatGroup(room.id) <- will be discussed later
+    }
+  }
+})
+```
 
 ## More About Rooms
 
 After successfully creating your room, you may need to do advanced development for your chat app. This may include inviting more participant to your room, entering a specific room without invitation, and so on. Hence, in this section you will learn about the following things :
 
 1. **Get Room List**, to get data of your user list so that you can use that data to load a specific room or many more.
-2. **Enter to Existing Room**, to enable you to open a room that you have already created by passing a room ID that is obtained by Get Room List.
+2. **Enter to Existing Room**, to enable you to open a room that you have already created by passing a room ID that is obtained by Getting Room List.
 3. **Participant Management**, to educate you on adding more participants to your room or managing users in your room.
 
 ### Get Room List
@@ -206,11 +228,11 @@ to be fetched per page
 - *show_participants* (boolean, optional, default=true) whether to list
 participants of each rooms too
 
-### Enter to Existing Room
+### Enter Existing Room
 
-After successfully get your room list, you may want to enter a specific room.
-Remember that there are 2 type of rooms, 1-on-1 Chat Room and Group Room. You
-can enter to 1-on-1 Chat Room by simply using `chatTarget(user)` by passing
+After successfully getting your room list, you may want to enter a specific room.
+Remember that there are 2 type of rooms, `1-on-1 Chat Room` and `Group Room`. You
+can enter `1-on-1 Chat Room` by simply using `chatTarget(user)` then passing
 `userId` to chat with a single user. However, in Group Chat Room, instead
 of `userId`, you need to pass a `roomId` by using `chatGroup()` function. This
 `roomId` can be obtained by loading room list, which has been explained in
@@ -229,17 +251,30 @@ to manage your users server to server. You cannot do it on you client app side.
 Hence, we recommend to invite and remove user out of specific room through
 our [SERVER API](https://www.qiscus.com/docs/restapi) for simplicity and
 security reason. You can learn how to use Server API here.
+## Enable Desktop Notification
 
-## Enable Push Notification
+By default, desktop notification feature is available on your web browser. To get notification, you need to enable browser notification on the browser pop-up.
 
-By default, push notification feature is available on your web browser. To get notification, you need to enable browser notification on the browser pop-up.
+Here's an example on how to display a desktop notification when the window is not on focus by using `newMessagesCallback` event handler:
 
-You can also use Event Handler to do anything when you got notification, by using ```newMessageCallback()```. here how to do that:
-
-```html
+```javascript
 newMessagesCallback(message) {
-  //  Do everything you want here
-}
+  //  request permission if it is disabled
+  if (Notification.permission !== "granted") Notification.requestPermission();
+  // create the notification if only window is not focused
+  if ( document.hasFocus() )) return
+  // create the notification
+  const notification = new Notification(`you get a chat from ${data[0].username}`, {
+    icon: data[0].user_avatar,
+    body: (data[0].message.startsWith('[file]'))
+          ? 'File attached.'
+          : data[0].message,
+    });
+  // add on click event handler, close the notif, focus the window
+  notification.onclick = function () {
+    notification.close();
+    window.focus();
+  }
 ```
 
 You can learn more about Event Handler in the next section.
