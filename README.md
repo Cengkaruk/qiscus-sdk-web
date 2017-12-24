@@ -349,7 +349,7 @@ QiscusSDK.core.init({
 After successfully creating your room, you may need to do advanced development for your chat app. This may include inviting more participant to your room, entering a specific room without invitation, and so on. Hence, in this section you will learn about the following things :
 
 1. **Get Room List**, to get data of your user list so that you can use that data to load a specific room or many more.
-2. **Enter to Existing Room**, to enable you to open a room that you have already created by passing a room ID that is obtained by Get Room List.
+2. **Enter to Existing Room**, to enable you to open a room that you have already created by passing a room ID that is obtained by Getting Room List.
 3. **Participant Management**, to educate you on adding more participants to your room or managing users in your room.
 
 ### Get Room List
@@ -386,11 +386,11 @@ to be fetched per page
 - *show_participants* (boolean, optional, default=true) whether to list
 participants of each rooms too
 
-### Enter to Existing Room
+### Enter Existing Room
 
-After successfully get your room list, you may want to enter a specific room.
-Remember that there are 2 type of rooms, 1-on-1 Chat Room and Group Room. You
-can enter to 1-on-1 Chat Room by simply using `chatTarget(user)` by passing
+After successfully getting your room list, you may want to enter a specific room.
+Remember that there are 2 type of rooms, `1-on-1 Chat Room` and `Group Room`. You
+can enter `1-on-1 Chat Room` by simply using `chatTarget(user)` then passing
 `userId` to chat with a single user. However, in Group Chat Room, instead
 of `userId`, you need to pass a `roomId` by using `chatGroup()` function. This
 `roomId` can be obtained by loading room list, which has been explained in
@@ -410,16 +410,30 @@ Hence, we recommend to invite and remove user out of specific room through
 our [SERVER API](https://www.qiscus.com/docs/restapi) for simplicity and
 security reason. You can learn how to use Server API here.
 
-## Enable Push Notification
+## Enable Desktop Notification
 
-By default, push notification feature is available on your web browser. To get notification, you need to enable browser notification on the browser pop-up.
+By default, desktop notification feature is available on your web browser. To get notification, you need to enable browser notification on the browser pop-up.
 
-You can also use Event Handler to do anything when you got notification, by using ```newMessageCallback()```. here how to do that:
+Here's an example on how to display a desktop notification when the window is not on focus by using `newMessagesCallback` event handler:
 
-```html
+```javascript
 newMessagesCallback(message) {
-  //  Do everything you want here
-}
+  //  request permission if it is disabled
+  if (Notification.permission !== "granted") Notification.requestPermission();
+  // create the notification if only window is not focused
+  if ( document.hasFocus() )) return
+  // create the notification
+  const notification = new Notification(`you get a chat from ${data[0].username}`, {
+    icon: data[0].user_avatar,
+    body: (data[0].message.startsWith('[file]'))
+          ? 'File attached.'
+          : data[0].message,
+    });
+  // add on click event handler, close the notif, focus the window
+  notification.onclick = function () {
+    notification.close();
+    window.focus();
+  }
 ```
 
 You can learn more about Event Handler in the next section.
@@ -427,9 +441,9 @@ You can learn more about Event Handler in the next section.
 
 ## Server Authentication
 
-Another option is to authenticate using Json Web Token [(JWT)](https://jwt.io/). Json Web Token contains your app account details which typically consists of a single string which contains information of two parts, Jose header and JWT claims set. 
+Another option is to authenticate using `JSON Web Token` [(JWT)](https://jwt.io/). JSON Web Token contains your app account details which typically consists of a single string which contains information of two parts, Jose header and `JWT` claims set. 
 
-The steps to authenticate with JWT goes like this:
+The steps to authenticate with `JWT` goes like this:
 
 1. The Client App request a nonce from Qiscus SDK server
 2. Qiscus SDK Server will send Nonce to client app
@@ -440,7 +454,7 @@ The steps to authenticate with JWT goes like this:
 
 <p align="center"><br/><img src="https://raw.githubusercontent.com/qiscus/qiscus-sdk-android/develop/screenshot/jwt.png" width="80%" /><br/></p>
 
-You need to request Nonce from Qiscus Chat SDK Server. Nonce (Number Used Once) is a unique, randomly generated string used to identify a single request. Please be noted that a Nonce will expire in 10 minutes. So you need to implement your code to request JWT from your backend right after you got the returned Nonce. Here is how to authenticate to Qiscus Chat SDK using JWT :
+You need to request `Nonce` from Qiscus Chat SDK Server. `Nonce` (Number Used Once) is a unique, randomly generated string used to identify a single request. Please be noted that a Nonce will expire in 10 minutes. So you need to implement your code to request JWT from your backend right after you got the returned Nonce. Here is how to authenticate to Qiscus Chat SDK using JWT :
 ```javascript
 QiscusSDK.core.getNonce()
         .then((res) => {
@@ -451,8 +465,8 @@ QiscusSDK.core.getNonce()
 
         }, err => this.setErrorMessage(`Failed getting auth nonce ${err}`));
 ```
-The code above is a sample of method you can implement in your app. By calling QiscusSDK.core.getNonce(), you will request Nonce from Qiscus SDK server and a Nonce will be returned. If it is success, you can request JWT from your backend by sending Nonce you got from Qiscus SDK Server. 
-When you got the JWT Token, you can pass that JWT to QiscusSDK.core.verifyIdentityToken method to allow Qiscus to authenticate your user and return user account through QiscusSDK.core.setUserWithIdentityToken(Response), as shown in the code below :
+The code above is a sample of method you can implement in your app. By calling `QiscusSDK.core.getNonce()`, you will request `Nonce` from Qiscus SDK server and a `Nonce` will be returned. If it is success, you can request `JWT` from your backend by sending `Nonce` you got from Qiscus SDK Server. 
+When you got the `JWT Token`, you can pass that `JWT` to `QiscusSDK.core.verifyIdentityToken` method to allow Qiscus to authenticate your user and return user account through `QiscusSDK.core.setUserWithIdentityToken(Response)`, as shown in the code below :
 
 ```javascript
 QiscusSDK.core.verifyIdentityToken(response.data.identity_token)
@@ -528,7 +542,7 @@ For advance customization, you need to posssess enough understanding of CSS.
 #### View Mode
 
 If you want to display your chat as a full width (not as widget), you can
-set the mode to wide on init as a parameter, as figure below:
+set the mode to wide on init as a parameter, as illustrated in figure below:
 ```javascript
 QiscusSDK.core.init({
   AppId: 'YOUR-APP-ID',
