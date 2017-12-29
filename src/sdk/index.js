@@ -320,7 +320,12 @@ export class qiscusSDK extends EventEmitter {
     const roomId = self.room_name_id_map[email] || null
     let room = find({ id: roomId })(self.rooms)
     if (room) {
-      room.last_comment_id = room.comments[room.comments.length-1].id
+      const isRoomExists = room.comments != null;
+      if (isRoomExists) {
+        room.last_comment_id = room.comments[room.comments.length-1].id
+      } else {
+        room.last_comment_id = -1;
+      }
       self.selected = null
       self.selected = room
       // make sure we always get the highest value of last_received_comment_id
