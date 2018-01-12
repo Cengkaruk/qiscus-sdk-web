@@ -912,7 +912,7 @@ export class Comment {
     // supported comment type text, account_linking, buttons
     let supported_comment_type = [
       'text','account_linking','buttons','reply','system_event','card', 'custom',
-      'contact_person', 'location', 'file_attachment'
+      'contact_person', 'location', 'file_attachment', 'carousel'
     ];
     this.type = (supported_comment_type.indexOf(comment.type) >= 0) ? comment.type : 'text';
     this.subtype = (comment.type === 'custom') ? comment.payload.type : null;

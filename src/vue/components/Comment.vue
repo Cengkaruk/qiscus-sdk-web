@@ -84,6 +84,8 @@
         <!-- CommentType: "CARD" -->
         <comment-card :data="comment.payload"
           v-if="comment.type==='card'"></comment-card>
+        <!-- CommentType: "CAROUSEL" -->
+        <comment-carousel v-if="comment.type ==='carousel'" :cards="comment.payload.cards"></comment-carousel>
         <!-- CommentType: "CUSTOM" -->
         <div v-if="comment.type === 'custom'">
           <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel>
@@ -183,7 +185,8 @@ export default {
     },
     postbackSubmit(button) {
       const topicId = qiscus.selected.id
-      qiscus.submitComment(topicId, button.label, null, 'button_postback_response', JSON.stringify(button.payload))
+      const labelToSend = button.postback_text ? button.postback_text : button.label;
+      qiscus.submitComment(topicId, labelToSend, null, 'button_postback_response', JSON.stringify(button.payload))
     },
     resend(comment){
       this.$store.dispatch('resendComment', comment)

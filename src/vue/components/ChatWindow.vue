@@ -61,12 +61,12 @@
         <li>
           <span class="qcw-attachment__label">Image</span>
           <icon name="ic-image"></icon>
-          <input class="uploader__input" name="file" type="file" accept="image/*" @change="uploadFile" v-if="commentInput.length <= 0">
+          <input class="uploader__input" name="file" type="file" accept="image/*" @change="uploadFile">
         </li>
         <li>
           <span class="qcw-attachment__label">File</span>
           <icon name="ic-docs-upload"></icon>
-          <input class="uploader__input" name="file" type="file" @change="uploadFile" v-if="commentInput.length <= 0">
+          <input class="uploader__input" name="file" type="file" @change="uploadFile">
         </li>
       </ul>
       <!-- untuk preview klo reply -->

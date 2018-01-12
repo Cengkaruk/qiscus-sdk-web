@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .comment__carousel { position: relative; }
 ul.carousel__bullets,
 ul.qcw-carousel__nav { list-style: none; overflow: hidden; text-align: center; }

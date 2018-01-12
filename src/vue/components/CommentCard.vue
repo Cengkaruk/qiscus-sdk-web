@@ -17,7 +17,9 @@ export default {
   methods: {
     postbackSubmit(button) {
       const topicId = qiscus.selected.id
-      qiscus.submitComment(topicId, button.label, null, 'button_postback_response', JSON.stringify(button.payload))
+      // qiscus.submitComment(topicId, button.label, null, 'button_postback_response', JSON.stringify(button.payload))
+      const labelToSend = button.postback_text ? button.postback_text : button.label;
+      qiscus.submitComment(topicId, labelToSend, null, 'button_postback_response', JSON.stringify(button.payload))
     },
   }
 }
