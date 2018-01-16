@@ -1,5 +1,8 @@
 # SDK v.2.5.10
 - Add login method using nonce and JWT identity_token
+- Fixing undefined id bug when room is empty
+- Refine Carousel and PostbackButton Type message
+- Fix error sending header when getting nonce or verify token
 
 # SDK v.2.5.9
 - Add file_attachment message type rendering
