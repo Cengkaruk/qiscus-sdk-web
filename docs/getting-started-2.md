@@ -176,11 +176,11 @@ QiscusSDK.core.init({
   AppId: 'YOUR-APP-ID',
   options: {
     loginSuccessCallback: function (userData) {
-      QiscusSDK.core.UI.chatTarget('userId')
+      QiscusSDK.core.createGroupRoom(name, [userId1, userId2, userId3], { avatarURL: 'http://avatar_url.com/avatar.png' })
     },
     groupRoomCreatedCallback: function(room) {
       console.info('newly created room', room);
-      // or QiscusSDK.core.UI.chatGroup(room.id) <- will be discussed later
+      QiscusSDK.core.UI.chatGroup(room.id)
     }
   }
 })
