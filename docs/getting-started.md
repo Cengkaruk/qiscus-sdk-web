@@ -264,7 +264,7 @@ newMessagesCallback(messages) {
   // create the notification if only window is not focused
   if ( document.hasFocus() )) return
   // create the notification
-  const notification = new Notification(`you get a chat from ${data[0].username}`, {
+  const notification = new Notification(`you get a chat from ${messages[0].username}`, {
     icon: messages[0].user_avatar,
     body: (messages[0].message.startsWith('[file]'))
           ? 'File attached.'
