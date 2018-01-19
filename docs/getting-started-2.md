@@ -258,17 +258,17 @@ By default, desktop notification feature is available on your web browser. To ge
 Here's an example on how to display a desktop notification when the window is not on focus by using `newMessagesCallback` event handler:
 
 ```javascript
-newMessagesCallback(message) {
+newMessagesCallback(messages) {
   //  request permission if it is disabled
   if (Notification.permission !== "granted") Notification.requestPermission();
   // create the notification if only window is not focused
   if ( document.hasFocus() )) return
   // create the notification
-  const notification = new Notification(`you get a chat from ${data[0].username}`, {
-    icon: data[0].user_avatar,
-    body: (data[0].message.startsWith('[file]'))
+  const notification = new Notification(`you get a chat from ${messages[0].username}`, {
+    icon: messages[0].user_avatar,
+    body: (messages[0].message.startsWith('[file]'))
           ? 'File attached.'
-          : data[0].message,
+          : messages[0].message,
     });
   // add on click event handler, close the notif, focus the window
   notification.onclick = function () {
