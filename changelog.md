@@ -1,3 +1,19 @@
+# SDK v.2.5.11
+- Default sync mode = 'socket', if mqtt server disconnected, automatically activate http sync
+- Add disableSync() method
+- Add template renderer for message with the comment type of 'custom', the payload needed is as follow:
+```
+{
+  type: 'your-awesome-type',
+  content: {
+    template: '<h1 class="my-awesome-heading">Welcome {name}</h1>',
+    data: {
+      name: 'Rijalul Fikri'
+    }
+  }
+}
+```
+
 # SDK v.2.5.10
 - Add login method using nonce and JWT identity_token
 - Fixing undefined id bug when room is empty
