@@ -230,13 +230,13 @@ Handler can be used either to notify your user using desktop notification, or
 somethhing else. This Event handler returns data of incoming message.
 ```javascript
 /**
- * @params message {Message}
+ * @params message {Messages}
  */
-newMessagesCallback: function (message) {
+newMessagesCallback: function (messages) {
   // Do everything you want here
 }
 ```
-Where message are an array of unread message as follow:
+Where messages are an array of unread message as follow:
 ```json
 [{
   "chat_type": "single",
