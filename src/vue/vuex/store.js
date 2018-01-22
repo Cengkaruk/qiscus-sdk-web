@@ -23,14 +23,14 @@ Vue.use(Vuex)
 
 // Create an object to hold the initial state when
 // the app starts up
-const mqttURL = "wss://mqtt.qiscus.com:1886/mqtt";
+const mqttURL = QiscusSDK.mqttURL ? QiscusSDK.mqttURL : "wss://mqtt.qisc.us:1900/mqtt";
 const state = {
   qiscus: QiscusSDK,
   selected: QiscusSDK.selected,
   windowStatus: false,
   participants: QiscusSDK.participants,
   plugins: QiscusSDK.plugins,
-  // mqtt: new MqttAdapter("wss://mqtt.qiscus.com:1886", callbacks),
+  // mqtt: new MqttAdapter("wss://mqtt.qisc.us:1886", callbacks),
   mqtt: null,
   mqttData: {
     typing: ''

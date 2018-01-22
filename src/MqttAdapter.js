@@ -37,7 +37,7 @@ export default class MqttAdapter {
       }
     })
     this.mqtt.on('offline', function() {
-      // QiscusSDK.core.activateSync();
+      QiscusSDK.core.activateSync();
     })
   }
   subscribe(topic) {

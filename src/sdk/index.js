@@ -31,6 +31,7 @@ export class qiscusSDK extends EventEmitter {
     self.mqttURL = null
     self.AppId = null
     self.chatmateStatus = ''
+    self.httpsync = null
 
     // User Properties
     self.userData    = {}
@@ -295,7 +296,12 @@ export class qiscusSDK extends EventEmitter {
     const self = this
     if (self.isSynced) return false;
     self.isSynced = true;
-    window.setInterval(() => self.synchronize(), 7500);
+    self.httpsync = window.setInterval(() => self.synchronize(), 7500);
+  }
+
+  disableSync() {
+    this.isSynced = false;
+    window.clearInterval(this.httpsync);
   }
 
   /**
