@@ -22,7 +22,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "moment": "^2.14.1",
-    "mqtt": "^2.15.1",
+    "mqtt": "2.0.1",
     "node-sass": "^4.5.0",
     "sass-loader": "^4.0.1",
     "superagent": "^2.2.0",

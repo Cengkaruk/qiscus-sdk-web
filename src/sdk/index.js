@@ -50,7 +50,7 @@ export class qiscusSDK extends EventEmitter {
     self.isLoading   = false
     self.isInit      = false
     self.isSynced    = false
-    self.sync        = 'both' // possible values 'socket', 'http', 'both'
+    self.sync        = 'socket' // possible values 'socket', 'http', 'both'
 
     // there's two mode, widget and wide
     self.mode        = 'widget'

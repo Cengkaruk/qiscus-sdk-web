@@ -88,7 +88,9 @@
         <comment-carousel v-if="comment.type ==='carousel'" :cards="comment.payload.cards"></comment-carousel>
         <!-- CommentType: "CUSTOM" -->
         <div v-if="comment.type === 'custom'">
-          <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel>
+          <!-- <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel> -->
+          <!-- render custom template and data -->
+          <comment-custom :template="comment.payload.content.template" :data="comment.payload.content.data" />
         </div>
         <!-- CommentType: "ACCOUNT_LINKING" -->
         <div v-if="comment.type == 'account_linking'">
@@ -121,6 +123,7 @@ import StaticMap from './StaticMap';
 import FileAttachment from './FileAttachment';
 import CommentRender from './CommentRender';
 import CommentButtons from './CommentButtons';
+import CommentCustom from './CommentCustom';
 import Icon from './Icon.vue'
 
 function searchAndReplace(str, find, replace) {
@@ -135,7 +138,7 @@ function escapeHTML(text) {
 export default {
   props: ['comment','onupdate', 'onClickImage', 'commentBefore', 'commentAfter', 'replyHandler'],
   components: { 
-    Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, 
+    Avatar, ImageLoader, CommentReply, CommentCard, CommentCarousel, CommentCustom,
     StaticMap, FileAttachment, CommentRender, CommentButtons, Icon 
   },
   updated(){
