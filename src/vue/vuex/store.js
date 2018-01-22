@@ -90,7 +90,7 @@ const mutations = {
       state.isLoadingComments = false;
       state.selected = QiscusSDK.selected;
     }, (error) => {
-      console.error('Error loading Comments', error);
+      // console.error('Error loading Comments', error);
       state.isLoadingComments = false;
     })
   },

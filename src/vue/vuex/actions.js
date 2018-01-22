@@ -78,7 +78,7 @@ export default {
         //on entering the room, wait for data processed then focus on comment form
         document.getElementsByClassName('qcw-comment-form').item(0).getElementsByTagName('textarea').item(0).focus();
       }, 0)
-      console.info('resend comment successful')
+      // console.info('resend comment successful')
       return Promise.resolve(state.qiscus.selected);
     }, error => {
       console.error('resend comment error', error)
