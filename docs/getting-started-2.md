@@ -10,7 +10,7 @@ https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.11/qiscus-sdk.2.5.11
 ```
 **Qiscus SDK Css File**
 ```
-https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.1/qiscus-sdk.2.5.11.css
+https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.11/qiscus-sdk.2.5.11.css
 ```
 ## Getting Your App ID
 
@@ -274,7 +274,8 @@ newMessagesCallback(messages) {
   notification.onclick = function () {
     notification.close();
     window.focus();
-  }}
+  }
+  }
 ```
 
 You can learn more about Event Handler in the next section.
