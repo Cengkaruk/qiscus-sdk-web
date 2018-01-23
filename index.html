@@ -83,7 +83,10 @@
             presenceCallback(response) {
               console.info('presence', response);
             }
-          }
+          },
+          customTemplates: {
+            'patient-card': `<div class="patient-card"><h3>{content.data.name}</h3><small>{content.data.reg_number}</small></div>`
+          },
         });
         // QiscusSDK.core.getNonce()
         //   .then(res => {

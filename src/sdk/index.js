@@ -32,6 +32,7 @@ export class qiscusSDK extends EventEmitter {
     self.AppId = null
     self.chatmateStatus = ''
     self.httpsync = null
+    self.customTemplates = {}
 
     // User Properties
     self.userData    = {}
@@ -268,6 +269,8 @@ export class qiscusSDK extends EventEmitter {
     if (config.mode) this.mode = config.mode
     // initconfig for developer
     this.dev_mode = config.dev_mode || false
+    // set custom template
+    if (config.customTemplates) this.customTemplates = config.customTemplates;
     // add plugins
     if (config.plugins && config.plugins.length>0) config.plugins.forEach(plugin => this.plugins.push(plugin))
   }

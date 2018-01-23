@@ -6,17 +6,26 @@
 <script>
 export default {
   name: 'CommentCustom',
-  props: ['template', 'data'],
+  props: ['data'],
   data() {
     return {
       finalTemplate: '',
     };
   },
   mounted() {
-    // ambil semua value dari data
-    let temp = this.template;
-    Object.keys(this.data).forEach(key => {
-      temp = temp.replace(`{${key}}`, this.data[key]);
+    // ambil dulu templatenya
+    let temp = QiscusSDK.core.customTemplates[this.data.payload.type];
+    let rgx = /{(.*?)}/g;
+    console.info(temp.match(rgx));
+    temp.match(rgx).forEach(r => {
+      // ambil array datanya
+      let val = this.data.payload;
+      r.substring(1, r.length-1)
+        .split('.')
+        .forEach(k => {
+          val = val[k];
+        });
+      temp = temp.replace(r, val);
     });
     this.finalTemplate = temp;
   }

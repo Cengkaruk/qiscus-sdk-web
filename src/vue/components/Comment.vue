@@ -90,7 +90,7 @@
         <div v-if="comment.type === 'custom'">
           <!-- <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel> -->
           <!-- render custom template and data -->
-          <comment-custom :template="comment.payload.content.template" :data="comment.payload.content.data" />
+          <comment-custom :data="comment" />
         </div>
         <!-- CommentType: "ACCOUNT_LINKING" -->
         <div v-if="comment.type == 'account_linking'">
