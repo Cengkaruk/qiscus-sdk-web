@@ -1,17 +1,19 @@
 # SDK v.2.5.11
 - Default sync mode = 'socket', if mqtt server disconnected, automatically activate http sync
 - Add disableSync() method
-- Add template renderer for message with the comment type of 'custom', the payload needed is as follow:
+- Add template renderer for message with the comment type of 'custom'. Add the template when initiating qiscus sdk
 ```
-{
-  type: 'your-awesome-type',
-  content: {
-    template: '<h1 class="my-awesome-heading">Welcome {name}</h1>',
-    data: {
-      name: 'Rijalul Fikri'
-    }
+QiscusSDK.core.init({
+  AppId: ...,
+  options: ...,
+  customTemplates: {
+    'my-awesome-type': `<div class="my-awesome-type"><h3>{user.name}</h3><small>{user.number}</small></div>`,
+    'another-type': `<div class="another-type">{data}</div>`
   }
-}
+});
+
+// you can fill the data needed for the template by using directives `{}`
+// it will automatically take value from keys inside the payload of current message
 ```
 
 # SDK v.2.5.10
