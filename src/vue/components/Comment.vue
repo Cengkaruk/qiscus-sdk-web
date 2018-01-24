@@ -6,7 +6,8 @@
     </div>
     <!-- CommentType: "system_event" -->
     <div v-if="comment.type == 'system_event'" class="qcw-comment--system-event">
-      {{ comment.message }}
+      <comment-custom :data="comment" v-if="haveTemplate(comment.payload.type)" />
+      <div v-else>{{ comment.message }}</div>
     </div>
     <!-- for text type comment -->
     <div class="qcw-comment"
@@ -207,6 +208,9 @@ export default {
       comment = this.searchAndReplace(comment, '>', '&gt;');
       return comment;
     },
+    haveTemplate(type) {
+      return this.customTemplates[type];
+    }
   },
   data () {
     return {

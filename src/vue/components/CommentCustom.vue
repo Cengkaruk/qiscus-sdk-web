@@ -15,8 +15,8 @@ export default {
   mounted() {
     // ambil dulu templatenya
     let temp = QiscusSDK.core.customTemplates[this.data.payload.type];
+    if(!temp) return this.finalTemplate = '<div>No template provided</div>';
     let rgx = /{(.*?)}/g;
-    console.info(temp.match(rgx));
     temp.match(rgx).forEach(r => {
       // ambil array datanya
       let val = this.data.payload;

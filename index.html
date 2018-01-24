@@ -20,8 +20,13 @@
       .participant--info i.fa { font-size: 24px; position: absolute; top:10px; right: 10px; }
       #mywidget { position: fixed; bottom: 15px; right: 15px; width: 400px; height: 500px; }
       /* contoh untuk custom template */
-      .patient-card { min-width: 200px; border: 1px solid #ddd; border-radius: 15px; text-align: center; }
-      .patient-card h3 { border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+      .patient-card { min-width: 250px; border: 1px solid #ddd; border-radius: 3px; text-align: center; background: #FFF; box-shadow: 0 2px 17px rgba(0,0,0,.32); }
+      .patient-card strong { display: block; padding: 10px; border-bottom: 1px solid #ddd;}
+      .patient-card h3 { border-bottom: 1px solid #ddd; padding: 10px; text-transform: uppercase; margin: 0; }
+      .patient-card small { display: block; color: grey; }
+      .patient-card ul { display: flex; list-style: none; padding: 10px 0; justify-content: space-around;}
+      .patient-card li { position: relative; flex: 1; }
+      .patient-card li:not(:nth-child(1)):before { content: ''; position: absolute; left: 0; border-left: 1px solid #ddd; height: 100%; }
     </style>
   </head>
   <body>
@@ -85,7 +90,14 @@
             }
           },
           customTemplates: {
-            'patient-card': `<div class="patient-card"><h3>{content.data.name}</h3><small>{content.data.reg_number}</small></div>`
+            "application/hd.patient_info": `<div class="patient-card">
+              <strong>Patient Info</strong>
+              <h3>{content.name} <small>{content.gender}</small></h3>
+              <ul>
+                <li>{content.weight} <small>Kg</small></li>
+                <li>{content.height} <small>Cm</small></li>
+              </ul>
+            </div>`
           },
         });
         // QiscusSDK.core.getNonce()
@@ -102,6 +114,14 @@
         }
         // QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'fikri');
         QiscusSDK.render();
+        // payload untuk system event
+        /*
+        let samplePayload = {
+            "content": {"consultation_id":"ZYWM34-6119","gender":"Perempuan","conversation_id":"4077","patient_id":"e5bed39a-2061-4892-8f06-4c1785b53c84","dob":"1992-11-15","name":"adicatur nugroho","weight":"56.0","height":"192.0"},
+            "type": "application/hd.patient_info"
+          }
+        qiscus.submitComment(qiscus.selected.id, "Sample data for patient card", null, 'custom', JSON.stringify(samplePayload));
+        */
       })
     </script>
     <!-- built files will be auto injected -->
