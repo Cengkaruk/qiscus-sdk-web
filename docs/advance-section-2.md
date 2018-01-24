@@ -150,6 +150,24 @@ There are more than just 3 properties that are unlisted in the table above. You
 can find more customizable properties in the css file in the sample app, which
 you can modify it as you like.
 
+## Emoji 
+Having emojis in your webpage is awesome. You can get it simply add following script and stylesheet link to your webpage.
+here is sample HTML :
+
+```html
+<html>
+  <head>
+    <title>Qiscus SDK Sample</title>
+    <link rel="stylesheet" type="text/css" href="https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.10/qiscus-sdk.2.5.10.css">
+  </head>
+  <body>
+    <div id="qiscus-widget"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script>
+    <script src="https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.10/qiscus-sdk.2.5.10-emoji.js"></script>
+  </body>
+</html>
+```
+
 ## Event Handler
 
 An Event Handler is a callback routine that operates asynchronously and handles
