@@ -572,6 +572,22 @@ QiscusSDK.core.init({
 Here what you will get by passing avatar parameter inside option brackets
 ![Without Avatar](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/no-avatar.png "No Avatar")
 
+### Custom Templates
+You can provide your own templates for messages which have type of `custom` or `system_events`, the data needed for the template will be acquired from `message.payload` object.
+
+You can define the template while initiating Qiscus Chat SDK.
+```
+QiscusSDK.core.init({
+  AppId: ...,
+  options: {},
+  // the format is `payload.type`: html template
+  // data is provided between curly brackets -> {payload.key.to.get}
+  customTemplates: {
+    'my-message-type': `<div class="my-message-template">{content.user.name}<strong>{content.user.email}</strong></div>`
+  }
+});
+```
+
 ### Advance UI Customization
 
 You can almost change everything you see on the chat UI by customizing it's CSS.
