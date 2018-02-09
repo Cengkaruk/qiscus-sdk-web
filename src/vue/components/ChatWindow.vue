@@ -232,7 +232,7 @@ export default {
         e.preventDefault();
         e.stopPropagation();
         // this code is needed for emoji implementation, dirty, but works, need to refine later
-        const selector = '#qcw-app > div.qcw-container.qcw-container--open > div > div.qcw-comment-form > textarea';
+        const selector = '#qcw-app > div.qcw-container > div > div.qcw-comment-form > textarea';
         const element = document.querySelector(selector);
         this.commentInput = element.value;
         let message = this.commentInput.trim()

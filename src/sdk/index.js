@@ -32,6 +32,8 @@ export class qiscusSDK extends EventEmitter {
     self.AppId = null
     self.chatmateStatus = ''
     self.httpsync = null
+    self.customTemplate = false;
+    self.templateFunction = null;
     self.customTemplates = {}
 
     // User Properties
@@ -215,6 +217,10 @@ export class qiscusSDK extends EventEmitter {
         : `Last seen ${distanceInWordsToNow(Number(payload[1]))}`
       if (self.options.presenceCallback) self.options.presenceCallback(data);
     })
+    
+    self.on('typing', function(data) {
+      if (self.options.typingCallback) self.options.typingCallback(data);
+    })
   }
 
   /**
@@ -270,6 +276,8 @@ export class qiscusSDK extends EventEmitter {
     // initconfig for developer
     this.dev_mode = config.dev_mode || false
     // set custom template
+    if (config.customTemplate) this.customTemplate = config.customTemplate;
+    if (this.customTemplate) this.templateFunction = config.templateFunction;
     if (config.customTemplates) this.customTemplates = config.customTemplates;
     // add plugins
     if (config.plugins && config.plugins.length>0) config.plugins.forEach(plugin => this.plugins.push(plugin))

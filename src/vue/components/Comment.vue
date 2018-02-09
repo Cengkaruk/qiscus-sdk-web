@@ -6,7 +6,7 @@
     </div>
     <!-- CommentType: "system_event" -->
     <div v-if="comment.type == 'system_event'" class="qcw-comment--system-event">
-      <comment-custom :data="comment" v-if="haveTemplate(comment.payload.type)" />
+      <comment-custom :data="comment" v-if="haveTemplate(comment)" />
       <div v-else>{{ comment.message }}</div>
     </div>
     <!-- for text type comment -->
@@ -88,11 +88,7 @@
         <!-- CommentType: "CAROUSEL" -->
         <comment-carousel v-if="comment.type ==='carousel'" :cards="comment.payload.cards"></comment-carousel>
         <!-- CommentType: "CUSTOM" -->
-        <div v-if="comment.type === 'custom'">
-          <!-- <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel> -->
-          <!-- render custom template and data -->
-          <comment-custom :data="comment" />
-        </div>
+        <comment-custom :data="comment" v-if="haveTemplate(comment)" />
         <!-- CommentType: "ACCOUNT_LINKING" -->
         <div v-if="comment.type == 'account_linking'">
           <comment-render :text="comment.payload.text || message"></comment-render>
@@ -208,8 +204,9 @@ export default {
       comment = this.searchAndReplace(comment, '>', '&gt;');
       return comment;
     },
-    haveTemplate(type) {
-      return this.customTemplates[type];
+    haveTemplate(comment) {
+      if(!QiscusSDK.core.customTemplate) return false;
+      return QiscusSDK.core.templateFunction(comment);
     }
   },
   data () {
@@ -240,6 +237,12 @@ export default {
       //   linkOptions: { target: '_blank' }
       // }),
     }
-  }
+  },
+  mounted() {
+    // get comment subtype if it's custom
+    if(this.comment.type == 'custom' || this.comment.type == 'system_event') {
+      this.commentClass = `${this.commentClass} qcw-comment--${this.comment.payload.type}`;
+    }
+  },
 }
 </script>

@@ -28,6 +28,7 @@ export default class MqttAdapter {
       } else if(topic[0] == 'r' && topic[4] == 't') {
         // it's a typing message
         callbacks.typing({username:topic[3], room_id: topic[1]}, message)
+        QiscusSDK.core.emit('typing', {username:topic[3], room_id: topic[1], message});
       } else if(topic[0] == 'r' && topic[4] == 'r') {
         // it's a read event
         callbacks.read(topic[3], message);

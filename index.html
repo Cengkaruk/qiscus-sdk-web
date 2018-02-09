@@ -87,17 +87,37 @@
             },
             presenceCallback(response) {
               console.info('presence', response);
+            },
+            chatRoomCreatedCallback(response) {
+              console.info('room created', response);
             }
           },
-          customTemplates: {
-            "application/hd.patient_info": `<div class="patient-card">
-              <strong>Patient Info</strong>
-              <h3>{content.name} <small>{content.gender}</small></h3>
-              <ul>
-                <li>{content.weight} <small>Kg</small></li>
-                <li>{content.height} <small>Cm</small></li>
-              </ul>
-            </div>`
+          customTemplate: true,
+          templateFunction: function templateFunction(comment) {
+            if(comment.type === 'custom') {
+              if(comment.payload.type === 'application/hd.patient_info') return `<div class="patient-card">
+                <strong>Patient Info</strong>
+                <h3>{payload.content.name} <small>{payload.content.gender}</small></h3>
+                <ul>
+                  <li>{payload.content.weight} <small>Kg</small></li>
+                  <li>{payload.content.height} <small>Cm</small></li>
+                </ul>
+              </div>`;
+            }else if(comment.type === 'system_event') {
+              if(comment.payload.payload.type == 'application/hd.welcome') {
+                return `<div class="welcome-message">{comment.payload.payload.message}</div>`;
+              } else if (comment.payload.payload.type === 'application/hd.patient_info') {
+                return `<div class="patient-card">
+                  <strong>Patient Info</strong>
+                  <h3>{comment.payload.content.name} <small>{comment.payload.content.gender}</small></h3>
+                  <ul>
+                    <li>{comment.payload.content.weight} <small>Kg</small></li>
+                    <li>{comment.payload.content.height} <small>Cm</small></li>
+                  </ul>
+                </div>`;
+              }
+            };
+            return false;
           },
         });
         // QiscusSDK.core.getNonce()

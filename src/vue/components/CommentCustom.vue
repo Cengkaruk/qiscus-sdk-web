@@ -14,12 +14,13 @@ export default {
   },
   mounted() {
     // ambil dulu templatenya
-    let temp = QiscusSDK.core.customTemplates[this.data.payload.type];
+    let temp = QiscusSDK.core.templateFunction(this.data);
     if(!temp) return this.finalTemplate = '<div>No template provided</div>';
     let rgx = /{(.*?)}/g;
-    temp.match(rgx).forEach(r => {
+    let matched = temp.match(rgx) || [];
+    matched.forEach(r => {
       // ambil array datanya
-      let val = this.data.payload;
+      let val = this.data;
       r.substring(1, r.length-1)
         .split('.')
         .forEach(k => {
