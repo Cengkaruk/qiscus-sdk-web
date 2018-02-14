@@ -322,6 +322,9 @@ export default {
       formData.append('token', qiscus.userData.token);
       var xhr = new XMLHttpRequest();
       xhr.open('POST', `${qiscus.baseURL}/api/v2/sdk/upload`, true);
+      xhr.setRequestHeader('qiscus_sdk_app_id', `${qiscus.AppId}`);
+      xhr.setRequestHeader('qiscus_sdk_user_id', `${qiscus.email}`);
+      xhr.setRequestHeader('qiscus_sdk_token', `${this.userData.token}`);
       xhr.onload = function() {
         if(xhr.status === 200) {
           // file(s) uploaded), let's post to comment
