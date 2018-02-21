@@ -38,6 +38,7 @@ export default {
   .qcw-image-modal {
     max-width: 80%;
     max-height: 80vh;
+    height: 80vh;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
@@ -45,6 +46,7 @@ export default {
     box-shadow: 0 0 17px rgba(0,0,0,.5);
     img {
       max-width: 100%;
+      max-height: 100%;
       display: block;
     }
     i {
