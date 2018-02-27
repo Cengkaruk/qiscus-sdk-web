@@ -321,6 +321,8 @@ export default {
       formData.append('file', files[0]);
       formData.append('token', qiscus.userData.token);
       var xhr = new XMLHttpRequest();
+      // cache dulu room id nya
+      const roomId = vm.selected.id;
       xhr.open('POST', `${qiscus.baseURL}/api/v2/sdk/upload`, true);
       xhr.setRequestHeader('qiscus_sdk_app_id', `${qiscus.AppId}`);
       xhr.setRequestHeader('qiscus_sdk_user_id', `${qiscus.email}`);
@@ -330,7 +332,7 @@ export default {
           // file(s) uploaded), let's post to comment
           var url = JSON.parse(xhr.response).results.file.url
           vm.uploads.splice(vm.uploads.indexOf(files[0].name),1)
-          vm.submitComment(vm.selected.last_comment_topic_id, `[file] ${url} [/file]`);
+          vm.submitComment(roomId, `[file] ${url} [/file]`);
         } else {
           vm.$toasted.error('File uploading failed')
           vm.uploads.splice(vm.uploads.indexOf(files[0].name), 1)
