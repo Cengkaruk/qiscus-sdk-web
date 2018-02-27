@@ -217,7 +217,7 @@ export class qiscusSDK extends EventEmitter {
         : `Last seen ${distanceInWordsToNow(Number(payload[1]))}`
       if (self.options.presenceCallback) self.options.presenceCallback(data);
     })
-    
+
     self.on('typing', function(data) {
       if (self.options.typingCallback) self.options.typingCallback(data);
     })
@@ -798,14 +798,14 @@ export class qiscusSDK extends EventEmitter {
     // request.set('qiscus_sdk_to', `${this.token}`);
     return request.post(`${this.baseURL}/api/v2/sdk/auth/nonce`)
       .send().set('qiscus_sdk_app_id', `${this.AppId}`)
-      .then(res => Promise.resolve(res.body.results), 
+      .then(res => Promise.resolve(res.body.results),
         err => Promise.reject(err));
   }
 
   verifyIdentityToken(identity_token) {
     return request.post(`${this.baseURL}/api/v2/sdk/auth/verify_identity_token`)
       .send({identity_token}).set('qiscus_sdk_app_id', `${this.AppId}`)
-      .then(res => Promise.resolve(res.body.results), 
+      .then(res => Promise.resolve(res.body.results),
         err => Promise.reject(err));
   }
 
@@ -906,7 +906,7 @@ export class Comment {
     this.username_as           = comment.username_as || comment.username
     this.username_real         = comment.username_real || comment.email
     this.date                  = format(comment.timestamp, 'YYYY-MM-DD')
-    this.time                  = format(comment.timestamp, 'HH:mm A')
+    this.time                  = format(comment.timestamp, 'HH:mm')
     this.unique_id             = comment.unique_temp_id || comment.unique_id
     this.avatar                = comment.user_avatar_url
     this.room_id               = comment.room_id
