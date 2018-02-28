@@ -645,7 +645,14 @@ export class qiscusSDK extends EventEmitter {
       parsedPayload.replied_comment_sender_username = replied_message.username_as
       pendingComment.payload = parsedPayload
     }
-    self.selected.comments.push(pendingComment)
+    // push to the correct room
+    if (topicId == self.selected.id) {
+      self.selected.comments.push(pendingComment)
+    } else {
+      // find the room first
+      const roomToFind = self.rooms.find(room => room.id == topicId);
+      if(roomToFind) roomToFind.comments.push(pendingComment);
+    }
 
     const extrasToBeSubmitted = self.extras;
     return this.userAdapter.postComment(topicId, commentMessage, pendingComment.unique_id, type, payload, extrasToBeSubmitted)
