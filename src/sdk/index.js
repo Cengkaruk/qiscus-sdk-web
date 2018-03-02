@@ -252,6 +252,7 @@ export class qiscusSDK extends EventEmitter {
     this.username = data.user.username;
     this.avatar_url = data.user.avatar_url;
     this.isInit = true;
+    vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, 1, {retain: true});
     this.emit('login-success', data)
   }
 
@@ -517,7 +518,6 @@ export class qiscusSDK extends EventEmitter {
    * If comment count > 0 then we have new message
    */
   synchronize () {
-    vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, 1, {retain: true});
     this.userAdapter.sync(this.last_received_comment_id)
     .then((comments) => {
       if (comments.length > 0) this.emit('newmessages', comments)
