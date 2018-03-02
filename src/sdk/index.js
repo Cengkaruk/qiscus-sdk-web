@@ -252,7 +252,9 @@ export class qiscusSDK extends EventEmitter {
     this.username = data.user.username;
     this.avatar_url = data.user.avatar_url;
     this.isInit = true;
-    vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, 1, {retain: true});
+    window.setInterval(function() {
+      vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, 1, {retain: true});
+    }, 3500);
     this.emit('login-success', data)
   }
 
