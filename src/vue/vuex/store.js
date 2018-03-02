@@ -16,6 +16,7 @@ function setPresence(state, email) {
   // unset old presence, ambil email yang lama
   unsetPresence(state);
   state.mqtt.subscribe(`u/${email}/s`);
+  // console.info(`u/${email}/s`, JSON.parse(JSON.stringify(state)));
 }
 
 // Make vue aware of Vuex
@@ -65,7 +66,7 @@ const mutations = {
     state.windowStatus = true;
     state.selected = state.qiscus.selected;
     state.mqtt.unsubscribe(`${state.qiscus.userData.token}/c`);
-    state.mqtt.subscribe(`r/${state.selected.id}/${state.selected.last_comment_topic_id}/+/t`);
+    state.mqtt.subscribe(`r/${state.selected.id}/${state.selected.id}/+/t`);
     state.mqtt.subscribe(`${state.qiscus.userData.token}/c`);
     state.mqttData.typing = '';
 
@@ -81,7 +82,7 @@ const mutations = {
     state.windowStatus = true;
     state.selected = state.qiscus.selected;
     state.mqttData.typing = '';
-    state.mqtt.subscribe(`r/${state.selected.id}/${state.selected.last_comment_topic_id}/+/t`);
+    state.mqtt.subscribe(`r/${state.selected.id}/${state.selected.id}/+/t`);
     state.mqtt.subscribe(`${state.qiscus.userData.token}/c`);
   },
   LOAD_COMMENTS (state, payload) {

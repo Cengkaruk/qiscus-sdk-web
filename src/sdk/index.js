@@ -211,6 +211,7 @@ export class qiscusSDK extends EventEmitter {
     })
 
     self.on('presence', function(data) {
+      // console.info('incoming presence data', data);
       const payload = data.split(":");
       QiscusSDK.core.chatmateStatus = (payload[0] == 1)
         ? 'Online'
@@ -252,9 +253,6 @@ export class qiscusSDK extends EventEmitter {
     this.username = data.user.username;
     this.avatar_url = data.user.avatar_url;
     this.isInit = true;
-    window.setInterval(function() {
-      vStore.state.mqtt.publish(`u/${qiscus.userData.email}/s`, 1, {retain: true});
-    }, 3500);
     this.emit('login-success', data)
   }
 

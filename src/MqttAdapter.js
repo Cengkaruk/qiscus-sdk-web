@@ -3,6 +3,7 @@ import {format} from 'date-fns';
 
 export default class MqttAdapter {
   constructor(url, callbacks, context) {
+    const self = this;
     this.context = context;
     if(this.context.mqttURL) url = this.context.mqttURL;
     this.mqtt = mqtt.connect(url, {
@@ -12,6 +13,12 @@ export default class MqttAdapter {
         retain: true
       }
     })
+    this.mqtt.on('connect', function(){
+      console.info('mqtt connected');
+      window.setInterval(function() {
+        self.mqtt.publish(`u/${context.userData.email}/s`, 1, {retain: true});
+      }, 3500);
+    });
     this.mqtt.on('message', function(topic, message) {
       // set the message to readable string
       message = message.toString();
@@ -22,6 +29,7 @@ export default class MqttAdapter {
         QiscusSDK.core.emit('newmessages', [JSON.parse(message)]);
       } else if(topic.length == 3) {
         // it's a user status message -> u/{user}/s
+        console.info('incoming presence', message);
         const presencePayload = message.split(":");
         if (presencePayload[1].length > 13) return;
         QiscusSDK.core.emit('presence', message);
