@@ -133,7 +133,7 @@ QiscusSDK.core.init({
 Here what you will get by passing avatar parameter inside option brackets
 ![Without Avatar](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/no-avatar.png "No Avatar")
 
-### Advance UI Customization
+### CSS Customization
 
 You can almost change everything you see on the chat UI by customizing it's CSS.
 Here are main CSS selectors being use in Qiscus Chat SDK:
@@ -149,6 +149,17 @@ Here are main CSS selectors being use in Qiscus Chat SDK:
 There are more than just 3 properties that are unlisted in the table above. You
 can find more customizable properties in the css file in the sample app, which
 you can modify it as you like.
+
+### Bubble Customization
+
+for customizing custom message bubble you can put it in `init` option. And then you can apply a custom html element css classes.You can even pass the data there.
+
+For more details information, you can check our example here 
+[Sample Feature Custom Message in Sample Web SDK](https://github.com/qiscus/qiscus-sdk-web-sample/blob/feature%2Fcustom-message/assets/js/main.js#L126)
+
+### Advance Customization
+
+For advance customization, you can only use our Core SDK API for the data flow and use your own full UI. By using this approach you will have full control over the UI. We have sample on how you can do it and there are documentation on list of core api that we provide in the SDK. check it here [https://bitbucket.org/qiscus/qiscus-sdk-core-web-sample](https://bitbucket.org/qiscus/qiscus-sdk-core-android-sample)
 
 ## Emoji 
 Having emojis in your webpage is awesome. You can get it simply add following script and stylesheet link to your webpage.
