@@ -186,6 +186,18 @@ QiscusSDK.core.init({
 })
 ```
 
+## Channel
+
+Channel is a room that behave similar like a group chat, in channel anyone can join using the room uniqueId, there are several limitation on channel like : no typing indicator, no read/deliver status, no comment info, and “delete for me” is not available. Here how you can create or join a Channel Room:
+
+```javascript
+QiscusSDK.core.getOrCreateRoomByChannel('channel-id', 'Channel Name', 'http://avatar-url.com/avatar.png')
+  .then(function (roomData) {
+    // Success create or opening channel
+    console.log(roomData)
+  })
+```
+
 ## More About Rooms
 
 After successfully creating your room, you may need to do advanced development for your chat app. This may include inviting more participant to your room, entering a specific room without invitation, and so on. Hence, in this section you will learn about the following things :
